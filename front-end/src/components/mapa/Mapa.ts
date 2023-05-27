@@ -7,8 +7,9 @@ export default defineComponent({
 
         const data = ref();
         
-        axios.get(process.env.VUE_APP_SERVIDOR_URL!,{})
+        axios.get(process.env.VUE_APP_SERVIDOR_URL,{})
         .then(function(response){
+            console.log(response);
             data.value = response ;
         })
         .catch(function(error){

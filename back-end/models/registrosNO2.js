@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 Schema = mongoose.Schema
 
-const RegistrosCOSchema = new Schema({
+const RegistrosNO2Schema = new Schema({
 	Nombre: {
 		type: String,
 		required: true, 
@@ -20,7 +20,7 @@ const RegistrosCOSchema = new Schema({
 		type: Number,
 		required: true
 	},
-	CO: {
+	SO2: {
 		type: Number, 
 		required: true,
 		min: 0
@@ -33,6 +33,6 @@ const RegistrosCOSchema = new Schema({
 		type: Number, 
 		required: true
 	}
-}, {collection: "registros_calidadAire_CO"})
+}, {collection: "registros_calidadAire_SO2"});
 
-module.exports = mongoose.model('registrosCO', RegistrosCOSchema)
+module.exports = mongoose.model('registrosNO2', RegistrosNO2Schema);
