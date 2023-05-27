@@ -1,25 +1,41 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import VisorLaPalma from '../views/visorLaPalma.vue'
+import Error404 from '../views/error404.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/',
-    name: 'home',
-    component: HomeView
+    path: '/visorLaPalma',
+    component: VisorLaPalma,
+    meta:{
+      title: 'TFG | Visor la Palma'
+    }    
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    path: '/:catchAll(.*)',
+    redirect: '/visorLaPalma'
+  },
+  {
+    path: '/visorLaPalma/:catchAll(.*)',
+    component: Error404,
+    meta:{
+      title: 'TFG | Error 404'
+    }
   }
 ]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+})
+
+router.beforeEach((to, from, next)=>{
+  const title = to.meta.title;
+  if(typeof title === 'string'){
+    document.title= title;
+  } else{
+    document.title= 'TFG';
+  }
+  next();
 })
 
 export default router

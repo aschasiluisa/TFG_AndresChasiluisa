@@ -4,7 +4,7 @@ console.clear();
 //Importación de librerias
 const  express = require('express')
 const dotenv = require('dotenv')
-
+const cors = require('cors')
 
 //llamada a las rutas
 const indexRouter = require('./routes/index')
@@ -16,8 +16,12 @@ const initMongo = require('./config/db')
 const app = express()
 dotenv.config()
 
+//middleware
 app.use(express.json());
 app.use(express.text());
+
+//para configurar el cors y permitir llamadas desde local
+app.use(cors());
 
 //Señalización de rutas
 app.use(indexRouter)
