@@ -29,12 +29,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next)=>{
-  const title = to.meta.title;
-  if(typeof title === 'string'){
-    document.title= title;
-  } else{
-    document.title= 'TFG';
-  }
+  document.title = `${to.meta.title}`;
   next();
 })
 

@@ -20,7 +20,7 @@ const RegistrosNO2Schema = new Schema({
 		type: Number,
 		required: true
 	},
-	SO2: {
+	NO2: {
 		type: Number, 
 		required: true,
 		min: 0
@@ -33,6 +33,6 @@ const RegistrosNO2Schema = new Schema({
 		type: Number, 
 		required: true
 	}
-}, {collection: "registros_calidadAire_SO2"});
+}, {collection: "registros_calidadAire_NO2"});
 
 module.exports = mongoose.model('registrosNO2', RegistrosNO2Schema);

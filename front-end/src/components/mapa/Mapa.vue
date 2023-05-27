@@ -1,14 +1,16 @@
 <script lang="ts" src="./Mapa.ts"></script>
 
 <template>
-  <h2>MAPA</h2>
-
-  <p>
-    {{ data }}
-  </p>
+  <div>
+    <!-- Mapa -->
+    <div id="contenedorMapa" />
+  </div>
 
 </template>
 
 <style>
-
+    #contenedorMapa {
+        height: 530px;
+        width: 40%;
+    }
 </style>

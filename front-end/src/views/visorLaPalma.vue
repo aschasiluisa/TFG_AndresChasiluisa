@@ -1,5 +1,5 @@
 <template>
-    <h1>VISOR LA PALMA</h1>
+    <p>VISOR LA PALMA</p>
 
     <Mapa />
 
