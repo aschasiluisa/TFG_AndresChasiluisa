@@ -44,7 +44,7 @@ const getData = async (req,res)=>{
             res.send("ERROR al pedir registros SO2: ", error)
         });
 
-    res.send({
+    res.json({
         registrosCO_data,
         registrosNO2_data,
         registrosO3_data,
