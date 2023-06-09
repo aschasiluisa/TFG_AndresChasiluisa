@@ -3,7 +3,6 @@ const jsonError = require('../config/errors')
 
 const userUpdate = async (req,res)=>{
     try{
-
         const emailVal = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const emailValidation = emailVal.test(req.body.mail)
 
@@ -38,12 +37,37 @@ const userUpdate = async (req,res)=>{
         }
 
     } catch (error) {
-        res.status(500).json(jsonError.serverError)
+        res.status(400).json(jsonError.serverError)
     }
 
 }
 
+const getUserInfo = async (req,res)=>{
+    try{
+        await usuarios.find({ Usuario: req.body.usuario })
+        .select({
+            Nombre:1,
+            Apellido:1,
+            Municipio:1
+        })
+        .then(user => {
+            res.json({
+                result: true,
+                user:
+                {
+                    Nombre: user[0].Nombre,
+                    Apellido: user[0].Apellido,
+                    Municipio: user[0].Municipio
+                }
+            })
+        })
+    } catch (error) {
+        res.status(400).json(jsonError.serverError)
+    }
+}
+
 //exportasmos el controlador
 module.exports = {
-    userUpdate
+    userUpdate,
+    getUserInfo
 }

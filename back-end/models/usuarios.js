@@ -23,7 +23,7 @@ const UsuariosSchema = new Schema({
             'Breña Alta',
             'Breña Baja',
             'Villa de Mazo',
-            'Fuencaliebte de La Palma',
+            'Fuencaliente de La Palma',
             'Los Llanos de Aridane',
             'El Paso',
             'Tazacorte',

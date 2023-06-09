@@ -60,7 +60,7 @@ const signup = async (req,res)=>{
             }
        }
     } catch(error) {
-        res.status(500).json(jsonError.serverError)
+        res.status(400).json(jsonError.serverError)
     }
 }
 

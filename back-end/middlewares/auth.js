@@ -4,7 +4,7 @@ const jsonError = require('../config/errors')
 
 let tokenVerification = async (req,res,next)=>{
     let token = req.get('token')
-
+    
     jwt.verify(token,process.env.SECRET_JWT_KEY,(error, decoded)=>{
         if(error){
             return res.status(401).json(jsonError.tokenError)

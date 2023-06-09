@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 
 const login = async (req,res)=>{
+    
     try{
         const Usuario = await usuarios.findOne({Usuario: req.body.usuario})
 
@@ -47,7 +48,7 @@ const login = async (req,res)=>{
         }
 
     } catch {
-        res.status(500).json(jsonError.serverError)
+        res.status(400).json(jsonError.serverError)
     }
 }
 
