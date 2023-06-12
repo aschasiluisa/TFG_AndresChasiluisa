@@ -11,7 +11,7 @@ const signup = async (req,res)=>{
         const usernameError = await usuarios.findOne({Usuario: req.body.usuario})
 
         if(usernameError){
-            res.status(400).json(jsonError.usernameError)
+            res.status(200).json(jsonError.usernameError)
         } else {
 
             const emailVal = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -21,7 +21,7 @@ const signup = async (req,res)=>{
                 const emailError = await usuarios.findOne({Mail: req.body.mail})
 
                 if(emailError){
-                    res.status(400).json(jsonError.emailError)
+                    res.status(200).json(jsonError.emailError)
                 } else {
                     let nuevoUsuario = new usuarios({
                         Nombre : req.body.nombre,
@@ -56,7 +56,7 @@ const signup = async (req,res)=>{
                     })
                 }
             } else {
-                res.status(400).json(jsonError.emailFormatError)
+                res.status(200).json(jsonError.emailFormatError)
             }
        }
     } catch(error) {

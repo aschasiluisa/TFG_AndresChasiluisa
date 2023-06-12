@@ -38,7 +38,7 @@ export const useAuthStore = () => {
                         store.dispatch('auth/updateUserInfo', {token, nombre, apellido, municipio, mail}),
 
         // MUTATIONS //
-
+        clearAuthResponse: () => store.commit('auth/clearAuthResponse'),
 
     }
 

@@ -44,8 +44,6 @@ $primary-color: rgb(4,78,157);
         grid-column: 2;
         margin-bottom: 20px;
         padding: 4px;
-        width: -webkit-fill-available;
-        width: -moz-available;
     }
 
     button{
@@ -54,4 +52,13 @@ $primary-color: rgb(4,78,157);
         margin-right: 40px;
         margin-bottom: 15px;
     }
+}
+
+.alert {
+    background-color: #ff9e81;
+    color: #fe0000;
+    border-radius: 10px;
+    padding-bottom: 0px;
+    width: 345px;
+    text-align: center;
 }

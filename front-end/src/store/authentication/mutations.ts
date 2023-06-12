@@ -33,6 +33,10 @@ const mutations: MutationTree<AuthenticationState> = {
 
     setEmail(state,email){
         state.email = email;
+    },
+
+    clearAuthResponse(state){
+        state.authResponse = undefined;
     }
 
 }

@@ -1,14 +1,14 @@
 
-import { responseLoginControl } from '@/api/authenticationAPI'
+import { responseLoginControl, responseSignupControl, responseProfileControl } from '@/api/authenticationAPI'
 
 export interface AuthenticationState {
     user?: string;
     email?: string;
     role?: number;
     token?: string;
-    userInfo?:any;
+    userInfo?: any;
     authenticathing: boolean
-    authResponse: responseLoginControl | undefined
+    authResponse: responseLoginControl | responseSignupControl | responseProfileControl | undefined
 }
 
 function state(): AuthenticationState {

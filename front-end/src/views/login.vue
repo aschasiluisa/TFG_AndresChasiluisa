@@ -1,6 +1,21 @@
 <template>
     <div class="page">
-        <form class="form" @submit.prevent="login">
+
+        <div v-show="!!authError">    
+            <div class="alert">
+                <p v-if="authError === responseLoginControl.emptyFieldError">
+                    <strong>Error!</strong> campos Vacios
+                </p>
+                <p v-if="authError === responseLoginControl.loginError">
+                    <strong>Error!</strong> usuario o contraseña incorrectos
+                </p>
+                <p v-if="authError === responseLoginControl.serverError">
+                    <strong>Error!</strong> error en el servidor
+                </p>
+            </div>
+        </div>
+
+        <form class="form">
             <h1>LOGIN</h1>
 
             <label class="label label-default" for="usuario">
@@ -13,7 +28,7 @@
             </label>
             <input type="password" id="contraseña" class="form-control" v-model="contraseña"> 
 
-            <button type="submit" :disabled="authenticathing" class="btn btn-success">
+            <button type="button" :disabled="authenticathing" class="btn btn-success" @click="login">
                 acceso
             </button>
         </form>
@@ -22,8 +37,9 @@
 
 <script lang="ts">
     import { useAuthStore } from "@/composables/useAuthStore";
-    import { ref, watch } from "vue"
+    import { ref, watch, computed } from "vue"
     import router from '@/router';
+    import { responseLoginControl } from "@/api/authenticationAPI"
 
     export default{
         name: "Login",
@@ -35,9 +51,13 @@
             const { 
                 login,
                 userAuthenticated,
-                authenticathing
+                authenticathing,
+                authResponse,
+                clearAuthResponse
             } = useAuthStore();
 
+            const authError = computed(()=>(authResponse.value && authResponse.value !== responseLoginControl.ok)? authResponse.value:undefined);
+            
             watch(userAuthenticated, () =>{
                 if(userAuthenticated.value){
                     router.push({ name: "VisorLaPalma" })
@@ -48,6 +68,9 @@
                 usuario,
                 contraseña,
                 authenticathing,
+                authError,
+                clearAuthResponse,
+                responseLoginControl,
 
                 login: () => {
                     login(

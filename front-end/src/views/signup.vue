@@ -1,19 +1,40 @@
 <template>
     <div class="page">
+
+        <div v-show="!!authError">    
+            <div class="alert">
+                <p v-if="authError === responseSignupControl.emptyFieldError">
+                    <strong>Error!</strong> campos Vacios
+                </p>
+                <p v-if="authError === responseSignupControl.usernameError">
+                    <strong>Error!</strong> nombre de usuario ya existente
+                </p>
+                <p v-if="authError === responseSignupControl.emailError">
+                    <strong>Error!</strong> email ya en uso
+                </p>
+                <p v-if="authError === responseSignupControl.emailFormatError">
+                    <strong>Error!</strong> formato de email incorrecto
+                </p>
+                <p v-if="authError === responseSignupControl.serverError">
+                    <strong>Error!</strong> error en el servidor
+                </p>
+            </div>
+        </div>
+
         <form class="form" @submit.prevent="signup">
             <h1>SIGNUP</h1>
             <label class="label label-default" for="nombre">
-                Nombre:
+                Nombre*
             </label>
             <input  type="text" id="nombre" class="form-control" v-model="nombre">
             
             <label class="label label-default" for="apellido">
-                Apellido:
+                Apellido*
             </label>
             <input type="text" id="apellido" class="form-control" v-model="apellido">
             
             <label class="label label-default" for="municipio">
-                Municipio:
+                Municipio
             </label>
             <select id="municipio" class="form-control" v-model="municipio">
                 <option>Garafía</option>
@@ -33,17 +54,17 @@
             </select>
 
             <label class="label label-default" for="usuario">
-                Usuario:
+                Usuario*
             </label>
             <input type="text" id="usuario" class="form-control" v-model="usuario">
             
             <label class="label label-default" for="mail">
-                Mail:
+                Mail*
             </label>
-            <input type="email" id="mail" class="form-control" v-model="mail">
+            <input type="text" id="mail" class="form-control" v-model="mail">
             
             <label class="label label-default" for="contraseña">
-                Contraseña:
+                Contraseña*
             </label>
             <input type="password" id="contraseña" class="form-control" v-model="contraseña"> 
             <button type="submit" :disabled="authenticathing" class="btn btn-success">
@@ -54,9 +75,11 @@
 </template>
 
 <script lang="ts">
-    import { ref, watch } from "vue"
+    import { ref, watch, computed } from "vue"
     import { useAuthStore } from "@/composables/useAuthStore";
     import router from '@/router';
+
+    import { responseSignupControl } from "@/api/authenticationAPI"
 
     export default{
         name: "Signup",
@@ -72,8 +95,11 @@
             const { 
                 signup,
                 userAuthenticated,
-                authenticathing
+                authenticathing,
+                authResponse
             } = useAuthStore();
+
+            const authError = computed(()=>(authResponse.value && authResponse.value !== responseSignupControl.ok)? authResponse.value:undefined);
 
             watch(userAuthenticated, () =>{
                 if(userAuthenticated.value){
@@ -89,6 +115,8 @@
                 mail,
                 contraseña,
                 authenticathing,
+                authError,
+                responseSignupControl,
 
                 signup: () => {
                      signup(

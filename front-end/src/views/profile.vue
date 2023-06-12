@@ -1,5 +1,20 @@
 <template>
     <div class="page">
+
+        <div v-show="!!responseError">    
+            <div class="alert">
+                <p v-if="responseError === responseProfileControl.emailError">
+                    <strong>Error!</strong> email ya en uso
+                </p>
+                <p v-if="responseError === responseProfileControl.emailFormatError">
+                    <strong>Error!</strong> formato de email incorrecto
+                </p>
+                <p v-if="responseError === responseProfileControl.serverError">
+                    <strong>Error!</strong> error en el servidor
+                </p>
+            </div>
+        </div>
+
         <form class="form">
             <h1>PROFILE</h1>
 
@@ -17,7 +32,7 @@
                 Municipio:
             </label>
             <select id="municipio" class="form-control" v-model="municipio" :disabled="readOnly">
-                <option value = "" disabled selected hidden> {{preMunicipio}} </option>
+                <option value = "" disabled selected hidden> {{ preMunicipio }} </option>
                 <option>Garafía</option>
                 <option>Barlovento</option>
                 <option>San Andrés y Sauces</option>
@@ -47,20 +62,21 @@
 </template>
 
 <script lang="ts">
-    import { useAuthStore } from "@/composables/useAuthStore";
-    import { ref, watch, onMounted } from "vue"
+    import { useAuthStore } from "@/composables/useAuthStore"
+    import { ref, watch, onMounted, computed } from "vue"
+    import { responseProfileControl } from "@/api/authenticationAPI"
 
     export default{
         name:'profile',
         setup(){
 
-            const nombre = ref("");
-            const apellido = ref("");
+            const nombre = ref();
+            const apellido = ref();
             const municipio = ref("");
-            const mail = ref("");
+            const mail = ref();
             const preNombre = ref("");
             const preApellido = ref("");
-            const preMunicipio = ref("");
+            const preMunicipio = ref();
             const preMail = ref("");
             const readOnly = ref(true);
 
@@ -70,15 +86,18 @@
                 getUserToken,
                 profileUserInfo,
                 getEmail,
+                authResponse,
             } = useAuthStore();
             
             const cambiarMode = () => {
                     readOnly.value = !readOnly.value;
-                    nombre.value = "";
-                    apellido.value = "";
+                    nombre.value = undefined;
+                    apellido.value = undefined;
                     municipio.value = "";
-                    mail.value = "";
+                    mail.value = undefined;
             };
+
+            const responseError = computed(()=>(authResponse.value && authResponse.value !== responseProfileControl.ok)? authResponse.value:undefined);
 
             watch(profileUserInfo, () => {
                 preNombre.value = profileUserInfo.value.Nombre;
@@ -103,10 +122,19 @@
 
                 readOnly,
                 cambiarMode,
-                
+
+                responseError, 
+                responseProfileControl,              
 
                 updateUserInfo: () => {
+
+                    if(!nombre.value) nombre.value = preNombre.value
+                    if(!apellido.value) apellido.value = preApellido.value
+                    if(!municipio.value) municipio.value = preMunicipio.value
+                    if(!mail.value || mail.value === preMail.value) mail.value = ""
+
                     updateUserInfo(getUserToken.value, nombre.value, apellido.value, municipio.value, mail.value);
+
                     cambiarMode();
                 }
             }

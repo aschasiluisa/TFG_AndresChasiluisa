@@ -5,6 +5,8 @@ import Login from '../views/login.vue'
 import Signup from '../views/signup.vue'
 import Profile from '../views/profile.vue'
 
+import { useAuthStore } from "@/composables/useAuthStore";
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/visorLaPalma',
@@ -54,7 +56,11 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next)=>{
+  
+  const { clearAuthResponse } = useAuthStore();
+
   document.title = `${to.meta.title}`;
+  clearAuthResponse();
   next();
 })
 
