@@ -56,13 +56,9 @@ const userUpdate = async (req,res)=>{
                 })
             })
         }
-
-       
-
     } catch (error) {
         res.status(400).json(jsonError.serverError)
     }
-
 }
 
 const getUserInfo = async (req,res)=>{

@@ -19,6 +19,10 @@ const getters: GetterTree<AuthenticationState, StateInterface> = {
     getUser(state) {
         return state.user ? state.user: "" ;
     },
+
+    getRole(state) {
+        return state.role ? state.role: undefined ;
+    },
 }
 
 export default getters

@@ -3,11 +3,11 @@
 <template>
   <header>
     <nav>
-        <router-link to="/visorLaPalma" v-show="noIsCurrentRoute(`/visorLaPalma`)"> Visor la palma</router-link> 
+        <router-link to="/visorLaPalma" v-show="noIsCurrentRoute(`/visorLaPalma`) && noSuperAdmin"> Visor la palma</router-link> 
         <router-link to="/visorLaPalma/login" v-show="!userAuthenticated && noIsCurrentRoute(`/visorLaPalma/login`)"> Login</router-link> 
         <router-link to="/visorLaPalma/signup" v-show="!userAuthenticated && noIsCurrentRoute(`/visorLaPalma/signup`)"> Signup</router-link> 
-        <router-link to="/visorLaPalma/profile" v-show="userAuthenticated && noIsCurrentRoute(`/visorLaPalma/profile`)"> Profile</router-link>
-        <p @click="logout" v-show="userAuthenticated">Logout</p>
+        <router-link to="/visorLaPalma/profile" v-show="userAuthenticated && noIsCurrentRoute(`/visorLaPalma/profile`) && noSuperAdmin"> Profile</router-link>
+        <p style="cursor:pointer;" @click="logout" v-show="userAuthenticated">Logout</p>
     </nav>
   </header>
 </template>

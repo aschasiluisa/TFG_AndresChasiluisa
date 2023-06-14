@@ -31,6 +31,10 @@ const mutations: MutationTree<AuthenticationState> = {
         state.userInfo = userInfo;
     },
 
+    setSuperAdminControlUserInfo(state, userInfo){
+        state.userClientInfo = userInfo;
+    },
+
     setEmail(state,email){
         state.email = email;
     },

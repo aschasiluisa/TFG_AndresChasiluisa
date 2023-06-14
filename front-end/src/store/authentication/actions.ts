@@ -2,7 +2,7 @@ import { ActionTree } from 'vuex'
 import { AuthenticationState } from './state'
 import { StateInterface } from '../index'
 
-import { authenticationAPI, responseLoginControl, responseSignupControl, responseProfileControl } from '@/api/authenticationAPI'
+import { authenticationAPI, responseLoginControl, responseSignupControl, responseLogOutControl, responseProfileControl, responseSuperAdminControlControl } from '@/api/authenticationAPI'
 import { useAuthStore } from "@/composables/useAuthStore";
 
 const emailVal = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -11,7 +11,6 @@ const actions: ActionTree<AuthenticationState, StateInterface> = {
 
     async login({commit}, { usuario, contraseña }) {
 
-        
         commit("setAuthenticating");
 
         let responseControl: responseLoginControl | undefined = undefined;
@@ -106,7 +105,7 @@ const actions: ActionTree<AuthenticationState, StateInterface> = {
                 commit("setAuthResponse", responseControl);
             }
             catch{
-                commit("setAuthResponse", responseLoginControl.serverError);
+                commit("setAuthResponse", responseSignupControl.serverError);
             }
         } else {
             commit("setAuthResponse", responseControl);
@@ -115,27 +114,40 @@ const actions: ActionTree<AuthenticationState, StateInterface> = {
 
     async logout({commit}, token){
         try {
+            let responseControl: responseLogOutControl | undefined = undefined;
+
             const responseLogout = await authenticationAPI.delete('/logout', { headers: token });
 
             if(responseLogout.data && responseLogout.data.result){
                 commit("resetUserInfo")
+                responseControl = responseLogOutControl.ok;
+            } else {
+                responseControl = responseLogOutControl.serverError;
             }
+            commit("setAuthResponse", responseControl);
         }
         catch {
-
+            commit("setAuthResponse", responseLogOutControl.serverError)
         }
     },
 
     async userInfo({commit}, token){
         try {
+            let responseControl: responseProfileControl | undefined = undefined;
+
             const responseUserInfo = await authenticationAPI.get('/profile', { headers: token });
 
             if(responseUserInfo.data && responseUserInfo.data.result){
                 commit("setProfileUserInfo",responseUserInfo.data.user)
+                responseControl = responseProfileControl.ok;
+            } else {
+                responseControl = responseProfileControl.serverError
             }
+
+            commit("setAuthResponse", responseControl);
         }
         catch {
-
+            commit("setAuthResponse", responseProfileControl.serverError);
         }
     },
 
@@ -152,7 +164,7 @@ const actions: ActionTree<AuthenticationState, StateInterface> = {
             if(!emailValidation) responseControl = responseProfileControl.emailFormatError;
             else{ body = {nombre, apellido, municipio, mail}; }
         } else {
-            body = body = {nombre, apellido, municipio};
+            body = {nombre, apellido, municipio};
         }
         
         if(!responseControl){
@@ -183,12 +195,78 @@ const actions: ActionTree<AuthenticationState, StateInterface> = {
                 commit("setAuthResponse", responseControl);
             } 
             catch {
-                commit("setAuthResponse", responseLoginControl.serverError);
+                commit("setAuthResponse", responseProfileControl.serverError);
             }
         } else {
             commit("setAuthResponse", responseControl);
         }
-    }
+    },
+
+    async superAdminControl({commit}, {token, usuarioCliente}){
+        try {
+            let responseControl: responseSuperAdminControlControl | undefined = undefined;
+
+            const responseSuperAdminControl = await authenticationAPI.get('/superAdminControl', {headers: { token, usuarioCliente }})
+
+            if(responseSuperAdminControl.data && responseSuperAdminControl.data.result){
+                commit("setSuperAdminControlUserInfo",responseSuperAdminControl.data.user)
+                responseControl = responseSuperAdminControlControl.ok;
+            } else {
+                responseControl = responseSuperAdminControlControl.serverError
+
+                if(responseSuperAdminControl.data && responseSuperAdminControl.data.msg === responseSuperAdminControlControl.userFindError){
+                    responseControl = responseSuperAdminControlControl.userFindError;
+                }
+            }
+            commit("setAuthResponse", responseControl);
+        } catch {
+            commit("setAuthResponse", responseSuperAdminControlControl.serverError);
+        }
+    },
+
+    async changeRole({commit}, {token, usuarioCliente, role }){
+        try{
+            let responseControl: responseSuperAdminControlControl | undefined = undefined;
+
+            const responseChangeRole = await authenticationAPI.put('/superAdminControl', {usuarioCliente, role} , {headers:{ token }})
+
+            if(responseChangeRole.data && responseChangeRole.data.result){
+                commit("setSuperAdminControlUserInfo",responseChangeRole.data.user)
+                responseControl = responseSuperAdminControlControl.ok;
+            } else {
+                responseControl = responseSuperAdminControlControl.serverError
+
+                if(responseChangeRole.data && responseChangeRole.data.msg === responseSuperAdminControlControl.userFindError){
+                    responseControl = responseSuperAdminControlControl.userFindError;
+                }
+            }
+            commit("setAuthResponse", responseControl);
+
+        } catch {
+            commit("setAuthResponse", responseSuperAdminControlControl.serverError);
+        }
+    },
+
+    async deleteUser({commit}, {token,usuarioCliente}){
+        try {
+            let responseControl: responseSuperAdminControlControl | undefined = undefined;
+
+            const responseDeleteUser = await authenticationAPI.delete('/superAdminControl', {headers: { token, usuarioCliente }})
+
+            if(responseDeleteUser.data && responseDeleteUser.data.result){
+                responseControl = responseSuperAdminControlControl.ok;
+            } else {
+                responseControl = responseSuperAdminControlControl.serverError
+
+                if(responseDeleteUser.data && responseDeleteUser.data.msg === responseSuperAdminControlControl.userFindError){
+                    responseControl = responseSuperAdminControlControl.userFindError;
+                }
+            }
+            commit("setAuthResponse", responseControl);
+        } catch {
+            commit("setAuthResponse", responseSuperAdminControlControl.serverError);
+        }
+    },
 }
 
 export default actions

@@ -1,6 +1,5 @@
 <template>
     <div class="page">
-
         <div v-show="!!authError">    
             <div class="alert">
                 <p v-if="authError === responseLoginControl.emptyFieldError">
@@ -53,14 +52,15 @@
                 userAuthenticated,
                 authenticathing,
                 authResponse,
-                clearAuthResponse
+                getRole,
             } = useAuthStore();
 
             const authError = computed(()=>(authResponse.value && authResponse.value !== responseLoginControl.ok)? authResponse.value:undefined);
             
             watch(userAuthenticated, () =>{
                 if(userAuthenticated.value){
-                    router.push({ name: "VisorLaPalma" })
+                    if(getRole.value === 5) router.push({ name: "SuperAdminControl" })
+                    else router.push({ name: "VisorLaPalma" })
                 }
             })
 
@@ -69,7 +69,6 @@
                 contraseña,
                 authenticathing,
                 authError,
-                clearAuthResponse,
                 responseLoginControl,
 
                 login: () => {

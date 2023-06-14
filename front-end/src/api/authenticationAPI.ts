@@ -23,6 +23,17 @@ export enum responseProfileControl {
     ok = "Ok response"
 }
 
+export enum responseLogOutControl {
+    serverError = "Server Error",
+    ok = "Ok response"
+}
+
+export enum responseSuperAdminControlControl {
+    serverError = "Server Error",
+    userFindError = "Failed to find user",
+    ok = "Ok response"
+}
+
 export const authenticationAPI = axios.create({
     baseURL: process.env.VUE_APP_SERVIDOR_URL,
 })

@@ -12,6 +12,7 @@ const signupRouter = require('./routes/signup')
 const loginRouter = require('./routes/login')
 const profileRouter = require('./routes/profile')
 const logoutRouter = require('./routes/logout')
+const superAdminControlRouter = require('./routes/superAdminControl')
 
 //llamada a la conexión de base de datos Mongo
 const initMongo = require('./config/db')
@@ -34,6 +35,7 @@ app.use(signupRouter)
 app.use(loginRouter)
 app.use(profileRouter)
 app.use(logoutRouter)
+app.use(superAdminControlRouter)
 
 //se conecta con la base de datos Mongo
 initMongo()
