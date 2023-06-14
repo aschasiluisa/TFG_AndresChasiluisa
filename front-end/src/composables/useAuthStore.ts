@@ -1,6 +1,8 @@
 import { computed } from 'vue'
 import { useStore } from 'vuex'
 import { StateInterface } from '@/store'
+import getters from '@/store/authentication/getters';
+import { roles } from '@/api/authenticationAPI'
 
 export const useAuthStore = () => {
 
@@ -14,6 +16,8 @@ export const useAuthStore = () => {
 
         profileUserInfo: computed(() => store.state.auth.userInfo),
 
+        userClientInfo: computed(() => store.state.auth.userClientInfo),
+
         // GETTERS //
         userAuthenticated: computed<boolean>(() => store.getters['auth/userAuthenticated'] ),
 
@@ -22,6 +26,8 @@ export const useAuthStore = () => {
         getUser: computed<string>(() => store.getters['auth/getUser']),
 
         getEmail: computed<string>(() => store.getters['auth/getEmail']),
+
+        getRole: computed<number>(() => store.getters['auth/getRole']),
 
         // ACTIONS //
         login: (usuario: string, contraseña: string) => 
@@ -36,6 +42,12 @@ export const useAuthStore = () => {
 
         updateUserInfo: (token: string, nombre: string, apellido: string, municipio: string, mail: string) => 
                         store.dispatch('auth/updateUserInfo', {token, nombre, apellido, municipio, mail}),
+
+        superAdminControl: (token: string, usuarioCliente: string) => store.dispatch('auth/superAdminControl',{token, usuarioCliente}),
+
+        changeRole: (token: string, usuarioCliente: string, role: roles) => store.dispatch('auth/changeRole',{token, usuarioCliente, role}),
+
+        deleteUser: (token: string, usuarioCliente: string) => store.dispatch('auth/deleteUser',{token, usuarioCliente}),
 
         // MUTATIONS //
         clearAuthResponse: () => store.commit('auth/clearAuthResponse'),

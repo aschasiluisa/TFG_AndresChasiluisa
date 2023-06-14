@@ -18,7 +18,7 @@ const login = async (req,res)=>{
                 if(token){
                     res.status(200).json(jsonError.loginError)
                 } else {
-                    const newtoken = jwt.sign({user: Usuario.Usuario, email: Usuario.Mail, role: Usuario.Rol}, process.env.SECRET_JWT_KEY, { expiresIn: '24h'})
+                    const newtoken = jwt.sign({user: Usuario.Usuario, role: Usuario.Rol}, process.env.SECRET_JWT_KEY, { expiresIn: '24h'})
 
                     let nuevoToken = new tokens({
                         Usuario : Usuario.Usuario,

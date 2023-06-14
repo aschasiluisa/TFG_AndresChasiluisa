@@ -36,11 +36,18 @@ const tokenError =
     msg : "Invalid token"
 }
 
+const userFindError = 
+{
+    result : false,
+    msg : "Failed to find user"
+}
+
 module.exports = {
     serverError,
     usernameError,
     emailError,
     emailFormatError,
     loginError,
-    tokenError
+    tokenError,
+    userFindError
 }

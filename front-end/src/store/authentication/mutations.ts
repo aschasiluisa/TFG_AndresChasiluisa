@@ -1,12 +1,18 @@
 import { MutationTree } from "vuex"
 import { AuthenticationState } from './state'
+import { roles } from '@/api/authenticationAPI'
 
 const mutations: MutationTree<AuthenticationState> = {
     setUserInfo(state, { user, email, role, token} ){
         state.user = user;
         state.email = email;
-        state.role = role;
         state.token = token;
+
+        if ( Object.values(roles).includes(role)){
+            state.role = role;
+        } else {
+            state.role = undefined;
+        }
     },
 
     setAuthenticating(state){
@@ -29,6 +35,10 @@ const mutations: MutationTree<AuthenticationState> = {
 
     setProfileUserInfo(state, userInfo){
         state.userInfo = userInfo;
+    },
+
+    setSuperAdminControlUserInfo(state, userInfo){
+        state.userClientInfo = userInfo;
     },
 
     setEmail(state,email){

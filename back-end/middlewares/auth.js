@@ -10,6 +10,7 @@ let tokenVerification = async (req,res,next)=>{
             return res.status(401).json(jsonError.tokenError)
         }
         req.body.usuario = decoded.user
+        req.body.rol = decoded.role
     })
 
     const DBtoken = await tokens.findOne({Usuario: req.body.usuario})

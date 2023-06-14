@@ -4,6 +4,7 @@ import Error404 from '../views/error404.vue'
 import Login from '../views/login.vue'
 import Signup from '../views/signup.vue'
 import Profile from '../views/profile.vue'
+import SuperAdminControl from '../views/superAdminControl.vue'
 
 import { useAuthStore } from "@/composables/useAuthStore";
 
@@ -30,6 +31,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path:'/visorLaPalma/login',
     component: Login,
+    name: 'Login',
     meta:{
       title: 'TFG | Login'
     }
@@ -45,7 +47,19 @@ const routes: Array<RouteRecordRaw> = [
     path:'/visorLaPalma/profile',
     component: Profile,
     meta:{
-      title: 'TFG | Profile'
+      title: 'TFG | Profile',
+      requiresAuth: true,
+      authRol: [0,1]
+    }
+  },
+  {
+    path:'/visorLaPalma/superAdminControl',
+    component: SuperAdminControl,
+    name: 'SuperAdminControl',
+    meta:{
+      title: 'TFG | Super admin control',
+      requiresAuth: true,
+      authRol: [5]
     }
   }
 ]
@@ -56,12 +70,29 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next)=>{
-  
-  const { clearAuthResponse } = useAuthStore();
+  const { 
+    clearAuthResponse,
+    getRole,
+    userAuthenticated,
+  } = useAuthStore();
 
-  document.title = `${to.meta.title}`;
   clearAuthResponse();
-  next();
+
+  if(to.meta.requiresAuth){
+    if (userAuthenticated){
+      if(Array.isArray(to.meta.authRol) && to.meta.authRol.includes(getRole.value)){
+        document.title = `${to.meta.title}`;
+        next()
+      } else {
+        next({ path: '/visorLaPalma/acessoDenegado'})
+      }
+    } else {
+      next({path: '/visorLaPalma/login'})
+    }
+  } else {
+    document.title = `${to.meta.title}`;
+    next();
+  }
 })
 
 export default router

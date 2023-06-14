@@ -1,4 +1,4 @@
-import { defineComponent, watch, ref } from "vue";
+import { defineComponent, watch, ref, computed } from "vue";
 import { useAuthStore } from "@/composables/useAuthStore";
 import { useRoute } from "vue-router";
 import router from '@/router';
@@ -10,10 +10,13 @@ export default defineComponent ({
         const { 
             userAuthenticated,
             getUserToken,
+            getRole,
             logout
         } = useAuthStore();
 
         const route = useRoute();
+
+        const noSuperAdmin = computed(()=>(getRole.value !== 5 )? true : false);
 
         const noIsCurrentRoute = (path: string) => {
             return route.path != path;
@@ -21,9 +24,10 @@ export default defineComponent ({
 
         return{
             userAuthenticated,
+            noSuperAdmin,
             noIsCurrentRoute,
 
-            logout: () => { logout(getUserToken.value); router.push({ name: "VisorLaPalma" }) }
+            logout: () => { logout(getUserToken.value); router.push({ name: "Login" }) }
         }
     }
 })

@@ -1,6 +1,7 @@
 import { GetterTree } from "vuex"
 import { AuthenticationState } from './state'
 import { StateInterface } from '../index'
+import { roles } from '@/api/authenticationAPI'
 
 const getters: GetterTree<AuthenticationState, StateInterface> = {
     
@@ -18,6 +19,14 @@ const getters: GetterTree<AuthenticationState, StateInterface> = {
 
     getUser(state) {
         return state.user ? state.user: "" ;
+    },
+
+    getRole(state) {
+        if ( Object.values(roles).includes(state.role!)){
+            return state.role
+        } else {
+            return undefined
+        }
     },
 }
 
