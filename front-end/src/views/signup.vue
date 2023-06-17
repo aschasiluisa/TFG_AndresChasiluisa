@@ -21,7 +21,7 @@
             </div>
         </div>
 
-        <form class="form" @submit.prevent="signup">
+        <div class="window" @submit.prevent="signup">
             <h1>SIGNUP</h1>
             <label class="label label-default" for="nombre">
                 Nombre*
@@ -70,7 +70,7 @@
             <button type="submit" :disabled="authenticathing" class="btn btn-success">
                 registro
             </button>
-        </form>
+        </div>
     </div>
 </template>
 

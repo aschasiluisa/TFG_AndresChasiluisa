@@ -14,7 +14,7 @@
             </div>
         </div>
 
-        <form class="form">
+        <div class="window">
             <h1>LOGIN</h1>
 
             <label class="label label-default" for="usuario">
@@ -30,7 +30,7 @@
             <button type="button" :disabled="authenticathing" class="btn btn-success" @click="login">
                 acceso
             </button>
-        </form>
+        </div>
     </div>
 </template>
 

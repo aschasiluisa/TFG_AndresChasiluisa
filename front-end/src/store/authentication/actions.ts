@@ -3,7 +3,6 @@ import { AuthenticationState } from './state'
 import { StateInterface } from '../index'
 
 import { authenticationAPI, responseLoginControl, responseSignupControl, responseLogOutControl, responseProfileControl, responseSuperAdminControlControl } from '@/api/authenticationAPI'
-import { useAuthStore } from "@/composables/useAuthStore";
 
 const emailVal = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 

@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <div class="form">
+    <div class="window">
       <h1>ERROR 404</h1>
     </div>
   </div>

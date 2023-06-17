@@ -1,10 +1,8 @@
 <template>
-
-    <div class="page">
-        <p>VISOR LA PALMA</p>        
+    <div class="page" id="grid-Map">         
         <Mapa />
+        <ControlLayers />
     </div>
-
 </template>
 
 <script lang="ts">
@@ -12,28 +10,24 @@
     import { defineComponent } from 'vue';
 
     import Mapa from '@/components/mapa/Mapa.vue'
+    import ControlLayers from '@/components/controlLayers/ControlLayers.vue'
 
     export default defineComponent({
         name: 'Visor la Palma',
         components:{
-            Mapa
+            Mapa,
+            ControlLayers
         }
     });
 
 </script>
 
 <style lang="scss" scoped>
-    
-.page{
-    height: 100vh;
-    align-items: center;
-    justify-content: center;
-    background:  rgb(4,78,157);
-    background: linear-gradient(
-        0deg,
-        rgba(4,78,157,1) 0%,
-        rgba(0,174,255,1)100%
-    );
-    margin: 0;
-}
+    @import "@/css/globalStyles.scss";
+
+    #grid-Map{
+        display: grid;
+        grid-template-columns: 50% 50%;
+    }
+
 </style>

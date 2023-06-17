@@ -12,7 +12,7 @@
             </div>
         </div>
 
-        <form class="form" v-show="!showClientInfo">
+        <div class="window" v-show="!showClientInfo">
             <h1>Super Admin Control</h1>
 
             <label class="label label-default" for="usuario">
@@ -23,9 +23,9 @@
             <button type="button" class="btn btn-success" @click="superAdminControl">
                 buscar usuario
             </button>
-        </form>
+        </div>
 
-        <form class="form" v-show="showClientInfo">
+        <div class="window" v-show="showClientInfo">
             <h1>{{ clienteUsuario }}</h1>
             <p><strong>Nombre</strong> : {{ clienteNombre }}</p>
             <p><strong>Apellido</strong> : {{ clienteApellido }}</p>
@@ -38,7 +38,7 @@
                 <del style="color:red; cursor:pointer;" @click="deleteUser">{{ clienteUsuario }}</del>
             </p>
             <button type="button" class="btn btn-danger" @click="cambiarMode">Volver</button>
-        </form>
+        </div>
     </div>
 </template>
 

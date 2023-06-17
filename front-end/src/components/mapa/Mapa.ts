@@ -31,7 +31,7 @@ export default defineComponent({
 
             await getData();
 
-            mapa = leaflet.map("contenedorMapa",{zoomSnap:0.2}).setView([28.655, -17.865],10.6);
+            mapa = leaflet.map("Mapa",{zoomSnap:0.1}).setView([28.655, -17.865],10.5);
 
             leaflet.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 18,

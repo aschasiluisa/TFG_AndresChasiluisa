@@ -1,23 +1,20 @@
 
-$primary-color: rgb(4,78,157);
+$primary-color: rgb(0, 138, 184);
+$secondary-color: rgb(60,85,112);
+$dark-color: rgb(30,44,61);
+$light-color:rgb(235,247,253);
 
 .page{
-    height: 90vh;
+    flex:1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: $primary-color;
-    background: linear-gradient(
-        0deg,
-        rgba(4,78,157,1) 0%,
-        rgba(0,174,255,1)100%
-    );
-    margin: 0;
+    background: $secondary-color;
 }
 
-.form{
-    background-color: #fff;
+.window{
+    background-color: $light-color;
     padding: 30px;
     box-shadow: 0px 0px 38px -5px rgba(0,0,0,0.45);
     border-radius: 10px;

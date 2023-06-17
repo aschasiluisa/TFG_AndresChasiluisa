@@ -1,16 +1,33 @@
 <script lang="ts" src="./Mapa.ts"></script>
 
 <template>
-  <div>
+  <div class="ContenedorMapa">
     <!-- Mapa -->
-    <div id="contenedorMapa" />
+    <div id="Mapa"/>
   </div>
 
 </template>
 
-<style>
-    #contenedorMapa {
-        height: 530px;
-        width: 40%;
-    }
+<style lang="scss" scoped>
+
+@import "@/css/globalStyles.scss";
+
+  #Mapa {
+    height: 98%;
+    width: 98%;
+    align-self: center;
+    border-radius: 10px;
+  }
+
+  .ContenedorMapa {
+    margin-left: 20%;
+    grid-column: 1;
+    border-radius: 10px;
+    box-shadow: 0px 0px 38px -5px rgba(0,0,0,0.45);
+    display: flex;
+    justify-content: center;
+    height: 95%;
+    width: 68%;
+    background-color: $light-color;
+  }
 </style>

@@ -1,14 +1,10 @@
 <template>
 
-  <div>
-    <Header />
-  </div>
-
+<div class="app">
+  <Header />
   <router-view/>
-
-  <div>
-    <Footer />
-  </div>
+  <Footer />
+</div>
 
 </template>
 
@@ -51,5 +47,11 @@
 
 
 <style lang="scss">
+
+  .app {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
 
 </style>

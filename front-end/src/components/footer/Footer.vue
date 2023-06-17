@@ -2,16 +2,20 @@
 
 <template>
     <footer>
-        <p>footer</p>
+        <p>Trabajo Final de grado, Andrés Chasiluisa</p>
     </footer>
 </template>
 
 <style lang="scss">
+
+    @import "@/css/globalStyles.scss";
+
     footer {
-        background-color: #333;
-        color: #fff;
-        padding: 20px;
         text-align: center;
-        margin-top: 0px;
+        height: 5%;
+        background-color: $dark-color;
+        color: $light-color;
+        font-family: cambria Italic;
+        padding-top: 0.3% ;
     }
 </style>

@@ -15,7 +15,7 @@
             </div>
         </div>
 
-        <form class="form">
+        <div class="window">
             <h1>PROFILE</h1>
 
             <label class="label label-default" for="nombre">
@@ -57,7 +57,7 @@
             <button type="button" v-show="readOnly" class="btn btn-success" @click="cambiarMode">Editar</button>
             <button type="button" v-show="!readOnly" class="btn btn-success" @click="updateUserInfo">Enviar cambios</button>
             <button type="button" v-show="!readOnly" class="btn btn-danger" @click="cambiarMode">Volver</button>
-        </form>
+        </div>
     </div>
 </template>
 
