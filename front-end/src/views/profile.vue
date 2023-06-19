@@ -15,7 +15,7 @@
             </div>
         </div>
 
-        <div class="window">
+        <div class="window form">
             <h1>PROFILE</h1>
 
             <label class="label label-default" for="nombre">

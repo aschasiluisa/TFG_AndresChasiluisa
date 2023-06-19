@@ -12,10 +12,11 @@
 
     footer {
         text-align: center;
+        align-items: center;
         height: 5%;
         background-color: $dark-color;
         color: $light-color;
         font-family: cambria Italic;
-        padding-top: 0.3% ;
+        padding-top: 0.6% ;
     }
 </style>

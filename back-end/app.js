@@ -7,7 +7,7 @@ const dotenv = require('dotenv')
 const cors = require('cors')
 
 //llamada a las rutas
-const indexRouter = require('./routes/index')
+const registrosCalidadAireRouter = require('./routes/registrosCalidadAire')
 const signupRouter = require('./routes/signup')
 const loginRouter = require('./routes/login')
 const profileRouter = require('./routes/profile')
@@ -30,7 +30,7 @@ app.use(express.urlencoded({extended:true}))
 app.use(cors());
 
 //Señalización de rutas
-app.use(indexRouter)
+app.use(registrosCalidadAireRouter)
 app.use(signupRouter)
 app.use(loginRouter)
 app.use(profileRouter)

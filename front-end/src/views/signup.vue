@@ -21,7 +21,7 @@
             </div>
         </div>
 
-        <div class="window" @submit.prevent="signup">
+        <div class="window form" @submit.prevent="signup">
             <h1>SIGNUP</h1>
             <label class="label label-default" for="nombre">
                 Nombre*
@@ -67,7 +67,7 @@
                 Contraseña*
             </label>
             <input type="password" id="contraseña" class="form-control" v-model="contraseña"> 
-            <button type="submit" :disabled="authenticathing" class="btn btn-success">
+            <button type="button" :disabled="authenticathing" class="btn btn-success" @click="signup">
                 registro
             </button>
         </div>
@@ -119,6 +119,7 @@
                 responseSignupControl,
 
                 signup: () => {
+
                      signup(
                         usuario.value,  
                         mail.value,

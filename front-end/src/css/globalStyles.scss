@@ -16,38 +16,40 @@ $light-color:rgb(235,247,253);
 .window{
     background-color: $light-color;
     padding: 30px;
-    box-shadow: 0px 0px 38px -5px rgba(0,0,0,0.45);
-    border-radius: 10px;
+    box-shadow: 0px 0px 40px -5px rgba(0,0,0,0.5);
+    border-radius: 20px;
 
-    display: grid;
-    grid-template-columns: 48% 50%;
-    grid-column-gap: 2%;
-    grid-template-rows: auto;
+    &.form{
 
-    h1{
-        grid-column: 1/3;
-        text-align: center;
-        padding: 10px;
-    }
+        display: grid;
+        grid-template-columns: 48% 50%;
+        grid-column-gap: 2%;
+        grid-template-rows: auto;
 
-    label{
-        grid-column: 1;
-        align-self: center;
-        padding-left: 20px;
-        margin-bottom: 20px;
-    }
-
-    input, select{
-        grid-column: 2;
-        margin-bottom: 20px;
-        padding: 4px;
-    }
-
-    button{
-        grid-column: 1/3;
-        margin-left: 40px;
-        margin-right: 40px;
-        margin-bottom: 15px;
+        h1{
+            grid-column: 1/3;
+            text-align: center;
+            padding-bottom: 10px;
+        }
+    
+        label{
+            grid-column: 1;
+            align-self: center;
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+    
+        input, select{
+            align-self: center;
+            grid-column: 2;
+            margin-bottom: 20px;
+            padding: 4px;
+        }
+    
+        button{
+            grid-column: 1/3;
+            margin: 10px 40px 9px 40px;
+        }
     }
 }
 

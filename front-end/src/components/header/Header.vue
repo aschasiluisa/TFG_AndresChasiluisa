@@ -19,7 +19,7 @@
         <router-link to="/visorLaPalma/login" class="headerLink" v-show="!userAuthenticated && noIsCurrentRoute(`/visorLaPalma/login`)"> Login</router-link> 
         <router-link to="/visorLaPalma/signup" class="headerLink" v-show="!userAuthenticated && noIsCurrentRoute(`/visorLaPalma/signup`)"> Signup</router-link> 
         <router-link to="/visorLaPalma/profile" class="headerLink" v-show="userAuthenticated && noIsCurrentRoute(`/visorLaPalma/profile`) && noSuperAdmin"> Profile</router-link>
-        <p @click="logout" style="margin-top: 5.5%;" class="headerLink" v-show="userAuthenticated">Logout</p>
+        <router-link to="/visorLaPalma/login" @click="logout" class="headerLink" v-show="userAuthenticated">Logout</router-link>
     </nav>
   </header>
 </template>
@@ -33,6 +33,7 @@
       background-color: $primary-color;
       display: grid;
       grid-template-columns: 20% 60% 20%;
+      align-items: center;
   }
 
   .selectorIdioma{

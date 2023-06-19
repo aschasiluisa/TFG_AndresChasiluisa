@@ -48,7 +48,6 @@ const mutations: MutationTree<AuthenticationState> = {
     clearAuthResponse(state){
         state.authResponse = undefined;
     }
-
 }
 
 export default mutations

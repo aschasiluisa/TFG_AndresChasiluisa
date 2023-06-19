@@ -16,13 +16,13 @@
     height: 98%;
     width: 98%;
     align-self: center;
-    border-radius: 10px;
+    border-radius: 20px;
   }
 
   .ContenedorMapa {
     margin-left: 20%;
     grid-column: 1;
-    border-radius: 10px;
+    border-radius: 20px;
     box-shadow: 0px 0px 38px -5px rgba(0,0,0,0.45);
     display: flex;
     justify-content: center;

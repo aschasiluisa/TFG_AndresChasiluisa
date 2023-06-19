@@ -12,8 +12,8 @@
             </div>
         </div>
 
-        <div class="window" v-show="!showClientInfo">
-            <h1>Super Admin Control</h1>
+        <div class="window super" v-show="!showClientInfo">
+            <h2>Super Admin Control</h2>
 
             <label class="label label-default" for="usuario">
                 Usuario a modificar:
@@ -25,18 +25,15 @@
             </button>
         </div>
 
-        <div class="window" v-show="showClientInfo">
-            <h1>{{ clienteUsuario }}</h1>
-            <p><strong>Nombre</strong> : {{ clienteNombre }}</p>
-            <p><strong>Apellido</strong> : {{ clienteApellido }}</p>
-            <p><strong>Municipio</strong> : {{ clienteMunicipio }}</p>
-            <p><strong>Mail</strong> : {{ clienteMail }}</p>
-            <p><strong>Rol</strong> : {{ clienteRol }}</p>
-            <p>
-                <ins style="color:darkorange; cursor:pointer" @click="changeRole">cambiar rol</ins>
-                 &nbsp; | &nbsp; 
-                <del style="color:red; cursor:pointer;" @click="deleteUser">{{ clienteUsuario }}</del>
-            </p>
+        <div class="window userInfo" v-show="showClientInfo">
+            <h2>{{ clienteUsuario }}</h2>
+            <p><strong>Nombre:</strong>         {{ clienteNombre }}</p>
+            <p><strong>Apellido: </strong>       {{ clienteApellido }}</p>
+            <p><strong>Municipio: </strong>      {{ clienteMunicipio }}</p>
+            <p><strong>Mail: </strong>           {{ clienteMail }}</p>
+            <div><strong>Rol: </strong>            {{ clienteRol }}</div>
+            <ins style="color:darkorange; cursor:pointer" @click="changeRole">cambiar rol</ins> 
+            <del style="color:red; cursor:pointer;" @click="deleteUser">{{ clienteUsuario }}</del>
             <button type="button" class="btn btn-danger" @click="cambiarMode">Volver</button>
         </div>
     </div>
@@ -136,4 +133,80 @@
 
 <style lang="scss" scoped>
     @import "@/css/globalStyles.scss";
+
+    .window{
+
+        &.super{
+            display: grid;
+            grid-template-columns: 48% 50%;
+            grid-column-gap: 2%;
+            grid-template-rows: auto;
+
+            h2 {
+                grid-column: 1/3;
+                text-align: center;
+                white-space: nowrap;
+                padding-bottom: 10px;
+            }
+
+            label{
+                grid-column: 1;
+                align-self: center;
+                padding-left: 20px;
+                margin-bottom: 20px;
+            }
+        
+            input{
+                align-self: center;
+                grid-column: 2;
+                margin-bottom: 20px;
+                padding: 4px;
+                width: 90%;
+            }
+
+            button{
+                grid-column: 1/3;
+                margin: 10px 40px 9px 40px;
+            }
+
+        }
+
+        &.userInfo{
+            display: grid;
+            grid-template-columns: 49% 49%;
+            grid-column-gap: 2%;
+            grid-template-rows: auto;
+
+            h2 {
+                grid-column: 1/3;
+                text-align: center;
+                padding-bottom: 15px;
+                white-space: nowrap;
+            }
+
+            button{
+                grid-column: 1/3;
+                margin: 10px 40px 9px 40px;
+            }
+
+            p{
+                white-space: nowrap;
+                padding: 2px 60px 2px 7px;
+
+                strong{
+                    padding-right: 3px ;
+                }
+            }
+
+            div{
+                grid-column: 1/3;
+                text-align: center;
+            }
+
+            ins , del{
+                text-align: center;
+                padding: 20px 5px 5px 25px;
+            }
+        }
+    }
 </style>

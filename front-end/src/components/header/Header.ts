@@ -27,7 +27,7 @@ export default defineComponent ({
             noSuperAdmin,
             noIsCurrentRoute,
 
-            logout: () => { logout(getUserToken.value); router.push({ name: "Login" }) }
+            logout: () => { logout(getUserToken.value); }
         }
     }
 })
