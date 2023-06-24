@@ -7,6 +7,8 @@ const registrosCalidadAireController = require('../controllers/registrosCalidadA
 //Get de la ruta RAIZ
 registrosCalidadAireRouter.get('/registrosCalidadAire', registrosCalidadAireController.getData)
 
+registrosCalidadAireRouter.get('/registrosCalidadAire/:id', registrosCalidadAireController.getRegistro)
+
 
 //exportasmos la ruta
 module.exports = registrosCalidadAireRouter

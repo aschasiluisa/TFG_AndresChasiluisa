@@ -42,6 +42,22 @@ const userFindError =
     msg : "Failed to find user"
 }
 
+const incidenceFindError = 
+{
+    result : false,
+    msg : "Failed to find incidence"
+}
+
+const coorBboxError = {
+    result : false,
+    msg : "Coordinates outside the bbox",
+}
+
+const imageFormatError = {
+    result : false,
+    msg : "Wrong image file format",
+}
+
 module.exports = {
     serverError,
     usernameError,
@@ -49,5 +65,8 @@ module.exports = {
     emailFormatError,
     loginError,
     tokenError,
-    userFindError
+    userFindError,
+    coorBboxError,
+    imageFormatError,
+    incidenceFindError,
 }

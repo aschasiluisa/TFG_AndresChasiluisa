@@ -3,7 +3,10 @@
 <template>
   <div class="ContenedorMapa">
     <!-- Mapa -->
-    <div id="Mapa"/>
+    <div id="Mapa">
+      <button type="button" class="zoom-home-boton" @click="home"></button>
+    </div>
+
   </div>
 
 </template>
@@ -29,5 +32,20 @@
     height: 95%;
     width: 68%;
     background-color: $light-color;
+  }
+
+  .zoom-home-boton {
+      position: absolute;
+      top: 50px;
+      right: 11px;
+      width: 8px;
+      height: 8px;
+      padding: 14px;
+      background: url(../../../public/casa.png);
+      background-position: center;
+      background-size: contain;
+      background-color: white;
+      z-index: 1000;
+      cursor: pointer;
   }
 </style>

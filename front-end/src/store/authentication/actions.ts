@@ -54,6 +54,8 @@ const actions: ActionTree<AuthenticationState, StateInterface> = {
     },
 
     async signup({commit},  { usuario, mail, contraseña, municipio, nombre, apellido }) {
+
+        commit("setAuthenticating");
         
         let responseControl: responseSignupControl | undefined = undefined;
 
@@ -73,7 +75,6 @@ const actions: ActionTree<AuthenticationState, StateInterface> = {
 
         if(!responseControl){
             try{
-                commit("setAuthenticating");
                 
                 const responseSignup = await authenticationAPI.post('/signup', { usuario, mail, contraseña, municipio, nombre, apellido});
                 

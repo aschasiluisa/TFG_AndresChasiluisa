@@ -43,12 +43,15 @@
           <input type="checkbox" :id="layer.name"  v-model="layersControl[layer.id]" />
           <label :for="layer.name">{{ layer.name }}</label>
         </div>
-        <div v-show="getElementInfoID.layerID == layer.id">
+        <div v-show="getElementInfoID == layer.id">
           <div v-if="layerID == layer.id" class="dropup">
             <button class="btn dropdown-toggle" style="color: rgb(0, 138, 184);" @click="resetLayerID" ></button>
           </div>
           <button v-else class="btn dropdown-toggle" style="color: rgb(0, 138, 184);" @click="layerInfo(layer.id)" ></button>
         </div>
+
+        <button v-if="layer.id != 1 && userAuthenticated" class="btn btn-default" id="goButton1" @click="goCrearIncidencias">+</button>
+
       </tr>
 
       <tr  v-if="layerID == layer.id " class="desplegable">
@@ -124,6 +127,7 @@
 }
 
 .inputLayerMap {
+  position: relative;
   width: 100%;
   border-top: 1px solid $secondary-color;
   background-color: $light-color;
@@ -158,7 +162,7 @@
       content: '';
       position: absolute;
       top: 60%;
-      border-radius: 50%;
+      border-radius: 100%;
     }
     &:before {
       left: 0;
@@ -173,7 +177,7 @@
       left: 3px;
       width: 12px;
       height: 12px;
-      margin: -11.5px 8px 0 ;
+      margin: -11.6px 8.3px 0 ;
       opacity: 0;
       background: $primary-color
     }
@@ -194,4 +198,18 @@
   }
 }
 
+#goButton1{
+  position: absolute;
+  right: 0;
+  margin-right: 10px ;
+  
+  color: $primary-color;
+  border: 1px solid $primary-color;
+  border-radius: 100%;
+
+  font-size: 15px;
+  line-height: 1;
+  padding: 2px 4px; 
+ 
+}
 </style>

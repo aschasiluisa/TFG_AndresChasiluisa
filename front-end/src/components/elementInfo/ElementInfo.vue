@@ -1,38 +1,66 @@
 <script lang="ts" src="./ElementInfo.ts"></script>
 
 <template>
-  <div v-if="getElementInfoID.layerID == 1 && getRegistrosCalidadAire" class="containerCalidadAireInfo">
+  <div v-if="getElementInfoID == 1 && getRegistroInfo" class="containerCalidadAireInfo">
     <h6>
-       Estacion {{ getRegistrosCalidadAire[getElementInfoID.elementID].Nombre }}
+       Estacion {{ getRegistroInfo.Nombre }}
     </h6>
     <p>
         <strong> Fecha: </strong>
-        {{ getRegistrosCalidadAire[getElementInfoID.elementID].Fecha.slice(0, -7) }}
+        {{ getRegistroInfo.Fecha.slice(0, -7) }}
     </p>
     <p>
         <strong> Temperatura: </strong>
-        {{ getRegistrosCalidadAire[getElementInfoID.elementID].Temperatura }}
+        {{ getRegistroInfo.Temperatura }}
     </p>
     <p>
         <strong> Humedad: </strong>
-        {{ getRegistrosCalidadAire[getElementInfoID.elementID].Humedad }}
+        {{ getRegistroInfo.Humedad }}
     </p>
-    <p v-if="getRegistrosCalidadAire[getElementInfoID.elementID].CO != 0 && getRegistrosCalidadAire[getElementInfoID.elementID].CO != 1">
+    <p v-if="getRegistroInfo.CO != 0 && getRegistroInfo.CO != 1">
         <strong> CO: </strong>
-        {{ getRegistrosCalidadAire[getElementInfoID.elementID].CO }}
+        {{ getRegistroInfo.CO }}
     </p>
-    <p v-if="getRegistrosCalidadAire[getElementInfoID.elementID].NO2 != 0 && getRegistrosCalidadAire[getElementInfoID.elementID].NO2 != 1">
+    <p v-if="getRegistroInfo.NO2 != 0 && getRegistroInfo.NO2 != 1">
         <strong> NO2: </strong>
-        {{ getRegistrosCalidadAire[getElementInfoID.elementID].NO2 }}
+        {{ getRegistroInfo.NO2 }}
     </p>
-    <p v-if="getRegistrosCalidadAire[getElementInfoID.elementID].O3 != 0 && getRegistrosCalidadAire[getElementInfoID.elementID].O3 != 1">
+    <p v-if="getRegistroInfo.O3 != 0 && getRegistroInfo.O3 != 1">
         <strong> O3: </strong>
-        {{ getRegistrosCalidadAire[getElementInfoID.elementID].O3 }}
+        {{ getRegistroInfo.O3 }}
     </p>
-    <p v-if="getRegistrosCalidadAire[getElementInfoID.elementID].SO2 != 0 && getRegistrosCalidadAire[getElementInfoID.elementID].SO2 != 1">
+    <p v-if="getRegistroInfo.SO2 != 0 && getRegistroInfo.SO2 != 1">
         <strong> SO2: </strong>
-        {{ getRegistrosCalidadAire[getElementInfoID.elementID].SO2 }}
+        {{ getRegistroInfo.SO2 }}
     </p>
+  </div>
+
+  <div v-if="getElementInfoID == 2 && getRegistroInfo" class="containerIncidenciasInfo">
+    <div>
+        <p>
+            <strong> {{ getRegistroInfo.Nombre }} </strong>
+        </p>
+        <p>
+            <strong> Fecha: </strong>
+            {{ getRegistroInfo.Fecha }}
+        </p>
+        <p>
+            <strong> Tipo: </strong>
+            {{ getRegistroInfo.Tipo }}
+        </p>
+    </div>
+
+    <div class="image-container">
+        <img :src="`data:${getRegistroInfo.Imagen.contentType};base64,${Buffer.from(getRegistroInfo.Imagen.data.data).toString('base64')}`" alt="Imagen" class="img-fluid d-block aumentarImagen" />
+    </div>
+
+    <p v-if="getRegistroInfo.Descripcion">
+        <strong> Descripcion: </strong><br>
+        {{ getRegistroInfo.Descripcion }}
+    </p>
+
+    <button v-if="getRole == 1" id="editRegistro" class="btn btn-success"> Editar Incidencia </button>
+
   </div>
 </template>
 
@@ -43,11 +71,41 @@
         margin-top: 3%;
         display: grid;
         grid-template-columns: 50% 50%;
-        grid-column-gap: 0%;
         white-space: nowrap;
 
         h6{
             grid-column: 1/3;
         }
+    }
+
+    .containerIncidenciasInfo{
+        margin-top: 3%;
+        display: grid;
+        grid-template-columns: 50% 50%;
+
+        p, button {
+            grid-column: 1/3;
+        }
+
+        button {
+            margin: 0px 50px 9px 50px;
+        }
+    }
+
+    .image-container{
+        width: 200px; /* Ancho de la caja en píxeles */
+        height: 200px; /* Alto de la caja en píxeles */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .aumentarImagen:hover{
+        transform: scale(2.5)
+    }
+
+    .aumentarImagen{
+        transition: transform 1s;
+        z-index: 1000;
     }
 </style>

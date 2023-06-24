@@ -8,9 +8,21 @@ const getters: GetterTree<MapState, StateInterface> = {
         return state.registrosCalidadAire ? state.registrosCalidadAire : false ;
     },
 
-    getElementInfoID(state){
-        return state.elementInfoID ? state.elementInfoID : false ;
+    getRegistrosIncidencias(state){
+        return state.registrosIncidencias ? state.registrosIncidencias : false ;
     },
+
+    getRegistroInfo(state){
+        return state.registroInfo ? state.registroInfo : false ;
+    },
+
+    getElementInfoID(state){
+        return state.elementInfoIDlayer ? state.elementInfoIDlayer : false ;
+    },
+
+    getBbox(state){
+        return state.bbox;
+    }
 }
 
 export default getters

@@ -6,9 +6,9 @@ const tokenVerification = require('../middlewares/auth')
 const profileController = require('../controllers/profile')
 
 //Post de la ruta signup
-profileRouter.put('/profile', tokenVerification, profileController.userUpdate)
+profileRouter.put('/profile', tokenVerification.tokenVerification, profileController.userUpdate)
 
-profileRouter.get('/profile', tokenVerification, profileController.getUserInfo)
+profileRouter.get('/profile', tokenVerification.tokenVerification, profileController.getUserInfo)
 
 //exportasmos la ruta
 module.exports = profileRouter

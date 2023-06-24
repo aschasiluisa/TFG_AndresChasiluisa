@@ -22,4 +22,38 @@ let tokenVerification = async (req,res,next)=>{
     }
 }
 
-module.exports = tokenVerification;
+let tokenVerificationNext = async (req,res,next)=>{
+    
+    let token = req.get('token')
+    let correctToken = true;
+    let usuario = "";
+    let rol= "";
+
+    req.body.register = false;
+    
+    jwt.verify(token,process.env.SECRET_JWT_KEY,(error, decoded)=>{
+        if(error){
+            correctToken = false;
+        } else {
+            usuario = decoded.user;
+            rol = decoded.role;
+        }
+    })
+
+    if(correctToken){
+        const DBtoken = await tokens.findOne({Token: token})
+        
+        if(DBtoken && DBtoken.Usuario === usuario){
+            req.body.usuario = usuario;
+            req.body.rol = rol;
+            req.body.register = true;
+        }
+    }
+
+    next()
+}
+
+module.exports = {
+    tokenVerification,
+    tokenVerificationNext
+}

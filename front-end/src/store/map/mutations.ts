@@ -8,6 +8,7 @@ const mutations: MutationTree<MapState> = {
     },
 
     setMapResponse(state, mapResponse){
+        state.sendingData = false;
         state.mapResponse = mapResponse
     },
 
@@ -15,19 +16,30 @@ const mutations: MutationTree<MapState> = {
         state.registrosCalidadAire = registrosCalidadAire;
     },
 
-    resetLayersControl(state){
-        for (var key in state.layersControl) state.layersControl[key] = false;
-        state.elementInfoID = undefined;        
+    setRegistrosIncidencias(state, registrosIncidencias){
+        state.registrosIncidencias = registrosIncidencias;
     },
 
-    setElementInfoID(state, elementInfoID){
-        state.elementInfoID = elementInfoID;
+    resetLayersControl(state){
+        for (var key in state.layersControl) state.layersControl[key] = false;
+        state.elementInfoIDlayer = undefined;
+        state.registrosIncidencias = undefined;
+        state.selectedBaseMap= { id: 1, name: 'OpenStreetMap' };     
     },
 
     resetElementInfoID(state){
-        state.elementInfoID = undefined;
+        state.elementInfoIDlayer = undefined;
     },
 
+    setSendingData(state){
+        state.sendingData = true;
+        state.mapResponse = undefined;
+    },
+
+    setRegistroInfo(state, registroInfo,){
+        state.registroInfo = registroInfo.data;
+        state.elementInfoIDlayer = registroInfo.id;
+    },
 }
 
 export default mutations

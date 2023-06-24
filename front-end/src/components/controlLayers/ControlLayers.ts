@@ -1,5 +1,8 @@
 import { defineComponent, ref,  watch, computed } from "vue";
+import router from '@/router';
+
 import { useMapStore } from "@/composables/useMapStore";
+import { useAuthStore } from "@/composables/useAuthStore"
 import ElementInfo from '../elementInfo/ElementInfo.vue'
 
 export default defineComponent({
@@ -22,10 +25,14 @@ export default defineComponent({
           resetLayersControl,
         } = useMapStore();
 
+        const {
+          userAuthenticated,
+        } = useAuthStore();
+
         resetLayersControl();
 
         watch(getElementInfoID,() => {
-          layerID.value = getElementInfoID.value.layerID;
+          layerID.value = getElementInfoID.value;
         })
     
         return {
@@ -40,6 +47,8 @@ export default defineComponent({
 
           layerID,
 
+          userAuthenticated,
+
           // Método para mostrar u ocultar las opciones de mapas
           toggleMapOptions: () => {
             showMapOptions.value = !showMapOptions.value;
@@ -52,11 +61,14 @@ export default defineComponent({
 
           layerInfo: ( id:number ) => {
             layerID.value = id;
-            console.log(layers)
           },
 
           resetLayerID: () => {
             layerID.value = undefined;
+          },
+
+          goCrearIncidencias: () => {
+            router.push({ name: "CrearIncidencia" });
           },
         };
       },

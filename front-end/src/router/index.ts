@@ -4,6 +4,8 @@ import Error404 from '../views/error404.vue'
 import Login from '../views/login.vue'
 import Signup from '../views/signup.vue'
 import Profile from '../views/profile.vue'
+import CrearIncidencia from '../views/crearIncidencia.vue'
+import EditarIncidencia from '../views/editarIncidencia.vue'
 import SuperAdminControl from '../views/superAdminControl.vue'
 
 import { useAuthStore } from "@/composables/useAuthStore";
@@ -31,7 +33,6 @@ const routes: Array<RouteRecordRaw> = [
   {
     path:'/visorLaPalma/login',
     component: Login,
-    name: 'Login',
     meta:{
       title: 'TFG | Login'
     }
@@ -48,6 +49,26 @@ const routes: Array<RouteRecordRaw> = [
     component: Profile,
     meta:{
       title: 'TFG | Profile',
+      requiresAuth: true,
+      authRol: [0,1]
+    }
+  },
+  {
+    path:'/visorLaPalma/editarIncidencia',
+    component: EditarIncidencia,
+    name: 'EditarIncidencia',
+    meta:{
+      title: 'TFG | Editar incidencia',
+      requiresAuth: true,
+      authRol: [1]
+    }
+  },
+  {
+    path:'/visorLaPalma/crearIncidencia',
+    component: CrearIncidencia,
+    name: 'CrearIncidencia',
+    meta:{
+      title: 'TFG | Crear incidencia',
       requiresAuth: true,
       authRol: [0,1]
     }

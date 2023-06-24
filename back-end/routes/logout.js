@@ -6,7 +6,7 @@ const tokenVerification = require('../middlewares/auth')
 const logoutController = require('../controllers/logout')
 
 //Post de la ruta signup
-logoutRouter.delete('/logout',tokenVerification,logoutController.logout)
+logoutRouter.delete('/logout',tokenVerification.tokenVerification,logoutController.logout)
 
 //exportasmos la ruta
 module.exports = logoutRouter
