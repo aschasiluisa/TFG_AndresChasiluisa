@@ -14,7 +14,7 @@ registrosIncidenciasRouter.post('/registrosIncidencias', tokenVerification.token
 
 registrosIncidenciasRouter.put('/registrosIncidencias', tokenVerification.tokenVerification, registrosIncidenciasController.updateRegistro)
 
-registrosIncidenciasRouter.delete('/registrosIncidencias', tokenVerification.tokenVerification, registrosIncidenciasController.deleteRegistro)
+registrosIncidenciasRouter.delete('/registrosIncidencias/:id', tokenVerification.tokenVerification, registrosIncidenciasController.deleteRegistro)
 
 //exportasmos la ruta
 module.exports = registrosIncidenciasRouter

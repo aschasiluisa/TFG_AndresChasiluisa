@@ -158,7 +158,7 @@ const actions: ActionTree<MapState, StateInterface> = {
         }
     },
 
-    async updateIncidencia({commit}, {token, id, nombre, tipo, coordenadas, imagen, descripcion, bbox}){
+    async updateIncidencia({commit}, {token, id, nombre, tipo, coordenadas, imagen, descripcion, validada, bbox}){
         commit("setSendingData");
 
         let responseControl: responseRegistrosIncidenciasControl | undefined = undefined;
@@ -191,6 +191,7 @@ const actions: ActionTree<MapState, StateInterface> = {
                 formData.append('nombre', nombre)
                 formData.append('tipo', tipo)
                 formData.append('latitud', String(latitud))
+                formData.append('validada', String(validada))
                 formData.append('longitud', String(longitud))
                 if(imagen) formData.append('imagen', imagen);
                 if(descripcion)formData.append('descripcion', descripcion)
@@ -222,13 +223,12 @@ const actions: ActionTree<MapState, StateInterface> = {
 
     },
 
-    async deleteIncidencia({commit}, {token, id}){
+    async deleteIncidencia({commit}, {token, id, validada, nombre}){
         try {
             commit("setSendingData");
-            
             let responseControl: responseRegistrosIncidenciasControl | undefined = undefined;
 
-            const responseDeleteIncidenia = await mapAPI.delete('/registrosIncidencias', {headers: { token, id }})
+            const responseDeleteIncidenia = await mapAPI.delete(`/registrosIncidencias/${id}`, {headers: { token, validada: String(validada), nombre }})
 
             if(responseDeleteIncidenia.data && responseDeleteIncidenia.data.result){
                 responseControl = responseRegistrosIncidenciasControl.ok;

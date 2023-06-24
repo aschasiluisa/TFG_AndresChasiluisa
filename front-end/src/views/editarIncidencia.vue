@@ -52,7 +52,7 @@
             <input class="form-control" type="file" id="imagen" name="imagen" @change="buscarImagen" accept="image/png, image/jpeg, image/jpg">
             
             <label for="exampleFormControlTextarea1" class="form-label">Descripción</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" maxlength="1000" v-model="descripcion" :placeholder= "`${getRegistroInfo.Descripcion}`"></textarea>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" maxlength="1000" v-model="descripcion" :placeholder= "preDescripcion"></textarea>
 
             <button  type="button" :disabled="sendingData" class="btn btn-success" style="margin-top: 6%;" @click="updateUserInfo">Guardar cambios y validar Incidencia</button>
             <button  type="button" :disabled="sendingData" class="btn btn-danger"  @click="deleteIncidencia">Borrar Incidencia</button>
@@ -62,7 +62,7 @@
 
 <script lang="ts">
 
-import { defineComponent, ref,  watch, computed, onMounted } from "vue";
+import { defineComponent, ref,  watch, computed, onMounted, toValue } from "vue";
 import { useMapStore } from "@/composables/useMapStore";
 import { useAuthStore } from "@/composables/useAuthStore";
 import { responseRegistrosIncidenciasControl} from '@/api/mapAPI'
@@ -78,6 +78,7 @@ export default defineComponent({
         const coordenadas = ref();
         let imagen: File | undefined;
         const descripcion = ref();
+        const preDescripcion = ref();
 
         const { 
             getRegistroInfo,
@@ -100,6 +101,10 @@ export default defineComponent({
         watch(mapResponse, () => {
           if(mapResponse.value == responseRegistrosIncidenciasControl.ok) router.push({ name: "VisorLaPalma" })
         })
+
+        if(getRegistroInfo.value.Descripcion){
+            preDescripcion.value = getRegistroInfo.value.Descripcion;
+        }
         
         return {
             nombre,
@@ -107,6 +112,7 @@ export default defineComponent({
             coordenadas,
             descripcion,
 
+            preDescripcion,
             preCoordenadas,
 
             getElementInfoID,
@@ -131,11 +137,11 @@ export default defineComponent({
                 if(!descripcion.value) descripcion.value = getRegistroInfo.value.Descripcion
                 if(!imagen) imagen = undefined
 
-                updateIncidencia(getUserToken.value, getRegistroInfo.value._id, nombre.value, tipo.value, coordenadas.value, imagen, descripcion.value, getBbox.value);
+                updateIncidencia(getUserToken.value, getRegistroInfo.value._id, nombre.value, tipo.value, coordenadas.value, imagen, descripcion.value, getRegistroInfo.value.Validada, getBbox.value);
             },
 
             deleteIncidencia: () => {
-                deleteIncidencia(getUserToken.value, getRegistroInfo.value._id);
+                deleteIncidencia(getUserToken.value, getRegistroInfo.value._id, getRegistroInfo.value.Validada, getRegistroInfo.value.Nombre);
             },        
         }
     },

@@ -1,7 +1,11 @@
 //Importación de los modelos de datos 
 const registrosIncidencias = require('../models/registrosIncidencias')
 const ImagenesDefault = require('../models/imagenesIncidenciasDefault')
+const usuarios = require('../models/usuarios')
 const jsonError = require('../config/errors')
+
+const sendMail =require('../config/mailer')
+
 const moment = require('moment')
 
 const bbox = [28.384151, -18.102722, 28.926439, -17.620697];
@@ -83,7 +87,7 @@ const getRegistro = async (req,res) => {
                     }
 
                 } catch (error) {
-
+                    res.status(200).json(jsonError.serverError)
                 }
 
             } else {
@@ -149,12 +153,40 @@ const postRegistro = async (req, res) => {
 }
 
 const updateRegistro = async (req, res) => {
-    console.log(req.body)
     if(req.body.rol === 1){
         try {
             if( bbox[0] < req.body.latitud || req.body.latitud < bbox[2] || bbox[1] < req.body.longitud || req.body.longitud < bbox[3]){
                 if(req.files){
                     if(allowedTypes.includes(req.files.imagen.mimetype)){
+
+                        if(req.body.validada === "false"){
+                            const usuario = await registrosIncidencias.findById(req.body.id).select('Usuario');
+                            if(usuario.Usuario){
+                                const mail = await usuarios.findOne({Usuario: usuario.Usuario}).select('Mail');
+                                if (mail.Mail){
+                                    sendMail(mail.Mail, "Incidencia validada", 
+                                        `<p>`+
+                                            "Hola,"+`<br> <br>`+
+                                            "su Incidencia ha sido validada como: "+`<br>  &emsp;`+
+                                                `<strong>`+" nombre = "+`</strong>`+req.body.nombre+`<br>  &emsp;`+
+                                                `<strong>`+" tipo = "+`</strong>`+req.body.tipo+`<br>  &emsp;`+
+                                                `<strong>`+"descripcion = "+`</strong>`+req.body.descripcion+`<br> <br>`+
+                                                "gracias por su colaboración. Un saludo,"+`<br> <br>`+
+                                                `<strong>`+"TFG | La Palma"+`</strong>`+
+                                        `</p>`+`<br> <hr> <br>`+
+                                        `<p>`+
+                                            "Hello,"+`<br> <br>`+
+                                            "Your Incident has been validated as: "+`<br>  &emsp;`+
+                                                `<strong>`+" name = "+`</strong>`+req.body.nombre+`<br>  &emsp;`+
+                                                `<strong>`+" type = "+`</strong>`+req.body.tipo+`<br>  &emsp;`+
+                                                `<strong>`+"description = "+`</strong>`+req.body.descripcion+`<br> <br>`+
+                                                "Thank you for your cooperation. All the best,"+`<br> <br>`+
+                                                `<strong>`+"TFG | La Palma"+`</strong>`+
+                                        `</p>`
+                                        )
+                                }
+                            }
+                        }
     
                          await registrosIncidencias.findOneAndUpdate({ _id: req.body.id }, {
                             Nombre : req.body.nombre,
@@ -169,7 +201,7 @@ const updateRegistro = async (req, res) => {
                             Administrador : req.body.usuario,
                             Validada : true,
                         }, { new: true })
-    
+
                         .then (incidencia =>{
                             res.json({
                                 result: true,
@@ -180,6 +212,36 @@ const updateRegistro = async (req, res) => {
                         res.status(200).json(jsonError.imageFormatError)
                     }
                 }  else {
+
+                    if(req.body.validada === "false"){
+                        const usuario = await registrosIncidencias.findById(req.body.id).select('Usuario');
+                        if(usuario.Usuario){
+                            const mail = await usuarios.findOne({Usuario: usuario.Usuario}).select('Mail');
+                            if (mail.Mail){
+                                sendMail(mail.Mail, "Incidencia validada", 
+                                    `<p>`+
+                                        "Hola,"+`<br> <br>`+
+                                        "su Incidencia ha sido validada como: "+`<br>  &emsp;`+
+                                            `<strong>`+" nombre = "+`</strong>`+req.body.nombre+`<br>  &emsp;`+
+                                            `<strong>`+" tipo = "+`</strong>`+req.body.tipo+`<br>  &emsp;`+
+                                            `<strong>`+"descripcion = "+`</strong>`+req.body.descripcion+`<br> <br>`+
+                                            "gracias por su colaboración. Un saludo,"+`<br> <br>`+
+                                            `<strong>`+"TFG | La Palma"+`</strong>`+
+                                    `</p>`+`<br> <hr> <br>`+
+                                    `<p>`+
+                                        "Hello,"+`<br> <br>`+
+                                        "Your Incident has been validated as: "+`<br>  &emsp;`+
+                                            `<strong>`+" name = "+`</strong>`+req.body.nombre+`<br>  &emsp;`+
+                                            `<strong>`+" type = "+`</strong>`+req.body.tipo+`<br>  &emsp;`+
+                                            `<strong>`+"description = "+`</strong>`+req.body.descripcion+`<br> <br>`+
+                                            "Thank you for your cooperation. All the best,"+`<br> <br>`+
+                                            `<strong>`+"TFG | La Palma"+`</strong>`+
+                                    `</p>`
+                                )
+                            }
+                        }
+                    }
+
                     await registrosIncidencias.findOneAndUpdate({ _id: req.body.id }, {
                         Nombre : req.body.nombre,
                         Tipo : req.body.tipo,
@@ -212,17 +274,50 @@ const updateRegistro = async (req, res) => {
 
 const deleteRegistro = async (req, res) => {
     if(req.body.rol === 1){
+        
+        const id = req.params.id;
 
-        console.log(req.get("id"))
-        await registrosIncidencias.findOneAndDelete({ _id: req.get("id") })
-        .catch (error => {
-            res.status(200).json(jsonError.incidenceFindError)
-        })
-    
-        res.json({
-            result: true,
-            msg: "delete Incidence successful"
-        })
+        if(id){
+            try{
+                if(req.get("validada") === "false"){
+                    const usuario = await registrosIncidencias.findById(id).select('Usuario');
+                    if(usuario.Usuario){
+                        const mail = await usuarios.findOne({Usuario: usuario.Usuario}).select('Mail');
+                        if (mail.Mail){
+                            sendMail(mail.Mail, "Propuesta de incidencia rechazada", 
+                                `<p>`+
+                                    "Hola,"+`<br> <br>`+
+                                    "su propuesta de Incidencia con nombre "+ req.get("nombre")+", ha sido rechazada."+`<br> <br>`+
+                                        "gracias por su colaboración. Un saludo,"+`<br> <br>`+
+                                        `<strong>`+"TFG | La Palma"+`</strong>`+
+                                `</p>`+`<br> <hr> <br>`+
+                                `<p>`+
+                                    "Hello,"+`<br> <br>`+
+                                    "your incidence proposal,  "+ req.get("nombre")+" call, has been rejected."+`<br> <br>`+
+                                        "Thank you for your cooperation. All the best,"+`<br> <br>`+
+                                        `<strong>`+"TFG | La Palma"+`</strong>`+
+                                `</p>`
+                            )
+                        }
+                    }
+                }
+        
+                await registrosIncidencias.findOneAndDelete({ _id: id })
+                .catch (error => {
+                    res.status(200).json(jsonError.incidenceFindError)
+                })
+            
+                res.json({
+                    result: true,
+                    msg: "delete Incidence successful"
+                })
+            } catch {
+                res.status(200).json(jsonError.serverError)
+            }
+
+        } else {
+            res.status(200).json(jsonError.serverError)
+        }
     } else {
         return res.status(401).json(jsonError.tokenError)
     }

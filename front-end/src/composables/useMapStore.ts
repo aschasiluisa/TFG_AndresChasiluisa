@@ -45,10 +45,10 @@ export const useMapStore = () => {
         nuevaIncidencia: (token: string, nombre: string, tipo: string, coordenadas: string, imagen: File, descripcion: string, bbox: number[]) => 
         store.dispatch('map/nuevaIncidencia', {token, nombre, tipo, coordenadas, imagen, descripcion, bbox }),
 
-        updateIncidencia: (token: string, id: string, nombre: string, tipo: string, coordenadas: string, imagen: File | undefined, descripcion: string, bbox: number[]) => 
-        store.dispatch('map/updateIncidencia', {token, id, nombre, tipo, coordenadas, imagen, descripcion, bbox }),
+        updateIncidencia: (token: string, id: string, nombre: string, tipo: string, coordenadas: string, imagen: File | undefined, descripcion: string, validada: boolean, bbox: number[]) => 
+        store.dispatch('map/updateIncidencia', {token, id, nombre, tipo, coordenadas, imagen, descripcion, validada, bbox }),
 
-        deleteIncidencia: (token: string, id: string) => store.dispatch('map/deleteIncidencia', { token, id}),
+        deleteIncidencia: (token: string, id: string, validada: boolean, nombre: string) => store.dispatch('map/deleteIncidencia', { token, id, validada, nombre}),
 
         //  MUTATIONS //
         setBaseMap: (map: { id: number, name: string }) => store.commit('map/setBaseMap', map),
