@@ -1,8 +1,10 @@
 //Importación de los modelos de datos 
 const registrosIncidencias = require('../models/registrosIncidencias')
+const registrosAlarmas = require('../models/registrosAlarmas')
 const ImagenesDefault = require('../models/imagenesIncidenciasDefault')
 const usuarios = require('../models/usuarios')
 const jsonError = require('../config/errors')
+const calcularDistancia = require('./calcularDistancia')
 
 const sendMail =require('../config/mailer')
 
@@ -30,6 +32,7 @@ const getData = async (req,res) => {
                 res.status(200).json(jsonError.serverError)
             }
         } 
+        
         if(req.body.rol == 1){
             try{
                 registros = await registrosIncidencias.find().select('_id Latitud Longitud Validada');
@@ -132,8 +135,76 @@ const postRegistro = async (req, res) => {
             }
  
             if(req.body.rol == 1){
+
                 nuevaIncidencia.Administrador = req.body.usuario;
                 nuevaIncidencia.Validada = true;
+
+                try{
+                    Alarmas = await registrosAlarmas.find().select('_id Nombre Rango Latitud Longitud Usuario');
+    
+                } catch {
+                    res.status(200).json(jsonError.serverError)
+                }
+    
+                const puntoIncidencia = {
+                    latitud: req.body.latitud,
+                    longitud: req.body.longitud
+                };
+    
+                let alarmasActivadas = [];
+    
+                Alarmas.forEach((alarma) => {
+                    const distancia = calcularDistancia(puntoIncidencia.latitud, puntoIncidencia.longitud, alarma.Latitud, alarma.Longitud);
+
+                    if (distancia < alarma.Rango) {
+                        alarmasActivadas.push({
+                          id: alarma._id,
+                          nombre: alarma.Nombre,
+                          usuario: alarma.Usuario,
+                          distancia: parseInt(distancia)
+                        });
+                    }
+                });
+    
+                if(alarmasActivadas.length != 0){
+                    for (let i = 0; i < alarmasActivadas.length; i++) {
+
+                        const mail = await usuarios.findOne({Usuario: alarmasActivadas[i].usuario}).select('Mail');
+                        if (mail.Mail){
+                            sendMail(mail.Mail, "Alerta!!! incidencdia detectada", 
+                            `<p>`+
+                                "Hola,"+`<br> <br>`+
+                                "Su alerta con nombre "+alarmasActivadas[i].nombre+" ha sido activada por una incidencia a "+alarmasActivadas[i].distancia+" m, con los siguientes datos:"+`<br>  &emsp;`+
+                                    `<strong>`+" nombre = "+`</strong>`+req.body.nombre+`<br>  &emsp;`+
+                                    `<strong>`+" tipo = "+`</strong>`+req.body.tipo+`<br>  &emsp;`+
+                                    `<strong>`+"descripcion = "+`</strong>`+req.body.descripcion+`<br> <br>`+
+                                    "gracias por su colaboración. Un saludo,"+`<br> <br>`+
+                                    `<strong>`+"TFG | La Palma"+`</strong>`+
+                            `</p>`+`<br> <hr> <br>`+
+                            `<p>`+
+                                "Hello,"+`<br> <br>`+
+                                "Your alert "+alarmasActivadas[i].nombre+" was activated by a incedence "+alarmasActivadas[i].distancia+" m away, with the following data:"+`<br>  &emsp;`+
+                                    `<strong>`+" name = "+`</strong>`+req.body.nombre+`<br>  &emsp;`+
+                                    `<strong>`+" type = "+`</strong>`+req.body.tipo+`<br>  &emsp;`+
+                                    `<strong>`+"description = "+`</strong>`+req.body.descripcion+`<br> <br>`+
+                                    "Thank you for your cooperation. All the best,"+`<br> <br>`+
+                                    `<strong>`+"TFG | La Palma"+`</strong>`+
+                            `</p>`
+                            )
+                        }
+
+                        try {
+
+                            await registrosAlarmas.findOneAndUpdate({_id: alarmasActivadas[i].id},{
+                                Activada: true,
+                            }, { new: true })
+
+                        } catch {
+                            res.status(200).json(jsonError.serverError)
+                        }
+                    }
+                }
+
             }
     
             await nuevaIncidencia.save()
@@ -185,6 +256,72 @@ const updateRegistro = async (req, res) => {
                                         `</p>`
                                         )
                                 }
+                            }
+                        }
+
+                        try{
+                            Alarmas = await registrosAlarmas.find().select('_id Nombre Rango Latitud Longitud Usuario');
+                        } catch {
+                            res.status(200).json(jsonError.serverError)
+                        }
+            
+                        const puntoIncidencia = {
+                            latitud: req.body.latitud,
+                            longitud: req.body.longitud
+                        };
+            
+                        let alarmasActivadas = [];
+            
+                        Alarmas.forEach((alarma) => {
+                            const distancia = calcularDistancia(puntoIncidencia.latitud, puntoIncidencia.longitud, alarma.Latitud, alarma.Longitud);
+        
+                            if (distancia < alarma.Rango) {
+                                alarmasActivadas.push({
+                                  id: alarma._id,
+                                  nombre: alarma.Nombre,
+                                  usuario: alarma.Usuario,
+                                  distancia: parseInt(distancia)
+                                });
+                            }
+                        });
+            
+                        if(alarmasActivadas.length != 0){
+                            for (let i = 0; i < alarmasActivadas.length; i++) {
+        
+                                const mail = await usuarios.findOne({Usuario: alarmasActivadas[i].usuario}).select('Mail');
+                                if (mail.Mail){
+                                    sendMail(mail.Mail, "Alerta!!! incidencdia detectada", 
+                                    `<p>`+
+                                        "Hola,"+`<br> <br>`+
+                                        "Su alerta con nombre "+alarmasActivadas[i].nombre+" ha sido activada por una incidencia a "+alarmasActivadas[i].distancia+" m, con los siguientes datos:"+`<br>  &emsp;`+
+                                            `<strong>`+" nombre = "+`</strong>`+req.body.nombre+`<br>  &emsp;`+
+                                            `<strong>`+" tipo = "+`</strong>`+req.body.tipo+`<br>  &emsp;`+
+                                            `<strong>`+"descripcion = "+`</strong>`+req.body.descripcion+`<br> <br>`+
+                                            "gracias por su colaboración. Un saludo,"+`<br> <br>`+
+                                            `<strong>`+"TFG | La Palma"+`</strong>`+
+                                    `</p>`+`<br> <hr> <br>`+
+                                    `<p>`+
+                                        "Hello,"+`<br> <br>`+
+                                        "Your alert "+alarmasActivadas[i].nombre+" was activated by a incedence "+alarmasActivadas[i].distancia+" m away, with the following data:"+`<br>  &emsp;`+
+                                            `<strong>`+" name = "+`</strong>`+req.body.nombre+`<br>  &emsp;`+
+                                            `<strong>`+" type = "+`</strong>`+req.body.tipo+`<br>  &emsp;`+
+                                            `<strong>`+"description = "+`</strong>`+req.body.descripcion+`<br> <br>`+
+                                            "Thank you for your cooperation. All the best,"+`<br> <br>`+
+                                            `<strong>`+"TFG | La Palma"+`</strong>`+
+                                    `</p>`
+                                    )
+                                }
+        
+                                try {
+        
+                                    await registrosAlarmas.findOneAndUpdate({_id: alarmasActivadas[i].id},{
+                                        Activada: true,
+                                    }, { new: true })
+        
+                                } catch {
+                                    res.status(200).json(jsonError.serverError)
+                                }
+        
                             }
                         }
     
@@ -239,6 +376,72 @@ const updateRegistro = async (req, res) => {
                                     `</p>`
                                 )
                             }
+                        }
+                    }
+
+                    try{
+                        Alarmas = await registrosAlarmas.find().select('_id Nombre Rango Latitud Longitud Usuario');
+                    } catch {
+                        res.status(200).json(jsonError.serverError)
+                    }
+        
+                    const puntoIncidencia = {
+                        latitud: req.body.latitud,
+                        longitud: req.body.longitud
+                    };
+        
+                    let alarmasActivadas = [];
+        
+                    Alarmas.forEach((alarma) => {
+                        const distancia = calcularDistancia(puntoIncidencia.latitud, puntoIncidencia.longitud, alarma.Latitud, alarma.Longitud);
+    
+                        if (distancia < alarma.Rango) {
+                            alarmasActivadas.push({
+                              id: alarma._id,
+                              nombre: alarma.Nombre,
+                              usuario: alarma.Usuario,
+                              distancia: parseInt(distancia)
+                            });
+                        }
+                    });
+        
+                    if(alarmasActivadas.length != 0){
+                        for (let i = 0; i < alarmasActivadas.length; i++) {
+    
+                            const mail = await usuarios.findOne({Usuario: alarmasActivadas[i].usuario}).select('Mail');
+                            if (mail.Mail){
+                                sendMail(mail.Mail, "Alerta!!! incidencdia detectada", 
+                                `<p>`+
+                                    "Hola,"+`<br> <br>`+
+                                    "Su alerta con nombre "+alarmasActivadas[i].nombre+" ha sido activada por una incidencia a "+alarmasActivadas[i].distancia+" m, con los siguientes datos:"+`<br>  &emsp;`+
+                                        `<strong>`+" nombre = "+`</strong>`+req.body.nombre+`<br>  &emsp;`+
+                                        `<strong>`+" tipo = "+`</strong>`+req.body.tipo+`<br>  &emsp;`+
+                                        `<strong>`+"descripcion = "+`</strong>`+req.body.descripcion+`<br> <br>`+
+                                        "gracias por su colaboración. Un saludo,"+`<br> <br>`+
+                                        `<strong>`+"TFG | La Palma"+`</strong>`+
+                                `</p>`+`<br> <hr> <br>`+
+                                `<p>`+
+                                    "Hello,"+`<br> <br>`+
+                                    "Your alert "+alarmasActivadas[i].nombre+" was activated by a incedence "+alarmasActivadas[i].distancia+" m away, with the following data:"+`<br>  &emsp;`+
+                                        `<strong>`+" name = "+`</strong>`+req.body.nombre+`<br>  &emsp;`+
+                                        `<strong>`+" type = "+`</strong>`+req.body.tipo+`<br>  &emsp;`+
+                                        `<strong>`+"description = "+`</strong>`+req.body.descripcion+`<br> <br>`+
+                                        "Thank you for your cooperation. All the best,"+`<br> <br>`+
+                                        `<strong>`+"TFG | La Palma"+`</strong>`+
+                                `</p>`
+                                )
+                            }
+    
+                            try {
+    
+                                await registrosAlarmas.findOneAndUpdate({_id: alarmasActivadas[i].id},{
+                                    Activada: true,
+                                }, { new: true })
+    
+                            } catch {
+                                res.status(200).json(jsonError.serverError)
+                            }
+    
                         }
                     }
 

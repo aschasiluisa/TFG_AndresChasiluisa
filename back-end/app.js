@@ -15,6 +15,7 @@ const profileRouter = require('./routes/profile')
 const logoutRouter = require('./routes/logout')
 const superAdminControlRouter = require('./routes/superAdminControl')
 const registrosIncidenciasRouter = require('./routes/registrosIncidencias')
+const registrosAlarmasRouter = require('./routes/registrosAlarmas')
 
 //llamada a la conexión de base de datos Mongo
 const initMongo = require('./config/db');
@@ -43,6 +44,7 @@ app.use(profileRouter)
 app.use(logoutRouter)
 app.use(superAdminControlRouter)
 app.use(registrosIncidenciasRouter)
+app.use(registrosAlarmasRouter)
 
 //se conecta con la base de datos Mongo
 initMongo()

@@ -48,6 +48,12 @@ const incidenceFindError =
     msg : "Failed to find incidence"
 }
 
+const alarmFindError = 
+{
+    result : false,
+    msg : "Failed to find incidence"
+}
+
 const coorBboxError = {
     result : false,
     msg : "Coordinates outside the bbox",
@@ -69,4 +75,5 @@ module.exports = {
     coorBboxError,
     imageFormatError,
     incidenceFindError,
+    alarmFindError,
 }
