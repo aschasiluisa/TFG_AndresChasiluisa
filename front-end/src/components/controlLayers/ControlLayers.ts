@@ -70,6 +70,10 @@ export default defineComponent({
           goCrearIncidencias: () => {
             router.push({ name: "CrearIncidencia" });
           },
+
+          goCrearAlarmas: () => {
+            router.push({ name: "CrearAlarma" });
+          },
         };
       },
 });

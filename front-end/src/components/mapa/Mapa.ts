@@ -15,6 +15,7 @@ export default defineComponent({
         const currentBaseMap = ref(1);
         const RegistrosCalidadAire = L.layerGroup();
         const RegistrosIncidencias = L.layerGroup();
+        const RegistrosAlarmas = L.layerGroup();
         const home = ref(false);
 
         const { 
@@ -23,12 +24,15 @@ export default defineComponent({
             layersControl,
             getRegistrosCalidadAire,
             getRegistrosIncidencias,
+            getRegistrosAlarmas,
             getElementInfoID,
             getBbox,
             registrosCalidadAire,
             registroCalidadAireInfo,
             registrosIncidencias,
             registroIncidenciaInfo,
+            registrosAlarmas,
+            registroAlarmaInfo,
             resetElementInfoID,
         } = useMapStore();
 
@@ -60,7 +64,7 @@ export default defineComponent({
         });
 
         
-        const localizacionIncidenciasVer = new L.Icon({
+        const localizacionIncidenciasVal = new L.Icon({
             iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-black.png',
             shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
             iconSize: [25, 41],
@@ -72,6 +76,24 @@ export default defineComponent({
         
         const localizacionIncidencias = new L.Icon({
             iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-grey.png',
+            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41]
+        });
+
+        const localizacionAlarmas = new L.Icon({
+            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-yellow.png',
+            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41]
+        });
+
+        const localizacionAlarmasAct = new L.Icon({
+            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png',
             shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
             iconSize: [25, 41],
             iconAnchor: [12, 41],
@@ -137,8 +159,7 @@ export default defineComponent({
                 document.execCommand('copy');
                 document.body.removeChild(textarea);
               });
-
-          });
+        });
 
 
         if (mapa.hasLayer(baseMapsConnections.value[currentBaseMap.value])) {
@@ -193,7 +214,7 @@ export default defineComponent({
                         let marker: L.Marker;
 
                         if(getRegistrosIncidencias.value[i].Validada){
-                            marker =L.marker([getRegistrosIncidencias.value[i].Latitud,getRegistrosIncidencias.value[i].Longitud], {icon: localizacionIncidenciasVer}).addTo(RegistrosIncidencias);
+                            marker =L.marker([getRegistrosIncidencias.value[i].Latitud,getRegistrosIncidencias.value[i].Longitud], {icon: localizacionIncidenciasVal}).addTo(RegistrosIncidencias);
                         } else {
                             marker =L.marker([getRegistrosIncidencias.value[i].Latitud,getRegistrosIncidencias.value[i].Longitud], {icon: localizacionIncidencias}).addTo(RegistrosIncidencias);
                         }
@@ -214,6 +235,45 @@ export default defineComponent({
             } else {
                 mapa.removeLayer(RegistrosIncidencias);
                 if(getElementInfoID.value == 2){
+                    resetElementInfoID();
+                }
+            }
+
+            if (layersControl.value[3]){
+
+                if(!getRegistrosAlarmas.value){
+                    mapa.removeLayer(RegistrosAlarmas);
+                    RegistrosAlarmas.clearLayers();
+                    await registrosAlarmas(getUserToken.value); 
+                }
+
+                if(RegistrosAlarmas.getLayers().length == 0){
+                    for (let i = 0; i < getRegistrosAlarmas.value.length; i++){
+
+                        let marker: L.Marker;
+
+                        if(getRegistrosAlarmas.value[i].Activada){
+                            marker =L.marker([getRegistrosAlarmas.value[i].Latitud,getRegistrosAlarmas.value[i].Longitud], {icon: localizacionAlarmasAct}).addTo(RegistrosAlarmas);
+                        } else {
+                            marker =L.marker([getRegistrosAlarmas.value[i].Latitud,getRegistrosAlarmas.value[i].Longitud], {icon: localizacionAlarmas}).addTo(RegistrosAlarmas);
+                        }
+
+                        marker.on('click', async function() {
+                            // Obtenemos las coordenadas del marcador
+                            const latlng = marker.getLatLng()
+                            await registroAlarmaInfo(getUserToken.value, getRegistrosAlarmas.value[i]._id)
+                            // Hacemos un flyTo hacia las coordenadas del marcador con una duración de 2 segundo y un zoom de 16
+                            mapa.flyTo(latlng, 16, {
+                              duration: 2,
+                            });
+                          });
+                    }
+                }
+                
+                RegistrosAlarmas.addTo(mapa);
+            } else {
+                mapa.removeLayer(RegistrosAlarmas);
+                if(getElementInfoID.value == 3){
                     resetElementInfoID();
                 }
             }

@@ -19,11 +19,16 @@ const mutations: MutationTree<MapState> = {
     setRegistrosIncidencias(state, registrosIncidencias){
         state.registrosIncidencias = registrosIncidencias;
     },
+    
+    setRegistrosAlarmas(state, registrosAlarmas){
+        state.registrosAlarmas = registrosAlarmas;
+    },
 
     resetLayersControl(state){
         for (var key in state.layersControl) state.layersControl[key] = false;
         state.elementInfoIDlayer = undefined;
         state.registrosIncidencias = undefined;
+        state.registrosAlarmas = undefined;
         state.selectedBaseMap= { id: 1, name: 'OpenStreetMap' };     
     },
 
@@ -40,6 +45,17 @@ const mutations: MutationTree<MapState> = {
         state.registroInfo = registroInfo.data;
         state.elementInfoIDlayer = registroInfo.id;
     },
+
+    clearMapResponse(state){
+        state.mapResponse = undefined;
+    },
+
+    resetregistrosAlarmas(state){
+        state.layersControl[3] = false
+        state.registrosAlarmas = undefined;
+        state.registroInfo = undefined;
+        state.elementInfoIDlayer = undefined;
+    }
 }
 
 export default mutations

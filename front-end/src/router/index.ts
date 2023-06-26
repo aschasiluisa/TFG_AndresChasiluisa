@@ -5,10 +5,12 @@ import Login from '../views/login.vue'
 import Signup from '../views/signup.vue'
 import Profile from '../views/profile.vue'
 import CrearIncidencia from '../views/crearIncidencia.vue'
+import CrearAlarma from '../views/crearAlarma.vue'
 import EditarIncidencia from '../views/editarIncidencia.vue'
 import SuperAdminControl from '../views/superAdminControl.vue'
 
 import { useAuthStore } from "@/composables/useAuthStore";
+import { useMapStore } from "@/composables/useMapStore";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -74,6 +76,16 @@ const routes: Array<RouteRecordRaw> = [
     }
   },
   {
+    path:'/visorLaPalma/crearAlarma',
+    component: CrearAlarma,
+    name: 'CrearAlarma',
+    meta:{
+      title: 'TFG | Crear alarma',
+      requiresAuth: true,
+      authRol: [0,1]
+    }
+  },
+  {
     path:'/visorLaPalma/superAdminControl',
     component: SuperAdminControl,
     name: 'SuperAdminControl',
@@ -97,7 +109,13 @@ router.beforeEach((to, from, next)=>{
     userAuthenticated,
   } = useAuthStore();
 
+  const {
+    clearMapResponse
+  } = useMapStore();
+
   clearAuthResponse();
+
+  clearMapResponse();
 
   if(to.meta.requiresAuth){
     if (userAuthenticated){

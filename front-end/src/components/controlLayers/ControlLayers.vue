@@ -37,7 +37,7 @@
     
     <div v-for="layer in layers" :key="layer.id">
 
-      <tr class="inputLayerMap">
+      <tr v-if="layer.id != 3 || userAuthenticated" class="inputLayerMap">
 
         <div class="styled-input-single">
           <input type="checkbox" :id="layer.name"  v-model="layersControl[layer.id]" />
@@ -50,14 +50,13 @@
           <button v-else class="btn dropdown-toggle" style="color: rgb(0, 138, 184);" @click="layerInfo(layer.id)" ></button>
         </div>
 
-        <button v-if="layer.id != 1 && userAuthenticated" class="btn btn-default" id="goButton1" @click="goCrearIncidencias">+</button>
+        <button v-if="layer.id == 2 && userAuthenticated" class="btn btn-default" id="goButton1" @click="goCrearIncidencias">+</button>
+        <button v-if="layer.id == 3 && userAuthenticated" class="btn btn-default" id="goButton1" @click="goCrearAlarmas">+</button>
 
       </tr>
 
       <tr  v-if="layerID == layer.id " class="desplegable">
-        <div>
           <ElementInfo/>
-        </div>
       </tr>
 
     </div>

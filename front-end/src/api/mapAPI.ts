@@ -15,6 +15,16 @@ export enum responseRegistrosIncidenciasControl{
     ok = "Ok response"
 }
 
+export enum responseRegistrosAlarmasControl{
+    serverError = "Server Error",
+    emptyFieldError = "Mandatory Field empty",
+    coorBboxError = "Coordinates outside the bbox",
+    coorFormatError = "Wrong coordinates text format",
+    rangoError = "Wrong rango value error",
+    alarmFindError = "Failed to find alarm",
+    ok = "Ok response"
+}
+
 export const mapAPI = axios.create({
     baseURL: process.env.VUE_APP_SERVIDOR_URL,
 })

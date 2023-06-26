@@ -41,7 +41,7 @@
       width: 8px;
       height: 8px;
       padding: 14px;
-      background: url(../../../public/casa.png);
+      background: url(../../../public/imagenes/casa.png);
       background-position: center;
       background-size: contain;
       background-color: white;

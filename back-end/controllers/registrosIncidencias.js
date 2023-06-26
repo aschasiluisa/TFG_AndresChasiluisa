@@ -2,11 +2,10 @@
 const registrosIncidencias = require('../models/registrosIncidencias')
 const registrosAlarmas = require('../models/registrosAlarmas')
 const ImagenesDefault = require('../models/imagenesIncidenciasDefault')
-const usuarios = require('../models/usuarios')
 const jsonError = require('../config/errors')
 const calcularDistancia = require('./calcularDistancia')
 
-const sendMail =require('../config/mailer')
+const mailer =require('../config/mailer')
 
 const moment = require('moment')
 
@@ -169,29 +168,7 @@ const postRegistro = async (req, res) => {
                 if(alarmasActivadas.length != 0){
                     for (let i = 0; i < alarmasActivadas.length; i++) {
 
-                        const mail = await usuarios.findOne({Usuario: alarmasActivadas[i].usuario}).select('Mail');
-                        if (mail.Mail){
-                            sendMail(mail.Mail, "Alerta!!! incidencdia detectada", 
-                            `<p>`+
-                                "Hola,"+`<br> <br>`+
-                                "Su alerta con nombre "+alarmasActivadas[i].nombre+" ha sido activada por una incidencia a "+alarmasActivadas[i].distancia+" m, con los siguientes datos:"+`<br>  &emsp;`+
-                                    `<strong>`+" nombre = "+`</strong>`+req.body.nombre+`<br>  &emsp;`+
-                                    `<strong>`+" tipo = "+`</strong>`+req.body.tipo+`<br>  &emsp;`+
-                                    `<strong>`+"descripcion = "+`</strong>`+req.body.descripcion+`<br> <br>`+
-                                    "gracias por su colaboración. Un saludo,"+`<br> <br>`+
-                                    `<strong>`+"TFG | La Palma"+`</strong>`+
-                            `</p>`+`<br> <hr> <br>`+
-                            `<p>`+
-                                "Hello,"+`<br> <br>`+
-                                "Your alert "+alarmasActivadas[i].nombre+" was activated by a incedence "+alarmasActivadas[i].distancia+" m away, with the following data:"+`<br>  &emsp;`+
-                                    `<strong>`+" name = "+`</strong>`+req.body.nombre+`<br>  &emsp;`+
-                                    `<strong>`+" type = "+`</strong>`+req.body.tipo+`<br>  &emsp;`+
-                                    `<strong>`+"description = "+`</strong>`+req.body.descripcion+`<br> <br>`+
-                                    "Thank you for your cooperation. All the best,"+`<br> <br>`+
-                                    `<strong>`+"TFG | La Palma"+`</strong>`+
-                            `</p>`
-                            )
-                        }
+                        mailer.alarmaActivada_v2(alarmasActivadas[i], req.body);
 
                         try {
 
@@ -204,7 +181,6 @@ const postRegistro = async (req, res) => {
                         }
                     }
                 }
-
             }
     
             await nuevaIncidencia.save()
@@ -231,32 +207,7 @@ const updateRegistro = async (req, res) => {
                     if(allowedTypes.includes(req.files.imagen.mimetype)){
 
                         if(req.body.validada === "false"){
-                            const usuario = await registrosIncidencias.findById(req.body.id).select('Usuario');
-                            if(usuario.Usuario){
-                                const mail = await usuarios.findOne({Usuario: usuario.Usuario}).select('Mail');
-                                if (mail.Mail){
-                                    sendMail(mail.Mail, "Incidencia validada", 
-                                        `<p>`+
-                                            "Hola,"+`<br> <br>`+
-                                            "su Incidencia ha sido validada como: "+`<br>  &emsp;`+
-                                                `<strong>`+" nombre = "+`</strong>`+req.body.nombre+`<br>  &emsp;`+
-                                                `<strong>`+" tipo = "+`</strong>`+req.body.tipo+`<br>  &emsp;`+
-                                                `<strong>`+"descripcion = "+`</strong>`+req.body.descripcion+`<br> <br>`+
-                                                "gracias por su colaboración. Un saludo,"+`<br> <br>`+
-                                                `<strong>`+"TFG | La Palma"+`</strong>`+
-                                        `</p>`+`<br> <hr> <br>`+
-                                        `<p>`+
-                                            "Hello,"+`<br> <br>`+
-                                            "Your Incident has been validated as: "+`<br>  &emsp;`+
-                                                `<strong>`+" name = "+`</strong>`+req.body.nombre+`<br>  &emsp;`+
-                                                `<strong>`+" type = "+`</strong>`+req.body.tipo+`<br>  &emsp;`+
-                                                `<strong>`+"description = "+`</strong>`+req.body.descripcion+`<br> <br>`+
-                                                "Thank you for your cooperation. All the best,"+`<br> <br>`+
-                                                `<strong>`+"TFG | La Palma"+`</strong>`+
-                                        `</p>`
-                                        )
-                                }
-                            }
+                            mailer.incidenciaValidada(req.body);
                         }
 
                         try{
@@ -287,30 +238,7 @@ const updateRegistro = async (req, res) => {
             
                         if(alarmasActivadas.length != 0){
                             for (let i = 0; i < alarmasActivadas.length; i++) {
-        
-                                const mail = await usuarios.findOne({Usuario: alarmasActivadas[i].usuario}).select('Mail');
-                                if (mail.Mail){
-                                    sendMail(mail.Mail, "Alerta!!! incidencdia detectada", 
-                                    `<p>`+
-                                        "Hola,"+`<br> <br>`+
-                                        "Su alerta con nombre "+alarmasActivadas[i].nombre+" ha sido activada por una incidencia a "+alarmasActivadas[i].distancia+" m, con los siguientes datos:"+`<br>  &emsp;`+
-                                            `<strong>`+" nombre = "+`</strong>`+req.body.nombre+`<br>  &emsp;`+
-                                            `<strong>`+" tipo = "+`</strong>`+req.body.tipo+`<br>  &emsp;`+
-                                            `<strong>`+"descripcion = "+`</strong>`+req.body.descripcion+`<br> <br>`+
-                                            "gracias por su colaboración. Un saludo,"+`<br> <br>`+
-                                            `<strong>`+"TFG | La Palma"+`</strong>`+
-                                    `</p>`+`<br> <hr> <br>`+
-                                    `<p>`+
-                                        "Hello,"+`<br> <br>`+
-                                        "Your alert "+alarmasActivadas[i].nombre+" was activated by a incedence "+alarmasActivadas[i].distancia+" m away, with the following data:"+`<br>  &emsp;`+
-                                            `<strong>`+" name = "+`</strong>`+req.body.nombre+`<br>  &emsp;`+
-                                            `<strong>`+" type = "+`</strong>`+req.body.tipo+`<br>  &emsp;`+
-                                            `<strong>`+"description = "+`</strong>`+req.body.descripcion+`<br> <br>`+
-                                            "Thank you for your cooperation. All the best,"+`<br> <br>`+
-                                            `<strong>`+"TFG | La Palma"+`</strong>`+
-                                    `</p>`
-                                    )
-                                }
+                                mailer.alarmaActivada_v2(alarmasActivadas[i], req.body);
         
                                 try {
         
@@ -351,32 +279,7 @@ const updateRegistro = async (req, res) => {
                 }  else {
 
                     if(req.body.validada === "false"){
-                        const usuario = await registrosIncidencias.findById(req.body.id).select('Usuario');
-                        if(usuario.Usuario){
-                            const mail = await usuarios.findOne({Usuario: usuario.Usuario}).select('Mail');
-                            if (mail.Mail){
-                                sendMail(mail.Mail, "Incidencia validada", 
-                                    `<p>`+
-                                        "Hola,"+`<br> <br>`+
-                                        "su Incidencia ha sido validada como: "+`<br>  &emsp;`+
-                                            `<strong>`+" nombre = "+`</strong>`+req.body.nombre+`<br>  &emsp;`+
-                                            `<strong>`+" tipo = "+`</strong>`+req.body.tipo+`<br>  &emsp;`+
-                                            `<strong>`+"descripcion = "+`</strong>`+req.body.descripcion+`<br> <br>`+
-                                            "gracias por su colaboración. Un saludo,"+`<br> <br>`+
-                                            `<strong>`+"TFG | La Palma"+`</strong>`+
-                                    `</p>`+`<br> <hr> <br>`+
-                                    `<p>`+
-                                        "Hello,"+`<br> <br>`+
-                                        "Your Incident has been validated as: "+`<br>  &emsp;`+
-                                            `<strong>`+" name = "+`</strong>`+req.body.nombre+`<br>  &emsp;`+
-                                            `<strong>`+" type = "+`</strong>`+req.body.tipo+`<br>  &emsp;`+
-                                            `<strong>`+"description = "+`</strong>`+req.body.descripcion+`<br> <br>`+
-                                            "Thank you for your cooperation. All the best,"+`<br> <br>`+
-                                            `<strong>`+"TFG | La Palma"+`</strong>`+
-                                    `</p>`
-                                )
-                            }
-                        }
+                        mailer.incidenciaValidada(req.body);
                     }
 
                     try{
@@ -408,29 +311,7 @@ const updateRegistro = async (req, res) => {
                     if(alarmasActivadas.length != 0){
                         for (let i = 0; i < alarmasActivadas.length; i++) {
     
-                            const mail = await usuarios.findOne({Usuario: alarmasActivadas[i].usuario}).select('Mail');
-                            if (mail.Mail){
-                                sendMail(mail.Mail, "Alerta!!! incidencdia detectada", 
-                                `<p>`+
-                                    "Hola,"+`<br> <br>`+
-                                    "Su alerta con nombre "+alarmasActivadas[i].nombre+" ha sido activada por una incidencia a "+alarmasActivadas[i].distancia+" m, con los siguientes datos:"+`<br>  &emsp;`+
-                                        `<strong>`+" nombre = "+`</strong>`+req.body.nombre+`<br>  &emsp;`+
-                                        `<strong>`+" tipo = "+`</strong>`+req.body.tipo+`<br>  &emsp;`+
-                                        `<strong>`+"descripcion = "+`</strong>`+req.body.descripcion+`<br> <br>`+
-                                        "gracias por su colaboración. Un saludo,"+`<br> <br>`+
-                                        `<strong>`+"TFG | La Palma"+`</strong>`+
-                                `</p>`+`<br> <hr> <br>`+
-                                `<p>`+
-                                    "Hello,"+`<br> <br>`+
-                                    "Your alert "+alarmasActivadas[i].nombre+" was activated by a incedence "+alarmasActivadas[i].distancia+" m away, with the following data:"+`<br>  &emsp;`+
-                                        `<strong>`+" name = "+`</strong>`+req.body.nombre+`<br>  &emsp;`+
-                                        `<strong>`+" type = "+`</strong>`+req.body.tipo+`<br>  &emsp;`+
-                                        `<strong>`+"description = "+`</strong>`+req.body.descripcion+`<br> <br>`+
-                                        "Thank you for your cooperation. All the best,"+`<br> <br>`+
-                                        `<strong>`+"TFG | La Palma"+`</strong>`+
-                                `</p>`
-                                )
-                            }
+                            mailer.alarmaActivada_v2(alarmasActivadas[i], req.body);
     
                             try {
     
@@ -483,26 +364,7 @@ const deleteRegistro = async (req, res) => {
         if(id){
             try{
                 if(req.get("validada") === "false"){
-                    const usuario = await registrosIncidencias.findById(id).select('Usuario');
-                    if(usuario.Usuario){
-                        const mail = await usuarios.findOne({Usuario: usuario.Usuario}).select('Mail');
-                        if (mail.Mail){
-                            sendMail(mail.Mail, "Propuesta de incidencia rechazada", 
-                                `<p>`+
-                                    "Hola,"+`<br> <br>`+
-                                    "su propuesta de Incidencia con nombre "+ req.get("nombre")+", ha sido rechazada."+`<br> <br>`+
-                                        "gracias por su colaboración. Un saludo,"+`<br> <br>`+
-                                        `<strong>`+"TFG | La Palma"+`</strong>`+
-                                `</p>`+`<br> <hr> <br>`+
-                                `<p>`+
-                                    "Hello,"+`<br> <br>`+
-                                    "your incidence proposal,  "+ req.get("nombre")+" call, has been rejected."+`<br> <br>`+
-                                        "Thank you for your cooperation. All the best,"+`<br> <br>`+
-                                        `<strong>`+"TFG | La Palma"+`</strong>`+
-                                `</p>`
-                            )
-                        }
-                    }
+                    mailer.incidenciaRechazada(id, req.get("nombre"));
                 }
         
                 await registrosIncidencias.findOneAndDelete({ _id: id })

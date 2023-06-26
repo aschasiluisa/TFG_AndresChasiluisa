@@ -89,8 +89,6 @@
           sendingData,
         } = useMapStore();
 
-
-
         const responseError = computed(()=>(mapResponse.value && mapResponse.value !== responseRegistrosIncidenciasControl.ok)? mapResponse.value:undefined);
 
         watch(mapResponse, () => {

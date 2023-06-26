@@ -62,6 +62,25 @@
     <button v-if="getRole == 1" id="editRegistro" class="btn btn-success"> Editar Incidencia </button>
 
   </div>
+
+  <div v-if="getElementInfoID == 3 && getRegistroInfo" class="containerAlarmasInfo">
+
+    <p class="">
+        <strong> Nombre: </strong>
+        {{ getRegistroInfo.Nombre }}
+    </p>
+    <p>
+        <strong> Rango: </strong>
+        {{ getRegistroInfo.Rango }}
+    </p>
+
+    <button v-if="getRegistroInfo.Activada" class="btn btn-warning" @click="resetAlarma(getRegistroInfo._id)"> Resetear Alarma </button>
+
+    <button v-if="getRegistroInfo.Activada" class="btn btn-danger" @click="deleteAlarma(getRegistroInfo._id)"> Borrar Alarma </button>
+
+    <input v-if="!getRegistroInfo.Activada" class="btn btn-danger" type="button" value="Borrar Alarma" @click="deleteAlarma(getRegistroInfo._id)">
+
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -89,6 +108,23 @@
 
         button {
             margin: 0px 50px 9px 50px;
+        }
+    }
+
+    .containerAlarmasInfo{
+        margin-top: 3%;
+        display: grid;
+        width: 100%;
+        grid-template-columns: 50% 50%;
+        white-space: nowrap;
+
+        input{
+            grid-column: 1/3;
+            margin: 0 20% 0 20% ;
+        }
+
+        button{
+            margin: 0 10% 5% 10% ;
         }
     }
 

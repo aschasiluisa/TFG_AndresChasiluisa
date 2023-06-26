@@ -64,6 +64,11 @@ const imageFormatError = {
     msg : "Wrong image file format",
 }
 
+const rangoError = {
+    result : false,
+    msg : "Wrong rango value error",
+}
+
 module.exports = {
     serverError,
     usernameError,
@@ -76,4 +81,5 @@ module.exports = {
     imageFormatError,
     incidenceFindError,
     alarmFindError,
+    rangoError,
 }

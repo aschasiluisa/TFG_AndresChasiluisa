@@ -10,9 +10,14 @@ export default defineComponent({
         const { 
             getRegistroInfo,
             getElementInfoID,
+            layersControl,
+            deleteAlarma,
+            resetAlarma,
+            resetregistrosAlarmas,
           } = useMapStore();
 
         const {
+            getUserToken,
             getRole,
         } = useAuthStore();
 
@@ -32,6 +37,19 @@ export default defineComponent({
             Buffer,
 
             getRole,
+
+            deleteAlarma : async (id: string) =>  {
+                await deleteAlarma(getUserToken.value, id);
+                resetregistrosAlarmas();
+                layersControl.value[3] = true;
+            },
+
+            resetAlarma : async (id: string) => {
+                resetAlarma(getUserToken.value, id);
+                resetregistrosAlarmas();
+                layersControl.value[3] = true;
+            },
+
         }
     },
 })
