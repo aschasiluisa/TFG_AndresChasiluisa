@@ -1,7 +1,9 @@
 <template>
   <div class="page">
     <div class="window">
-      <h1>ERROR 404</h1>
+      <h1>
+        {{ $t('Error404') }}
+      </h1>
     </div>
   </div>
 </template>

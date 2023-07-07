@@ -4,42 +4,42 @@
         <div v-show="!!responseError">    
             <div class="alert">
                 <p v-if="responseError === responseRegistrosAlarmasControl.emptyFieldError">
-                    <strong>Error!</strong> campos obligatorios vacios
+                    <strong>{{ $t('CrearAlarma.error.error') }}!</strong> {{ $t('CrearAlarma.error.emptyField') }}
                 </p>
                 <p v-if="responseError === responseRegistrosAlarmasControl.coorBboxError">
-                    <strong>Error!</strong> localización fuera de la isla
+                    <strong>{{ $t('CrearAlarma.error.error') }}!</strong> {{ $t('CrearAlarma.error.coorBbox') }}
                 </p>
                 <p v-if="responseError === responseRegistrosAlarmasControl.coorFormatError">
-                    <strong>Error!</strong> formato de coordenadas incorrecto
-                </p>
-                <p v-if="responseError === responseRegistrosAlarmasControl.serverError">
-                    <strong>Error!</strong> error en el servidor
+                    <strong>{{ $t('CrearAlarma.error.error') }}!</strong> {{ $t('CrearAlarma.error.coorFormat') }}
                 </p>
                 <p v-if="responseError === responseRegistrosAlarmasControl.rangoError">
-                    <strong>Error!</strong> rango incorrecto
+                    <strong>{{ $t('CrearAlarma.error.error') }}!</strong> {{ $t('CrearAlarma.error.rango') }}
+                </p>
+                <p v-if="responseError === responseRegistrosAlarmasControl.serverError">
+                    <strong>{{ $t('CrearAlarma.error.error') }}!</strong> {{ $t('CrearAlarma.error.server') }}
                 </p>
             </div>
         </div>
 
         <div class="window form">
-            <h1>Nueva Alarma</h1>
+            <h1>{{ $t('CrearAlarma.titulo') }}</h1>
 
             <label class="label label-default" for="nombre">
-                Nombre*
+                {{ $t('CrearAlarma.nombre') }}*
             </label>
             <input type="text" id="nombre" class="form-control" v-model="nombre">
 
             <label class="label label-default" for="rango">
-                Rango*
+                {{ $t('CrearAlarma.rango') }}*
             </label>
-            <input type="text" id="rango" class="form-control" v-model="rango" placeholder="de 100 m a 3000 m">
+            <input type="text" id="rango" class="form-control" v-model="rango" :placeholder="$t('CrearAlarma.rangoPlaceholder')">
 
             <label class="label label-default" for="coordenadas">
-                Coordenadas* 
+                {{ $t('CrearAlarma.coordenadas') }}* 
             </label>
-            <input type="text" id="coordenadas" class="form-control" v-model="coordenadas" placeholder="latitud,longitud "> 
+            <input type="text" id="coordenadas" class="form-control" v-model="coordenadas" :placeholder="$t('CrearAlarma.coordenadasPlaceholder')"> 
 
-            <button  type="button" :disabled="sendingData" class="btn btn-success" style="margin-top: 6%;" @click="nuevaAlarma">Guardar Alarma</button>
+            <button  type="button" :disabled="sendingData" class="btn btn-success" style="margin-top: 6%;" @click="nuevaAlarma">{{ $t('CrearAlarma.guardar') }}</button>
         </div>
     </div>
 </template>

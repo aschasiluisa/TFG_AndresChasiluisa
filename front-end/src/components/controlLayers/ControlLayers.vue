@@ -5,12 +5,12 @@
 
     <thead>
       <tr class="titulosTabla">
-        <h3><strong>CONTROL LAYERS</strong></h3>
+        <h3><strong>{{ $t('ControlLayers.titulo') }}</strong></h3>
       </tr>
     </thead>
 
     <tr class="titulosTabla">
-      Mapa Base
+      {{ $t('ControlLayers.mapaBase') }}
     </tr>
 
     <tr class="inputBaseMap">
@@ -32,7 +32,7 @@
     </div>
 
     <tr class="titulosTabla">
-      Layers
+      {{ $t('ControlLayers.capas') }}
     </tr>
     
     <div v-for="layer in layers" :key="layer.id">

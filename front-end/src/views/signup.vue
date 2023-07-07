@@ -4,37 +4,37 @@
         <div v-show="!!authError">    
             <div class="alert">
                 <p v-if="authError === responseSignupControl.emptyFieldError">
-                    <strong>Error!</strong> campos Vacios
+                    <strong>{{ $t('Signup.error.error') }}!</strong> {{ $t('Signup.error.emptyField') }}
                 </p>
                 <p v-if="authError === responseSignupControl.usernameError">
-                    <strong>Error!</strong> nombre de usuario ya existente
+                    <strong>{{ $t('Signup.error.error') }}!</strong> {{ $t('Signup.error.username') }}
                 </p>
                 <p v-if="authError === responseSignupControl.emailError">
-                    <strong>Error!</strong> email ya en uso
+                    <strong>{{ $t('Signup.error.error') }}!</strong> {{ $t('Signup.error.email') }}
                 </p>
                 <p v-if="authError === responseSignupControl.emailFormatError">
-                    <strong>Error!</strong> formato de email incorrecto
+                    <strong>{{ $t('Signup.error.error') }}!</strong> {{ $t('Signup.error.emailFormat') }}
                 </p>
                 <p v-if="authError === responseSignupControl.serverError">
-                    <strong>Error!</strong> error en el servidor
+                    <strong>{{ $t('Signup.error.error') }}!</strong> {{ $t('Signup.error.server') }}
                 </p>
             </div>
         </div>
 
         <div class="window form" @submit.prevent="signup">
-            <h1>SIGNUP</h1>
+            <h1>{{ $t('Signup.titulo') }}</h1>
             <label class="label label-default" for="nombre">
-                Nombre*
+                {{ $t('Signup.nombre') }}*
             </label>
             <input  type="text" id="nombre" class="form-control" v-model="nombre">
             
             <label class="label label-default" for="apellido">
-                Apellido*
+                {{ $t('Signup.apellido') }}*
             </label>
             <input type="text" id="apellido" class="form-control" v-model="apellido">
             
             <label class="label label-default" for="municipio">
-                Municipio
+                {{ $t('Signup.municipio') }}
             </label>
             <select id="municipio" class="form-control" v-model="municipio">
                 <option>Garafía</option>
@@ -54,21 +54,21 @@
             </select>
 
             <label class="label label-default" for="usuario">
-                Usuario*
+                {{ $t('Signup.usuario') }}*
             </label>
             <input type="text" id="usuario" class="form-control" v-model="usuario">
             
             <label class="label label-default" for="mail">
-                Mail*
+                {{ $t('Signup.mail') }}*
             </label>
             <input type="text" id="mail" class="form-control" v-model="mail">
             
             <label class="label label-default" for="contraseña">
-                Contraseña*
+                {{ $t('Signup.contraseña') }}*
             </label>
             <input type="password" id="contraseña" class="form-control" v-model="contraseña"> 
             <button type="button" :disabled="authenticathing" class="btn btn-success" @click="signup">
-                registro
+                {{ $t('Signup.boton') }}
             </button>
         </div>
     </div>

@@ -4,59 +4,61 @@
     <div v-show="!!responseError">    
         <div class="alert">
             <p v-if="responseError === responseRegistrosIncidenciasControl.emptyFieldError">
-                <strong>Error!</strong> campos obligatorios vacios
+                <strong>{{ $t('CrearIncidencia.error.error') }}!</strong> {{ $t('CrearIncidencia.error.emptyField') }}
             </p>
             <p v-if="responseError === responseRegistrosIncidenciasControl.coorBboxError">
-                <strong>Error!</strong> localización fuera de la isla
+                <strong>{{ $t('CrearIncidencia.error.error') }}!</strong> {{ $t('CrearIncidencia.error.coorBbox') }}
             </p>
             <p v-if="responseError === responseRegistrosIncidenciasControl.imageFormatError">
-                <strong>Error!</strong> formato de imagen incorrecto
+                <strong>{{ $t('CrearIncidencia.error.error') }}!</strong> {{ $t('CrearIncidencia.error.imageFormat') }}
             </p>
             <p v-if="responseError === responseRegistrosIncidenciasControl.coorFormatError">
-                <strong>Error!</strong> formato de coordenadas incorrecto
+                <strong>{{ $t('CrearIncidencia.error.error') }}!</strong> {{ $t('CrearIncidencia.error.coorFormat') }}
             </p>
             <p v-if="responseError === responseRegistrosIncidenciasControl.serverError">
-                <strong>Error!</strong> error en el servidor
+                <strong>{{ $t('CrearIncidencia.error.error') }}!</strong> {{ $t('CrearIncidencia.error.server') }}
             </p>
         </div>
     </div>
 
     <div class="window form">
-      <h1>Nueva Incidencia</h1>
+      <h1>{{ $t('CrearIncidencia.titulo') }}</h1>
 
       <label class="label label-default" for="nombre">
-          Nombre*
+        {{ $t('CrearIncidencia.nombre') }}*
       </label>
       <input type="text" id="nombre" class="form-control" v-model="nombre">
       
       <label class="label label-default" for="tipo">
-          Tipo de incidencia*
+        {{ $t('CrearIncidencia.tipo') }}*
       </label>
       <select id="tipo" class="form-control" v-model="tipo" >
-          <option>Accidente de Trafico</option>
-          <option>Derrumbe</option>
-          <option>Incendio</option>
-          <option>Inundación</option>
-          <option>Calima</option>
-          <option>Erupción</option>
-          <option>Escape de gases</option>
-          <option>Otro</option>
+          <option value="Accidente de Trafico">{{ $t('CrearIncidencia.tipoIncidencia.accidente') }}</option>
+          <option value="Derrumbe">{{ $t('CrearIncidencia.tipoIncidencia.derrumbe') }}</option>
+          <option value="Incendio">{{ $t('CrearIncidencia.tipoIncidencia.incendio') }}</option>
+          <option value="Inundación">{{ $t('CrearIncidencia.tipoIncidencia.inundacion') }}</option>
+          <option value="Calima">{{ $t('CrearIncidencia.tipoIncidencia.calima') }}</option>
+          <option value="Erupción">{{ $t('CrearIncidencia.tipoIncidencia.erupcion') }}</option>
+          <option value="Escape de gases">{{ $t('CrearIncidencia.tipoIncidencia.escape') }}</option>
+          <option value="Otro">{{ $t('CrearIncidencia.tipoIncidencia.otro') }}</option>
       </select>
 
       <label class="label label-default" for="coordenadas">
-          Coordenadas* 
+        {{ $t('CrearIncidencia.coordenadas') }}* 
       </label>
-      <input type="text" id="coordenadas" class="form-control" v-model="coordenadas" placeholder="latitud,longitud "> 
+      <input type="text" id="coordenadas" class="form-control" v-model="coordenadas" :placeholder="$t('CrearIncidencia.coordenadasPlaceholder')"> 
       
       <label class="label label-default" for="imagen">
-          Imagen
+        {{ $t('CrearIncidencia.imagen') }}
       </label>
       <input class="form-control" type="file" id="imagen" name="imagen" @change="buscarImagen" accept="image/png, image/jpeg, image/jpg">
       
-      <label for="exampleFormControlTextarea1" class="form-label">Descripción</label>
+      <label for="exampleFormControlTextarea1" class="form-label">
+        {{ $t('CrearIncidencia.descripcion') }}
+      </label>
       <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" maxlength="1000" v-model="descripcion"></textarea>
 
-      <button  type="button" :disabled="sendingData" class="btn btn-success" style="margin-top: 6%;" @click="nuevaIncidencia">Enviar Incidencia</button>
+      <button  type="button" :disabled="sendingData" class="btn btn-success" style="margin-top: 6%;" @click="nuevaIncidencia">{{ $t('CrearIncidencia.enviar') }}</button>
     </div>
   </div>
 </template>

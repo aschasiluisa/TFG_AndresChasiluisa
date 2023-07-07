@@ -3,18 +3,18 @@
 <template>
   <div v-if="getElementInfoID == 1 && getRegistroInfo" class="containerCalidadAireInfo">
     <h6>
-       Estacion {{ getRegistroInfo.Nombre }}
+        {{ $t('ElementInfo.estacion') }} {{ getRegistroInfo.Nombre }}
     </h6>
     <p>
-        <strong> Fecha: </strong>
+        <strong> {{ $t('ElementInfo.fecha') }}: </strong>
         {{ getRegistroInfo.Fecha.slice(0, -7) }}
     </p>
     <p>
-        <strong> Temperatura: </strong>
+        <strong> {{ $t('ElementInfo.temperatura') }}: </strong>
         {{ getRegistroInfo.Temperatura }}
     </p>
     <p>
-        <strong> Humedad: </strong>
+        <strong> {{ $t('ElementInfo.humedad') }}: </strong>
         {{ getRegistroInfo.Humedad }}
     </p>
     <p v-if="getRegistroInfo.CO != 0 && getRegistroInfo.CO != 1">
@@ -41,11 +41,11 @@
             <strong> {{ getRegistroInfo.Nombre }} </strong>
         </p>
         <p>
-            <strong> Fecha: </strong>
+            <strong> {{ $t('ElementInfo.fecha') }}: </strong>
             {{ getRegistroInfo.Fecha }}
         </p>
         <p>
-            <strong> Tipo: </strong>
+            <strong> {{ $t('ElementInfo.tipo') }}: </strong>
             {{ getRegistroInfo.Tipo }}
         </p>
     </div>
@@ -55,28 +55,28 @@
     </div>
 
     <p v-if="getRegistroInfo.Descripcion">
-        <strong> Descripcion: </strong><br>
+        <strong> {{ $t('ElementInfo.descripcion') }}: </strong><br>
         {{ getRegistroInfo.Descripcion }}
     </p>
 
-    <button v-if="getRole == 1" id="editRegistro" class="btn btn-success"> Editar Incidencia </button>
+    <button v-if="getRole == 1" id="editRegistro" class="btn btn-success"> {{ $t('ElementInfo.modIncidencia') }} </button>
 
   </div>
 
   <div v-if="getElementInfoID == 3 && getRegistroInfo" class="containerAlarmasInfo">
 
     <p class="">
-        <strong> Nombre: </strong>
+        <strong> {{ $t('ElementInfo.nombre') }}: </strong>
         {{ getRegistroInfo.Nombre }}
     </p>
     <p>
-        <strong> Rango: </strong>
+        <strong> {{ $t('ElementInfo.rango') }}: </strong>
         {{ getRegistroInfo.Rango }}
     </p>
 
-    <button v-if="getRegistroInfo.Activada" class="btn btn-warning" @click="resetAlarma(getRegistroInfo._id)"> Resetear Alarma </button>
+    <button v-if="getRegistroInfo.Activada" class="btn btn-warning" @click="resetAlarma(getRegistroInfo._id)"> {{ $t('ElementInfo.resAlarma') }} </button>
 
-    <button v-if="getRegistroInfo.Activada" class="btn btn-danger" @click="deleteAlarma(getRegistroInfo._id)"> Borrar Alarma </button>
+    <button v-if="getRegistroInfo.Activada" class="btn btn-danger" @click="deleteAlarma(getRegistroInfo._id)"> {{ $t('ElementInfo.borrAlarma') }} </button>
 
     <input v-if="!getRegistroInfo.Activada" class="btn btn-danger" type="button" value="Borrar Alarma" @click="deleteAlarma(getRegistroInfo._id)">
 

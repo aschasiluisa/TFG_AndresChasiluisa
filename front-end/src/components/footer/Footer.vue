@@ -2,7 +2,7 @@
 
 <template>
     <footer>
-        <p>Trabajo Final de grado, Andrés Chasiluisa</p>
+        <p>{{ $t('Footer') }}</p>
     </footer>
 </template>
 

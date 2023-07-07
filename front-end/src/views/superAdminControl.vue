@@ -4,37 +4,37 @@
         <div v-show="!!responseError">    
             <div class="alert">
                 <p v-if="responseError === responseSuperAdminControlControl.userFindError">
-                    <strong>Error!</strong> usuario no encontrado
+                    <strong>{{ $t('SuperAdminControl.error.error') }}!</strong> {{ $t('SuperAdminControl.error.userFind') }}
                 </p>
                 <p v-if="responseError === responseSuperAdminControlControl.serverError">
-                    <strong>Error!</strong> error en el servidor
+                    <strong>{{ $t('SuperAdminControl.error.error') }}!</strong> {{ $t('SuperAdminControl.error.server') }}
                 </p>
             </div>
         </div>
 
         <div class="window super" v-show="!showClientInfo">
-            <h2>Super Admin Control</h2>
+            <h2>{{ $t('SuperAdminControl.titulo') }}</h2>
 
             <label class="label label-default" for="usuario">
-                Usuario a modificar:
+                {{ $t('SuperAdminControl.modUsuario') }}
             </label>
             <input type="text" id="usuario" class="form-control" v-model="usuarioCliente">
 
             <button type="button" class="btn btn-success" @click="superAdminControl">
-                buscar usuario
+                {{ $t('SuperAdminControl.buscar') }}
             </button>
         </div>
 
         <div class="window userInfo" v-show="showClientInfo">
             <h2>{{ clienteUsuario }}</h2>
-            <p><strong>Nombre:</strong>         {{ clienteNombre }}</p>
-            <p><strong>Apellido: </strong>       {{ clienteApellido }}</p>
-            <p><strong>Municipio: </strong>      {{ clienteMunicipio }}</p>
-            <p><strong>Mail: </strong>           {{ clienteMail }}</p>
-            <div><strong>Rol: </strong>            {{ clienteRol }}</div>
-            <ins style="color:darkorange; cursor:pointer" @click="changeRole">cambiar rol</ins> 
+            <p><strong>{{ $t('SuperAdminControl.nombre') }}:</strong>         {{ clienteNombre }}</p>
+            <p><strong>{{ $t('SuperAdminControl.apellido') }}: </strong>       {{ clienteApellido }}</p>
+            <p><strong>{{ $t('SuperAdminControl.municipio') }}: </strong>      {{ clienteMunicipio }}</p>
+            <p><strong>{{ $t('SuperAdminControl.mail') }}: </strong>           {{ clienteMail }}</p>
+            <div><strong>{{ $t('SuperAdminControl.rol') }}: </strong>            {{ clienteRol }}</div>
+            <ins style="color:darkorange; cursor:pointer" @click="changeRole">{{ $t('SuperAdminControl.modRol') }}</ins> 
             <del style="color:red; cursor:pointer;" @click="deleteUser">{{ clienteUsuario }}</del>
-            <button type="button" class="btn btn-danger" @click="cambiarMode">Volver</button>
+            <button type="button" class="btn btn-danger" @click="cambiarMode">{{ $t('SuperAdminControl.volver') }}</button>
         </div>
     </div>
 </template>

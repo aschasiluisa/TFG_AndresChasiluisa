@@ -1,0 +1,190 @@
+{
+  "Header": {
+    "titulo": "VISOR LA PALMA",
+    "visorLaPalma": "Visor la Palma",
+    "login": "Acceso",
+    "signup": "Registro",
+    "profile": "Perfil",
+    "logout": "Salir"
+  },
+
+  "CrearAlarma": {
+    "titulo": "NUEVA ALARMA",
+    "nombre": "Nombre",
+    "rango": "Rango",
+    "rangoPlaceholder": "de 100m a 3000m",
+    "coordenadas": "Coordenadas",
+    "coordenadasPlaceholder": "latitud,longitud",
+    "guardar": "Guardar Alarma",
+
+    "error": {
+      "error": "ERROR",
+      "emptyField": "Campos vacios",
+      "coorBbox": "Localización fuera de la isla",
+      "coorFormat": "Formato de coordenadas incorrecto",
+      "rango": "Rango incorrecto",
+      "server": "Error en el servidor"
+    }
+  },
+
+  "CrearIncidencia": {
+    "titulo": "NUEVA INCIDENCIA",
+    "nombre": "Nombre",
+    "tipo": "Tipo de incidencia",
+
+    "tipoIncidencia": {
+      "accidente": "Accidente de Trafico",
+      "derrumbe": "Derrumbe",
+      "incendio": "Incendio",
+      "inundacion": "Inundación",
+      "calima": "Calima",
+      "erupcion": "Erupción",
+      "escape": "Escape de gases",
+      "otro": "Otro"
+    },
+
+    "coordenadas": "Coordenadas",
+    "imagen": "Imagen",
+    "descripcion": "Descripción",
+    "coordenadasPlaceholder": "latitud,longitud",
+    "enviar": "Enviar Incidencia",
+
+    "error": {
+      "error": "ERROR",
+      "emptyField": "Campos vacios",
+      "coorBbox": "Localización fuera de la isla",
+      "imageFormat": "Formato de imagen incorrecto",
+      "coorFormat": "Formato de coordenadas incorrecto",
+      "server": "Error en el servidor"
+    }
+  },
+
+  "EditarIncidencia": {
+    "titulo": "EDITAR INCIDENCIA",
+    "nombre": "Nombre",
+    "tipo": "Tipo de incidencia",
+
+    "tipoIncidencia": {
+      "accidente": "Accidente de Trafico",
+      "derrumbe": "Derrumbe",
+      "incendio": "Incendio",
+      "inundacion": "Inundación",
+      "calima": "Calima",
+      "erupcion": "Erupción",
+      "escape": "Escape de gases",
+      "otro": "Otro"
+    },
+
+    "coordenadas": "Coordenadas",
+    "imagen": "Imagen",
+    "descripcion": "Descripción",
+    "enviar": "Guardar Cambios y Validar Incidencia",
+    "borrar": "Borrar Incidencia",
+
+    "error": {
+      "error": "ERROR",
+      "coorBbox": "Localización fuera de la isla",
+      "imageFormat": "Formato de imagen incorrecto",
+      "coorFormat": "Formato de coordenadas incorrecto",
+      "server": "Error en el servidor"
+    }
+  },
+
+  "Login": {
+    "titulo": "ACCESO",
+    "usuario": "Usuario",
+    "contraseña": "Contraseña",
+    "boton": "acceso",
+
+    "error": {
+      "error": "ERROR",
+      "emptyField": "Campos vacios",
+      "login": "Usuario o contraseña incorrectos",
+      "server": "Error en el servidor"
+    }
+  },
+
+  "Profile": {
+    "titulo": "PERFIL",
+    "nombre": "Nombre",
+    "apellido": "Apellido",
+    "municipio": "Municipio",
+    "mail": "Mail",
+    "editar": "Editar",
+    "enviar": "Enviar Cambios",
+    "volver": "Volver",
+
+    "error": {
+      "error": "ERROR",
+      "email": "Email ya en uso",
+      "emailFormat": "Formato de email incorrecto",
+      "server": "Error en el servidor"
+    }
+  },
+
+  "Signup": {
+    "titulo": "REGISTRO",
+    "nombre": "Nombre",
+    "apellido": "Apellido",
+    "municipio": "Municipio",
+    "usuario": "Usuario",
+    "mail": "Mail",
+    "contraseña": "Contraseña",
+    "boton": "registro",
+
+    "error": {
+      "error": "ERROR",
+      "emptyField": "Campos vacios",
+      "username": "Nombre de usuario ya existente",
+      "email": "Email ya en uso",
+      "emailFormat": "Formato de email incorrecto",
+      "server": "Error en el servidor"
+    }
+  },
+
+  "SuperAdminControl": {
+    "titulo": "CONTROL DE SUPERADMINISTRADOR",
+    "modUsuario": "Usuario a modificar",
+    "buscar": "buscar usuario",
+
+    "nombre": "Nombre",
+    "apellido": "Apellido",
+    "municipio": "Municipio",
+    "mail": "Mail",
+    "rol": "Rol",
+    "modRol": "cambiar rol",
+    "volver": "volver",
+
+    "error": {
+      "error": "ERROR",
+      "userFind": "Usuario no encontrado",
+      "server": "Error en el servidor"
+    }
+  },
+
+  "ControlLayers": {
+    "titulo": "CONTROL DE CAPAS",
+    "mapaBase": "Mapa Base",
+    "capas": "Capas"
+  },
+
+  "ElementInfo": {
+    "estacion": "Estación",
+    "fecha": "Fecha",
+    "temperatura": "Temperatura",
+    "humedad": "Humedad",
+
+    "tipo": "Tipo",
+    "descripcion": "Descripción",
+    "modIncidencia": "Editar Incidencia",
+
+    "nombre": "Nombre",
+    "rango": "Rango",
+    "resAlarma": "Resetear Alarma",
+    "borrAlarma": "Borrar Alarma"
+  },
+
+  "Footer": "Trabajo Final de Grado, Andrés Chasiluisa",
+
+  "Error404": "PAGINA NO DISPONIBLE"
+}

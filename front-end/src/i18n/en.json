@@ -1,0 +1,190 @@
+{
+  "Header": {
+    "titulo": "LA PALMA VIEWER",
+    "visorLaPalma": "La Palma Viewer",
+    "login": "Login",
+    "signup": "Sign Up",
+    "profile": "Profile",
+    "logout": "Log Out"
+  },
+
+  "CrearAlarma": {
+    "titulo": "NEW ALARM",
+    "nombre": "Name",
+    "rango": "Range",
+    "rangoPlaceholder": "from 100m to 3000m",
+    "coordenadas": "Coordinates",
+    "coordenadasPlaceholder": "latitude,longitude",
+    "guardar": "Save Alarm",
+
+    "error": {
+      "error": "ERROR",
+      "emptyField": "Empty fields",
+      "coorBbox": "Off-island location",
+      "coorFormat": "Wrong coordinates format",
+      "rango": "Wrong range",
+      "server": "Server error"
+    }
+  },
+
+  "CrearIncidencia": {
+    "titulo": "NEW INCIDENCE",
+    "nombre": "Name",
+    "tipo": "Incidence type",
+
+    "tipoIncidencia": {
+      "accidente": "Traffic Accident",
+      "derrumbe": "Landslide",
+      "incendio": "Fire",
+      "inundacion": "Flood",
+      "calima": "Calima",
+      "erupcion": "Rash",
+      "escape": "Gas Exhaust",
+      "otro": "Other"
+    },
+
+    "coordenadas": "Coordinates",
+    "imagen": "Image",
+    "descripcion": "Description",
+    "coordenadasPlaceholder": "latitude,longitude",
+    "enviar": "Send Incidence",
+
+    "error": {
+      "error": "ERROR",
+      "emptyField": "Empty fields",
+      "coorBbox": "Off-island location",
+      "imageFormat": "Wrong image format",
+      "coorFormat": "Wrong coordinates format",
+      "server": "Server error"
+    }
+  },
+
+  "EditarIncidencia": {
+    "titulo": "EDIT INCIDENCE",
+    "nombre": "Name",
+    "tipo": "Incidence type",
+
+    "tipoIncidencia": {
+      "accidente": "Traffic Accident",
+      "derrumbe": "Landslide",
+      "incendio": "Fire",
+      "inundacion": "Flood",
+      "calima": "Calima",
+      "erupcion": "Rash",
+      "escape": "Gas Exhaust",
+      "otro": "Other"
+    },
+
+    "coordenadas": "Coordinates",
+    "imagen": "Image",
+    "descripcion": "Description",
+    "enviar": "Save Changes and Validate Incidence",
+    "borrar": "Delete Incidence",
+
+    "error": {
+      "error": "ERROR",
+      "coorBbox": "Off-island location",
+      "imageFormat": "Wrong image format",
+      "coorFormat": "Wrong coordinates format",
+      "server": "Server error"
+    }
+  },
+
+  "Login": {
+    "titulo": "LOGIN",
+    "usuario": "User",
+    "contraseña": "Password",
+    "boton": "login",
+
+    "error": {
+      "error": "ERROR",
+      "emptyField": "Empty fields",
+      "login": "Wrong username or password",
+      "server": "Server error"
+    }
+  },
+
+  "Profile": {
+    "titulo": "PROFILE",
+    "nombre": "Name",
+    "apellido": "Last Name",
+    "municipio": "Municipality",
+    "mail": "Email",
+    "editar": "Edit",
+    "enviar": "Send Changes",
+    "volver": "Return",
+
+    "error": {
+      "error": "ERROR",
+      "email": "Email already in use",
+      "emailFormat": "Wrong email format",
+      "server": "Server error"
+    }
+  },
+
+  "Signup": {
+    "titulo": "SIGN UP",
+    "nombre": "Name",
+    "apellido": "Last Name",
+    "municipio": "Municipality",
+    "usuario": "Username",
+    "mail": "Email",
+    "contraseña": "Password",
+    "boton": "sign up",
+
+    "error": {
+      "error": "ERROR",
+      "emptyField": "Empty fields",
+      "username": "Username already in use",
+      "email": "Email already in use",
+      "emailFormat": "Wrong email format",
+      "server": "Server error"
+    }
+  },
+
+  "SuperAdminControl": {
+    "titulo": "SUPER ADMIN CONTROL",
+    "modUsuario": "User to modify",
+    "buscar": "search user",
+
+    "nombre": "Name",
+    "apellido": "Last Name",
+    "municipio": "Municipality",
+    "mail": "Email",
+    "rol": "Role",
+    "modRol": "change role",
+    "volver": "return",
+
+    "error": {
+      "error": "ERROR",
+      "userFind": "User not found",
+      "server": "Server error"
+    }
+  },
+
+  "ControlLayers": {
+    "titulo": "LAYERS CONTROL",
+    "mapaBase": "Base Map",
+    "capas": "Layers"
+  },
+
+  "ElementInfo": {
+    "estacion": "Station",
+    "fecha": "Date",
+    "temperatura": "Temperature",
+    "humedad": "Humidity",
+
+    "tipo": "Type",
+    "descripcion": "Description",
+    "modIncidencia": "Edit Incidence",
+
+    "nombre": "Name",
+    "rango": "Range",
+    "resAlarma": "Reset Alarm",
+    "borrAlarma": "Delete Alarm"
+  },
+
+  "Footer": "Final Degree Project, Andrés Chasiluisa",
+
+  "Error404": "PAGE NOT AVAILABLE"
+}

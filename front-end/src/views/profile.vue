@@ -4,32 +4,32 @@
         <div v-show="!!responseError">    
             <div class="alert">
                 <p v-if="responseError === responseProfileControl.emailError">
-                    <strong>Error!</strong> email ya en uso
+                    <strong>{{ $t('Profile.error.error') }}!</strong> {{ $t('Profile.error.email') }}
                 </p>
                 <p v-if="responseError === responseProfileControl.emailFormatError">
-                    <strong>Error!</strong> formato de email incorrecto
+                    <strong>{{ $t('Profile.error.error') }}!</strong> {{ $t('Profile.error.emailFormat') }}
                 </p>
                 <p v-if="responseError === responseProfileControl.serverError">
-                    <strong>Error!</strong> error en el servidor
+                    <strong>{{ $t('Profile.error.error') }}!</strong> {{ $t('Profile.error.server') }}
                 </p>
             </div>
         </div>
 
         <div class="window form">
-            <h1>PROFILE</h1>
+            <h1>{{ $t('Profile.titulo') }}</h1>
 
             <label class="label label-default" for="nombre">
-                Nombre:
+                {{ $t('Profile.nombre') }}:
             </label>
             <input type="text" id="nombre" class="form-control" v-model="nombre" :placeholder= "preNombre" :readonly="readOnly">
             
             <label class="label label-default" for="apellido">
-                Apellido:
+                {{ $t('Profile.apellido') }}:
             </label>
             <input type="text" id="apellido" class="form-control" v-model="apellido" :placeholder= "preApellido" :readonly="readOnly"> 
 
             <label class="label label-default" for="municipio">
-                Municipio:
+                {{ $t('Profile.municipio') }}:
             </label>
             <select id="municipio" class="form-control" v-model="municipio" :disabled="readOnly">
                 <option value = "" disabled selected hidden> {{ preMunicipio }} </option>
@@ -50,13 +50,13 @@
             </select>
 
             <label class="label label-default" for="mail">
-                Mail:
+                {{ $t('Profile.mail') }}:
             </label>
             <input type="text" id="mail" class="form-control" v-model="mail" :placeholder= "preMail" :readonly="readOnly"> 
 
-            <button type="button" v-show="readOnly" class="btn btn-success" @click="cambiarMode">Editar</button>
-            <button type="button" v-show="!readOnly" class="btn btn-success" @click="updateUserInfo">Enviar cambios</button>
-            <button type="button" v-show="!readOnly" class="btn btn-danger" @click="cambiarMode">Volver</button>
+            <button type="button" v-show="readOnly" class="btn btn-success" @click="cambiarMode">{{ $t('Profile.editar') }}</button>
+            <button type="button" v-show="!readOnly" class="btn btn-success" @click="updateUserInfo">{{ $t('Profile.enviar') }}</button>
+            <button type="button" v-show="!readOnly" class="btn btn-danger" @click="cambiarMode">{{ $t('Profile.volver') }}</button>
         </div>
     </div>
 </template>

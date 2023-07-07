@@ -5,21 +5,21 @@
 
     <div class="selectorIdioma">
       <p>Español</p>
-      <input class="tgl tgl-ios" id="cb2" type="checkbox"/>
+      <input class="tgl tgl-ios" id="cb2" type="checkbox" @change="$i18n.locale =  getIdioma" v-model="idiomaSelector"/>
       <label class="tgl-btn" for="cb2"></label>
       <p>English</p>
     </div>
 
     <div class="tituloPagina">
-      <h1>VISOR LA PALMA</h1>
+      <h1>{{ $t('Header.titulo') }}</h1>
     </div>
 
     <nav>
-        <router-link to="/visorLaPalma" class="headerLink" v-show="noIsCurrentRoute(`/visorLaPalma`) && noSuperAdmin"> Visor la palma</router-link> 
-        <router-link to="/visorLaPalma/login" class="headerLink" v-show="!userAuthenticated && noIsCurrentRoute(`/visorLaPalma/login`)"> Login</router-link> 
-        <router-link to="/visorLaPalma/signup" class="headerLink" v-show="!userAuthenticated && noIsCurrentRoute(`/visorLaPalma/signup`)"> Signup</router-link> 
-        <router-link to="/visorLaPalma/profile" class="headerLink" v-show="userAuthenticated && noIsCurrentRoute(`/visorLaPalma/profile`) && noSuperAdmin"> Profile</router-link>
-        <router-link to="/visorLaPalma/login" @click="logout" class="headerLink" v-show="userAuthenticated">Logout</router-link>
+        <router-link to="/visorLaPalma" class="headerLink" v-show="noIsCurrentRoute(`/visorLaPalma`) && noSuperAdmin"> {{ $t('Header.visorLaPalma') }}</router-link> 
+        <router-link to="/visorLaPalma/login" class="headerLink" v-show="!userAuthenticated && noIsCurrentRoute(`/visorLaPalma/login`)"> {{ $t('Header.login') }}</router-link> 
+        <router-link to="/visorLaPalma/signup" class="headerLink" v-show="!userAuthenticated && noIsCurrentRoute(`/visorLaPalma/signup`)"> {{ $t('Header.signup') }}</router-link> 
+        <router-link to="/visorLaPalma/profile" class="headerLink" v-show="userAuthenticated && noIsCurrentRoute(`/visorLaPalma/profile`) && noSuperAdmin"> {{ $t('Header.profile') }}</router-link>
+        <router-link to="/visorLaPalma/login" @click="logout" class="headerLink" v-show="userAuthenticated">{{ $t('Header.logout') }}</router-link>
     </nav>
   </header>
 </template>

@@ -3,32 +3,32 @@
         <div v-show="!!authError">    
             <div class="alert">
                 <p v-if="authError === responseLoginControl.emptyFieldError">
-                    <strong>Error!</strong> campos Vacios
+                    <strong>{{ $t('Login.error.error') }}!</strong> {{ $t('Login.error.emptyField') }}
                 </p>
                 <p v-if="authError === responseLoginControl.loginError">
-                    <strong>Error!</strong> usuario o contraseña incorrectos
+                    <strong>{{ $t('Login.error.error') }}!</strong> {{ $t('Login.error.login') }}
                 </p>
                 <p v-if="authError === responseLoginControl.serverError">
-                    <strong>Error!</strong> error en el servidor
+                    <strong>{{ $t('Login.error.error') }}!</strong> {{ $t('Login.error.server') }}
                 </p>
             </div>
         </div>
 
         <div class="window form">
-            <h1>LOGIN</h1>
+            <h1>{{ $t('Login.titulo') }}</h1>
 
             <label class="label label-default" for="usuario">
-                Usuario:
+                {{ $t('Login.usuario') }}
             </label>
             <input type="text" id="usuario" class="form-control" v-model="usuario">
             
             <label class="label label-default" for="contraseña">
-                Contraseña:
+                {{ $t('Login.contraseña') }}
             </label>
             <input type="password" id="contraseña" class="form-control" v-model="contraseña"> 
 
             <button type="button" :disabled="authenticathing" class="btn btn-success" @click="login">
-                acceso
+                {{ $t('Login.boton') }}
             </button>
         </div>
     </div>
