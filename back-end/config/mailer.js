@@ -2,6 +2,18 @@ const nodemailer = require('nodemailer')
 const usuarios = require('../models/usuarios')
 const registrosIncidencias = require('../models/registrosIncidencias')
 
+const typeIncidence =
+{
+    'ACC': { name_es: 'Accidente de Trafico', name_en: 'Traffic Accident'},
+    'DER': { name_es: 'Derrumbe', name_en: 'Landslide'},
+    'INC': { name_es: 'Incendio', name_en: 'Fire'},
+    'INU': { name_es: 'Inundación', name_en: 'Flood'},
+    'CAL': { name_es: 'Calima', name_en: 'Calima'},
+    'ERU': { name_es: 'Erupción', name_en: 'Rash'},
+    'ESC': { name_es: 'Escape de gases', name_en: 'Gas exhaust'},
+    'OTR': { name_es: 'Otro', name_en: 'Other'},
+};
+
 const sendMail = (Mail, subject, mailBody) => {
 
     let transporter = nodemailer.createTransport({
@@ -36,18 +48,18 @@ const alarmaActivada_v1 = async (alarmaActivada, incidenciasCercanas) => {
             `<p>`+
                 "Hola "+usuario.Nombre+" "+usuario.Apellido+","+`<br> <br>`+
                 "Su alerta con nombre "+alarmaActivada.nombre+" ha sido activada por una incidencia a "+incidenciasCercanas[i].distancia+" m, con los siguientes datos:"+`<br>  &emsp;`+
-                    `<strong>`+" nombre = "+`</strong>`+incidenciasCercanas[i].nombre+`<br>  &emsp;`+
-                    `<strong>`+" tipo = "+`</strong>`+incidenciasCercanas[i].tipo+`<br>  &emsp;`+
-                    `<strong>`+"descripcion = "+`</strong>`+incidenciasCercanas[i].descripcion+`<br> <br>`+
+                    `<strong>`+" nombre = "+`</strong>`+incidenciasCercanas[i].nombre_es+`<br>  &emsp;`+
+                    `<strong>`+" tipo = "+`</strong>`+typeIncidence[incidenciasCercanas[i].tipo].name_es+`<br>  &emsp;`+
+                    `<strong>`+"descripcion = "+`</strong>`+incidenciasCercanas[i].descripcion_es+`<br> <br>`+
                     "gracias por su colaboración. Un saludo,"+`<br> <br>`+
                     `<strong>`+"TFG | La Palma"+`</strong>`+
             `</p>`+`<br> <hr> <br>`+
             `<p>`+
                 "Hello "+usuario.Nombre+" "+usuario.Apellido+","+`<br> <br>`+
                 "Your alert "+alarmaActivada.nombre+" was activated by a incedence "+incidenciasCercanas[i].distancia+" m away, with the following data:"+`<br>  &emsp;`+
-                    `<strong>`+" name = "+`</strong>`+incidenciasCercanas[i].nombre+`<br>  &emsp;`+
-                    `<strong>`+" type = "+`</strong>`+incidenciasCercanas[i].tipo+`<br>  &emsp;`+
-                    `<strong>`+"description = "+`</strong>`+incidenciasCercanas[i].descripcion+`<br> <br>`+
+                    `<strong>`+" name = "+`</strong>`+incidenciasCercanas[i].nombre_en+`<br>  &emsp;`+
+                    `<strong>`+" type = "+`</strong>`+typeIncidence[incidenciasCercanas[i].tipo].name_en+`<br>  &emsp;`+
+                    `<strong>`+"description = "+`</strong>`+incidenciasCercanas[i].descripcion_en+`<br> <br>`+
                     "Thank you for your cooperation. All the best,"+`<br> <br>`+
                     `<strong>`+"TFG | La Palma"+`</strong>`+
             `</p>`
@@ -63,18 +75,18 @@ const alarmaActivada_v2 = async (alarmaActivada, incidenciaCercana) => {
         `<p>`+
             "Hola "+usuario.Nombre+" "+usuario.Apellido+","+`<br> <br>`+
             "Su alerta con nombre "+alarmaActivada.nombre+" ha sido activada por una incidencia a "+alarmaActivada.distancia+" m, con los siguientes datos:"+`<br>  &emsp;`+
-                `<strong>`+" nombre = "+`</strong>`+incidenciaCercana.nombre+`<br>  &emsp;`+
-                `<strong>`+" tipo = "+`</strong>`+incidenciaCercana.tipo+`<br>  &emsp;`+
-                `<strong>`+"descripcion = "+`</strong>`+incidenciaCercana.descripcion+`<br> <br>`+
+                `<strong>`+" nombre = "+`</strong>`+incidenciaCercana.nombre_es+`<br>  &emsp;`+
+                `<strong>`+" tipo = "+`</strong>`+typeIncidence[incidenciaCercana.tipo].name_es+`<br>  &emsp;`+
+                `<strong>`+"descripcion = "+`</strong>`+incidenciaCercana.descripcion_es+`<br> <br>`+
                 "gracias por su colaboración. Un saludo,"+`<br> <br>`+
                 `<strong>`+"TFG | La Palma"+`</strong>`+
         `</p>`+`<br> <hr> <br>`+
         `<p>`+
             "Hello "+usuario.Nombre+" "+usuario.Apellido+","+`<br> <br>`+
             "Your alert "+alarmaActivada.nombre+" was activated by a incedence "+alarmaActivada.distancia+" m away, with the following data:"+`<br>  &emsp;`+
-                `<strong>`+" name = "+`</strong>`+incidenciaCercana.nombre+`<br>  &emsp;`+
-                `<strong>`+" type = "+`</strong>`+incidenciaCercana.tipo+`<br>  &emsp;`+
-                `<strong>`+"description = "+`</strong>`+incidenciaCercana.descripcion+`<br> <br>`+
+                `<strong>`+" name = "+`</strong>`+incidenciaCercana.nombre_en+`<br>  &emsp;`+
+                `<strong>`+" type = "+`</strong>`+typeIncidence[incidenciaCercana.tipo].name_en+`<br>  &emsp;`+
+                `<strong>`+"description = "+`</strong>`+incidenciaCercana.descripcion_en+`<br> <br>`+
                 "Thank you for your cooperation. All the best,"+`<br> <br>`+
                 `<strong>`+"TFG | La Palma"+`</strong>`+
         `</p>`
@@ -91,18 +103,18 @@ const incidenciaValidada = async (incidencia) => {
                 `<p>`+
                     "Hola "+usuario.Nombre+" "+usuario.Apellido+","+`<br> <br>`+
                     "su Incidencia ha sido validada como: "+`<br>  &emsp;`+
-                        `<strong>`+" nombre = "+`</strong>`+incidencia.nombre+`<br>  &emsp;`+
-                        `<strong>`+" tipo = "+`</strong>`+incidencia.tipo+`<br>  &emsp;`+
-                        `<strong>`+"descripcion = "+`</strong>`+incidencia.descripcion+`<br> <br>`+
+                        `<strong>`+" nombre = "+`</strong>`+incidencia.nombre_es+`<br>  &emsp;`+
+                        `<strong>`+" tipo = "+`</strong>`+typeIncidence[incidencia.tipo].name_es+`<br>  &emsp;`+
+                        `<strong>`+"descripcion = "+`</strong>`+incidencia.descripcion_es+`<br> <br>`+
                         "gracias por su colaboración. Un saludo,"+`<br> <br>`+
                         `<strong>`+"TFG | La Palma"+`</strong>`+
                 `</p>`+`<br> <hr> <br>`+
                 `<p>`+
                     "Hello "+usuario.Nombre+" "+usuario.Apellido+","+`<br> <br>`+
                     "Your Incident has been validated as: "+`<br>  &emsp;`+
-                        `<strong>`+" name = "+`</strong>`+incidencia.nombre+`<br>  &emsp;`+
-                        `<strong>`+" type = "+`</strong>`+incidencia.tipo+`<br>  &emsp;`+
-                        `<strong>`+"description = "+`</strong>`+incidencia.descripcion+`<br> <br>`+
+                        `<strong>`+" name = "+`</strong>`+incidencia.nombre_en+`<br>  &emsp;`+
+                        `<strong>`+" type = "+`</strong>`+typeIncidence[incidencia.tipo].name_en+`<br>  &emsp;`+
+                        `<strong>`+"description = "+`</strong>`+incidencia.descripcion_en+`<br> <br>`+
                         "Thank you for your cooperation. All the best,"+`<br> <br>`+
                         `<strong>`+"TFG | La Palma"+`</strong>`+
                 `</p>`

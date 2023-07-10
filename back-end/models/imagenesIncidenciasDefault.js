@@ -6,14 +6,14 @@ const ImagenesDefaultSchema = new Schema({
         type: String,
         required: true,
         enum: [
-            'Accidente de Trafico', 
-            'Derrumbe',
-            'Incendio',
-            'Inundación',
-            'Calima',
-            'Erupción',
-            'Escape de gases',
-            'Otro',
+            'ACC', 
+            'DER',
+            'INC',
+            'INU',
+            'CAL',
+            'ERU',
+            'ESC',
+            'OTR',
          ]
     },
     Imagen: {

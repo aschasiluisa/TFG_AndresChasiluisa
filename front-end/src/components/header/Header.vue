@@ -15,10 +15,10 @@
     </div>
 
     <nav>
-        <router-link to="/visorLaPalma" class="headerLink" v-show="noIsCurrentRoute(`/visorLaPalma`) && noSuperAdmin"> {{ $t('Header.visorLaPalma') }}</router-link> 
+        <router-link to="/visorLaPalma" class="headerLink" v-show="noIsCurrentRoute(`/visorLaPalma`) && !getSuper"> {{ $t('Header.visorLaPalma') }}</router-link> 
         <router-link to="/visorLaPalma/login" class="headerLink" v-show="!userAuthenticated && noIsCurrentRoute(`/visorLaPalma/login`)"> {{ $t('Header.login') }}</router-link> 
         <router-link to="/visorLaPalma/signup" class="headerLink" v-show="!userAuthenticated && noIsCurrentRoute(`/visorLaPalma/signup`)"> {{ $t('Header.signup') }}</router-link> 
-        <router-link to="/visorLaPalma/profile" class="headerLink" v-show="userAuthenticated && noIsCurrentRoute(`/visorLaPalma/profile`) && noSuperAdmin"> {{ $t('Header.profile') }}</router-link>
+        <router-link to="/visorLaPalma/profile" class="headerLink" v-show="userAuthenticated && noIsCurrentRoute(`/visorLaPalma/profile`) && !getSuper"> {{ $t('Header.profile') }}</router-link>
         <router-link to="/visorLaPalma/login" @click="logout" class="headerLink" v-show="userAuthenticated">{{ $t('Header.logout') }}</router-link>
     </nav>
   </header>

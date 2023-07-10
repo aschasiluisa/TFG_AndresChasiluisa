@@ -14,7 +14,12 @@
     </tr>
 
     <tr class="inputBaseMap">
-      {{ selectedBaseMap.name }}
+      <div v-if="getIdioma === Idiomas.ES">
+        {{ selectedBaseMap.name_es }}
+      </div>
+      <div v-else-if="getIdioma === Idiomas.EN">
+        {{ selectedBaseMap.name_en }}
+      </div>
       <div v-if="!showMapOptions">
         <button class="btn dropdown-toggle" @click="toggleMapOptions" style="color: rgb(0, 138, 184);" ></button>
       </div>
@@ -25,8 +30,13 @@
 
     <div v-if="showMapOptions">
       <div v-for="map in baseMaps" :key="map.id" @click="selectBaseMap(map)">
-        <tr v-if="selectedBaseMap.name != map.name" class="desplegable">
-          {{ map.name }}
+        <tr v-if="selectedBaseMap.id != map.id" class="desplegable">
+          <div v-if="getIdioma === Idiomas.ES">
+            {{ map.name_es }}
+          </div>
+          <div v-else-if="getIdioma === Idiomas.EN">
+            {{ map.name_en }}
+          </div>
         </tr>
       </div>
     </div>
@@ -40,8 +50,15 @@
       <tr v-if="layer.id != 3 || userAuthenticated" class="inputLayerMap">
 
         <div class="styled-input-single">
-          <input type="checkbox" :id="layer.name"  v-model="layersControl[layer.id]" />
-          <label :for="layer.name">{{ layer.name }}</label>
+          <input type="checkbox" :id="layer.name_es"  v-model="layersControl[layer.id]" />
+          <label :for="layer.name_es">
+            <div v-if="getIdioma === Idiomas.ES">
+              {{ layer.name_es }}
+            </div>
+            <div v-else-if="getIdioma === Idiomas.EN">
+              {{ layer.name_en }}
+            </div>
+          </label>
         </div>
         <div v-show="getElementInfoID == layer.id">
           <div v-if="layerID == layer.id" class="dropup">

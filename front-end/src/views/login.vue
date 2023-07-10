@@ -52,14 +52,14 @@
                 userAuthenticated,
                 authenticathing,
                 authResponse,
-                getRole,
+                getSuper,
             } = useAuthStore();
 
             const authError = computed(()=>(authResponse.value && authResponse.value !== responseLoginControl.ok)? authResponse.value:undefined);
             
             watch(userAuthenticated, () =>{
                 if(userAuthenticated.value){
-                    if(getRole.value === 5) router.push({ name: "SuperAdminControl" })
+                    if(getSuper.value) router.push({ name: "SuperAdminControl" })
                     else router.push({ name: "VisorLaPalma" })
                 }
             })

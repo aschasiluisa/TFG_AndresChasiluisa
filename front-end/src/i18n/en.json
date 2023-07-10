@@ -30,22 +30,14 @@
   "CrearIncidencia": {
     "titulo": "NEW INCIDENCE",
     "nombre": "Name",
+    "nombre_es": "Spanish name",
+    "nombre_en": "English name",
     "tipo": "Incidence type",
-
-    "tipoIncidencia": {
-      "accidente": "Traffic Accident",
-      "derrumbe": "Landslide",
-      "incendio": "Fire",
-      "inundacion": "Flood",
-      "calima": "Calima",
-      "erupcion": "Rash",
-      "escape": "Gas Exhaust",
-      "otro": "Other"
-    },
-
     "coordenadas": "Coordinates",
     "imagen": "Image",
     "descripcion": "Description",
+    "descripcion_es": "Spanish description",
+    "descripcion_en": "English description",
     "coordenadasPlaceholder": "latitude,longitude",
     "enviar": "Send Incidence",
 
@@ -61,23 +53,13 @@
 
   "EditarIncidencia": {
     "titulo": "EDIT INCIDENCE",
-    "nombre": "Name",
+    "nombre_es": "Spanish name",
+    "nombre_en": "English name",
     "tipo": "Incidence type",
-
-    "tipoIncidencia": {
-      "accidente": "Traffic Accident",
-      "derrumbe": "Landslide",
-      "incendio": "Fire",
-      "inundacion": "Flood",
-      "calima": "Calima",
-      "erupcion": "Rash",
-      "escape": "Gas Exhaust",
-      "otro": "Other"
-    },
-
     "coordenadas": "Coordinates",
     "imagen": "Image",
-    "descripcion": "Description",
+    "descripcion_es": "Spanish description",
+    "descripcion_en": "English description",
     "enviar": "Save Changes and Validate Incidence",
     "borrar": "Delete Incidence",
 

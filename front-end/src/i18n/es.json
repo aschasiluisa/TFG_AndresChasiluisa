@@ -30,22 +30,14 @@
   "CrearIncidencia": {
     "titulo": "NUEVA INCIDENCIA",
     "nombre": "Nombre",
+    "nombre_es": "Nombre en español",
+    "nombre_en": "Nombre en ingles",
     "tipo": "Tipo de incidencia",
-
-    "tipoIncidencia": {
-      "accidente": "Accidente de Trafico",
-      "derrumbe": "Derrumbe",
-      "incendio": "Incendio",
-      "inundacion": "Inundación",
-      "calima": "Calima",
-      "erupcion": "Erupción",
-      "escape": "Escape de gases",
-      "otro": "Otro"
-    },
-
     "coordenadas": "Coordenadas",
     "imagen": "Imagen",
     "descripcion": "Descripción",
+    "descripcion_es": "Descripción en español",
+    "descripcion_en": "Descripción en ingles",
     "coordenadasPlaceholder": "latitud,longitud",
     "enviar": "Enviar Incidencia",
 
@@ -61,23 +53,13 @@
 
   "EditarIncidencia": {
     "titulo": "EDITAR INCIDENCIA",
-    "nombre": "Nombre",
+    "nombre_es": "Nombre en español",
+    "nombre_en": "Nombre en ingles",
     "tipo": "Tipo de incidencia",
-
-    "tipoIncidencia": {
-      "accidente": "Accidente de Trafico",
-      "derrumbe": "Derrumbe",
-      "incendio": "Incendio",
-      "inundacion": "Inundación",
-      "calima": "Calima",
-      "erupcion": "Erupción",
-      "escape": "Escape de gases",
-      "otro": "Otro"
-    },
-
     "coordenadas": "Coordenadas",
     "imagen": "Imagen",
-    "descripcion": "Descripción",
+    "descripcion_es": "Descripción en español",
+    "descripcion_en": "Descripción en ingles",
     "enviar": "Guardar Cambios y Validar Incidencia",
     "borrar": "Borrar Incidencia",
 

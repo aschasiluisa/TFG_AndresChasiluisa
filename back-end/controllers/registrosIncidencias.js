@@ -62,19 +62,73 @@ const getRegistro = async (req,res) => {
 
     if(id){
         try{
-            const registroInfo = await registrosIncidencias.findById(id).select('Nombre Imagen Fecha Tipo Descripcion Latitud Longitud Validada')
+            const registroInfo = await registrosIncidencias.findById(id).select('Nombre Nombre_es Nombre_en Imagen Fecha Tipo Descripcion Descripcion_es Descripcion_en Latitud Longitud Validada')
 
             if(!registroInfo.Imagen.data){
-                try{
+                if(!registroInfo.Nombre_es){
+                    try{
+                        const imagenDefault = await ImagenesDefault.find({Tipo: registroInfo.Tipo }).select('Imagen')
+    
+                        if(registroInfo && imagenDefault){
+                            res.json({
+                                result: true,
+                                data: {
+                                    _id: registroInfo._id,
+                                    Imagen: imagenDefault[0].Imagen,
+                                    Nombre: registroInfo.Nombre,
+                                    Fecha: registroInfo.Fecha,
+                                    Tipo: registroInfo.Tipo,
+                                    Latitud: registroInfo.Latitud,
+                                    Longitud: registroInfo.Longitud,
+                                    Descripcion: registroInfo.Descripcion,
+                                    Validada: registroInfo.Validada
+                                }
+                            });            
+                        } else {
+                            res.status(200).json(jsonError.serverError)
+                        }
+    
+                    } catch (error) {
+                        res.status(200).json(jsonError.serverError)
+                    }
+    
+                } else {
+                    try{
+                        const imagenDefault = await ImagenesDefault.find({Tipo: registroInfo.Tipo }).select('Imagen')
 
-                    const imagenDefault = await ImagenesDefault.find({Tipo: registroInfo.Tipo }).select('Imagen')
+                        if(registroInfo && imagenDefault){
+                            res.json({
+                                result: true,
+                                data: {
+                                    _id: registroInfo._id,
+                                    Imagen: imagenDefault[0].Imagen,
+                                    Nombre_es: registroInfo.Nombre_es,
+                                    Nombre_en: registroInfo.Nombre_en,
+                                    Fecha: registroInfo.Fecha,
+                                    Tipo: registroInfo.Tipo,
+                                    Latitud: registroInfo.Latitud,
+                                    Longitud: registroInfo.Longitud,
+                                    Descripcion_es: registroInfo.Descripcion_es,
+                                    Descripcion_en: registroInfo.Descripcion_en,
+                                    Validada: registroInfo.Validada
+                                }
+                            });            
+                        } else {
+                            res.status(200).json(jsonError.serverError)
+                        }
 
-                    if(registroInfo && imagenDefault){
+                    } catch (error) {
+                        res.status(200).json(jsonError.serverError)
+                    }
+                }
+            } else {
+                if(!registroInfo.Nombre_es){
+                    if(registroInfo){
                         res.json({
                             result: true,
                             data: {
                                 _id: registroInfo._id,
-                                Imagen: imagenDefault[0].Imagen,
+                                Imagen: registroInfo.Imagen,
                                 Nombre: registroInfo.Nombre,
                                 Fecha: registroInfo.Fecha,
                                 Tipo: registroInfo.Tipo,
@@ -86,20 +140,28 @@ const getRegistro = async (req,res) => {
                         });            
                     } else {
                         res.status(200).json(jsonError.serverError)
-                    }
-
-                } catch (error) {
-                    res.status(200).json(jsonError.serverError)
-                }
-
-            } else {
-                if(registroInfo){
-                    res.json({
-                        result: true,
-                        data: registroInfo
-                    });            
+                    }            
                 } else {
-                    res.status(200).json(jsonError.serverError)
+                    if(registroInfo){
+                        res.json({
+                            result: true,
+                            data: {
+                                _id: registroInfo._id,
+                                Imagen: registroInfo.Imagen,
+                                Nombre_es: registroInfo.Nombre_es,
+                                Nombre_en: registroInfo.Nombre_en,
+                                Fecha: registroInfo.Fecha,
+                                Tipo: registroInfo.Tipo,
+                                Latitud: registroInfo.Latitud,
+                                Longitud: registroInfo.Longitud,
+                                Descripcion_es: registroInfo.Descripcion_es,
+                                Descripcion_en: registroInfo.Descripcion_en,
+                                Validada: registroInfo.Validada
+                            }
+                        });            
+                    } else {
+                        res.status(200).json(jsonError.serverError)
+                    } 
                 }
             }
         } catch (error) {
@@ -115,15 +177,13 @@ const postRegistro = async (req, res) => {
         if( bbox[0] < req.body.latitud || req.body.latitud < bbox[2] || bbox[1] < req.body.longitud || req.body.longitud < bbox[3]){
 
             let nuevaIncidencia = new registrosIncidencias({
-                Nombre : req.body.nombre,
-                Fecha : moment().format('YYYY-MM-DD HH:mm'),
+                Fecha : moment().format('DD/MM/YYYY HH:mm'),
                 Tipo : req.body.tipo,
-                Descripcion : req.body.descripcion,
                 Latitud : req.body.latitud,
                 Longitud : req.body.longitud,
                 Usuario : req.body.usuario,
             })
-    
+            
             if(req.files){
                 if(allowedTypes.includes(req.files.imagen.mimetype)){
                     nuevaIncidencia.Imagen.data = req.files.imagen.data;
@@ -134,53 +194,65 @@ const postRegistro = async (req, res) => {
             }
  
             if(req.body.rol == 1){
+                if( req.body.nombre_es && req.body.nombre_en && (req.body.descripcion_es && req.body.descripcion_en) || (!req.body.descripcion_es && !req.body.descripcion_en)){
+                    
+                    nuevaIncidencia.Administrador = req.body.usuario;
+                    nuevaIncidencia.Validada = true;
 
-                nuevaIncidencia.Administrador = req.body.usuario;
-                nuevaIncidencia.Validada = true;
+                    nuevaIncidencia.Nombre_es = req.body.nombre_es;
+                    nuevaIncidencia.Nombre_en = req.body.nombre_en;
 
-                try{
-                    Alarmas = await registrosAlarmas.find().select('_id Nombre Rango Latitud Longitud Usuario');
-    
-                } catch {
-                    res.status(200).json(jsonError.serverError)
-                }
-    
-                const puntoIncidencia = {
-                    latitud: req.body.latitud,
-                    longitud: req.body.longitud
-                };
-    
-                let alarmasActivadas = [];
-    
-                Alarmas.forEach((alarma) => {
-                    const distancia = calcularDistancia(puntoIncidencia.latitud, puntoIncidencia.longitud, alarma.Latitud, alarma.Longitud);
+                    nuevaIncidencia.Descripcion_es = req.body.descripcion_es;
+                    nuevaIncidencia.Descripcion_en = req.body.descripcion_en;
 
-                    if (distancia < alarma.Rango) {
-                        alarmasActivadas.push({
-                          id: alarma._id,
-                          nombre: alarma.Nombre,
-                          usuario: alarma.Usuario,
-                          distancia: parseInt(distancia)
-                        });
+                    try{
+                        Alarmas = await registrosAlarmas.find().select('_id Nombre Rango Latitud Longitud Usuario');
+        
+                    } catch {
+                        res.status(200).json(jsonError.serverError)
                     }
-                });
-    
-                if(alarmasActivadas.length != 0){
-                    for (let i = 0; i < alarmasActivadas.length; i++) {
+        
+                    const puntoIncidencia = {
+                        latitud: req.body.latitud,
+                        longitud: req.body.longitud
+                    };
+        
+                    let alarmasActivadas = [];
+        
+                    Alarmas.forEach((alarma) => {
+                        const distancia = calcularDistancia(puntoIncidencia.latitud, puntoIncidencia.longitud, alarma.Latitud, alarma.Longitud);
 
-                        mailer.alarmaActivada_v2(alarmasActivadas[i], req.body);
+                        if (distancia < alarma.Rango) {
+                            alarmasActivadas.push({
+                            id: alarma._id,
+                            nombre: alarma.Nombre,
+                            usuario: alarma.Usuario,
+                            distancia: parseInt(distancia)
+                            });
+                        }
+                    });
+        
+                    if(alarmasActivadas.length != 0){
+                        for (let i = 0; i < alarmasActivadas.length; i++) {
 
-                        try {
+                            mailer.alarmaActivada_v2(alarmasActivadas[i], req.body);
 
-                            await registrosAlarmas.findOneAndUpdate({_id: alarmasActivadas[i].id},{
-                                Activada: true,
-                            }, { new: true })
+                            try {
+                                await registrosAlarmas.findOneAndUpdate({_id: alarmasActivadas[i].id},{
+                                    Activada: true,
+                                }, { new: true })
 
-                        } catch {
-                            res.status(200).json(jsonError.serverError)
+                            } catch {
+                                res.status(200).json(jsonError.serverError)
+                            }
                         }
                     }
+                } else {
+                    res.status(200).json(jsonError.emptyFieldError)
                 }
+            } else if(req.body.rol === 0) {
+                nuevaIncidencia.Nombre = req.body.nombre;
+                nuevaIncidencia.Descripcion = req.body.descripcion;
             }
     
             await nuevaIncidencia.save()
@@ -202,14 +274,89 @@ const postRegistro = async (req, res) => {
 const updateRegistro = async (req, res) => {
     if(req.body.rol === 1){
         try {
-            if( bbox[0] < req.body.latitud || req.body.latitud < bbox[2] || bbox[1] < req.body.longitud || req.body.longitud < bbox[3]){
-                if(req.files){
-                    if(allowedTypes.includes(req.files.imagen.mimetype)){
-
+            if( req.body.nombre_es && req.body.nombre_en && (req.body.descripcion_es && req.body.descripcion_en) || (!req.body.descripcion_es && !req.body.descripcion_en)){
+                if( bbox[0] < req.body.latitud || req.body.latitud < bbox[2] || bbox[1] < req.body.longitud || req.body.longitud < bbox[3]){
+                    if(req.files){
+                        if(allowedTypes.includes(req.files.imagen.mimetype)){
+    
+                            if(req.body.validada === "false"){
+                                mailer.incidenciaValidada(req.body);
+                            }
+    
+                            try{
+                                Alarmas = await registrosAlarmas.find().select('_id Nombre Rango Latitud Longitud Usuario');
+                            } catch {
+                                res.status(200).json(jsonError.serverError)
+                            }
+                
+                            const puntoIncidencia = {
+                                latitud: req.body.latitud,
+                                longitud: req.body.longitud
+                            };
+                
+                            let alarmasActivadas = [];
+                
+                            Alarmas.forEach((alarma) => {
+                                const distancia = calcularDistancia(puntoIncidencia.latitud, puntoIncidencia.longitud, alarma.Latitud, alarma.Longitud);
+            
+                                if (distancia < alarma.Rango) {
+                                    alarmasActivadas.push({
+                                      id: alarma._id,
+                                      nombre: alarma.Nombre,
+                                      usuario: alarma.Usuario,
+                                      distancia: parseInt(distancia)
+                                    });
+                                }
+                            });
+                
+                            if(alarmasActivadas.length != 0){
+                                for (let i = 0; i < alarmasActivadas.length; i++) {
+                                    mailer.alarmaActivada_v2(alarmasActivadas[i], req.body);
+            
+                                    try {
+            
+                                        await registrosAlarmas.findOneAndUpdate({_id: alarmasActivadas[i].id},{
+                                            Activada: true,
+                                        }, { new: true })
+            
+                                    } catch {
+                                        res.status(200).json(jsonError.serverError)
+                                    }
+            
+                                }
+                            }
+        
+                             await registrosIncidencias.findOneAndUpdate({ _id: req.body.id }, {
+                                Nombre_es : req.body.nombre_es,
+                                Nombre_en : req.body.nombre_en,
+                                Imagen : {
+                                    data : req.files.imagen.data,
+                                    contentType : req.files.imagen.mimetype,
+                                },
+                                Tipo : req.body.tipo,
+                                Descripcion_es : req.body.descripcion_es,
+                                Descripcion_en : req.body.descripcion_en,
+                                Latitud : req.body.latitud,
+                                Longitud : req.body.longitud,
+                                Administrador : req.body.usuario,
+                                Validada : true,
+                            }, { new: true })
+    
+                            .then (incidencia =>{
+                                res.json({
+                                    result: true,
+                                })
+                            })
+                           
+                        } else {
+                            res.status(200).json(jsonError.imageFormatError)
+                        }
+                    }  else {
+    
                         if(req.body.validada === "false"){
                             mailer.incidenciaValidada(req.body);
                         }
-
+    
                         try{
                             Alarmas = await registrosAlarmas.find().select('_id Nombre Rango Latitud Longitud Usuario');
                         } catch {
@@ -238,6 +385,7 @@ const updateRegistro = async (req, res) => {
             
                         if(alarmasActivadas.length != 0){
                             for (let i = 0; i < alarmasActivadas.length; i++) {
+        
                                 mailer.alarmaActivada_v2(alarmasActivadas[i], req.body);
         
                                 try {
@@ -253,98 +401,30 @@ const updateRegistro = async (req, res) => {
                             }
                         }
     
-                         await registrosIncidencias.findOneAndUpdate({ _id: req.body.id }, {
-                            Nombre : req.body.nombre,
-                            Imagen : {
-                                data : req.files.imagen.data,
-                                contentType : req.files.imagen.mimetype,
-                            },
+                        await registrosIncidencias.findOneAndUpdate({ _id: req.body.id }, {
+                            Nombre_es : req.body.nombre_es,
+                            Nombre_en : req.body.nombre_en,
                             Tipo : req.body.tipo,
-                            Descripcion : req.body.descripcion,
+                            Descripcion_es : req.body.descripcion_es,
+                            Descripcion_en : req.body.descripcion_en,
                             Latitud : req.body.latitud,
                             Longitud : req.body.longitud,
                             Administrador : req.body.usuario,
                             Validada : true,
                         }, { new: true })
-
+    
                         .then (incidencia =>{
                             res.json({
                                 result: true,
                             })
                         })
-                       
-                    } else {
-                        res.status(200).json(jsonError.imageFormatError)
-                    }
-                }  else {
-
-                    if(req.body.validada === "false"){
-                        mailer.incidenciaValidada(req.body);
-                    }
-
-                    try{
-                        Alarmas = await registrosAlarmas.find().select('_id Nombre Rango Latitud Longitud Usuario');
-                    } catch {
-                        res.status(200).json(jsonError.serverError)
-                    }
+                    } 
         
-                    const puntoIncidencia = {
-                        latitud: req.body.latitud,
-                        longitud: req.body.longitud
-                    };
-        
-                    let alarmasActivadas = [];
-        
-                    Alarmas.forEach((alarma) => {
-                        const distancia = calcularDistancia(puntoIncidencia.latitud, puntoIncidencia.longitud, alarma.Latitud, alarma.Longitud);
-    
-                        if (distancia < alarma.Rango) {
-                            alarmasActivadas.push({
-                              id: alarma._id,
-                              nombre: alarma.Nombre,
-                              usuario: alarma.Usuario,
-                              distancia: parseInt(distancia)
-                            });
-                        }
-                    });
-        
-                    if(alarmasActivadas.length != 0){
-                        for (let i = 0; i < alarmasActivadas.length; i++) {
-    
-                            mailer.alarmaActivada_v2(alarmasActivadas[i], req.body);
-    
-                            try {
-    
-                                await registrosAlarmas.findOneAndUpdate({_id: alarmasActivadas[i].id},{
-                                    Activada: true,
-                                }, { new: true })
-    
-                            } catch {
-                                res.status(200).json(jsonError.serverError)
-                            }
-    
-                        }
-                    }
-
-                    await registrosIncidencias.findOneAndUpdate({ _id: req.body.id }, {
-                        Nombre : req.body.nombre,
-                        Tipo : req.body.tipo,
-                        Descripcion : req.body.descripcion,
-                        Latitud : req.body.latitud,
-                        Longitud : req.body.longitud,
-                        Administrador : req.body.usuario,
-                        Validada : true,
-                    }, { new: true })
-
-                    .then (incidencia =>{
-                        res.json({
-                            result: true,
-                        })
-                    })
-                } 
-    
+                } else {
+                    res.status(200).json(jsonError.coorBboxError)
+                }
             } else {
-                res.status(200).json(jsonError.coorBboxError)
+                res.status(200).json(jsonError.emptyFieldError)
             }
         }
         catch(error) {

@@ -29,6 +29,10 @@ export const useAuthStore = () => {
 
         getRole: computed<number>(() => store.getters['auth/getRole']),
 
+        getAdmin: computed<boolean>(() => store.getters['auth/getAdmin']),
+
+        getSuper: computed<boolean>(() => store.getters['auth/getSuper']),
+
         // ACTIONS //
         login: (usuario: string, contraseña: string) => 
                 store.dispatch('auth/login', { usuario, contraseña }),

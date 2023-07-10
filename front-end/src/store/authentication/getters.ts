@@ -28,6 +28,14 @@ const getters: GetterTree<AuthenticationState, StateInterface> = {
             return undefined
         }
     },
+
+    getAdmin(state) {
+        return state.role === roles.admin
+    },
+
+    getSuper(state) {
+        return state.role === roles.super
+    },
 }
 
 export default getters

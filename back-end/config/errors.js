@@ -69,6 +69,11 @@ const rangoError = {
     msg : "Wrong rango value error",
 }
 
+const emptyFieldError = {
+    result : false,
+    msg : "Mandatory Field empty",
+}
+
 module.exports = {
     serverError,
     usernameError,
@@ -82,4 +87,5 @@ module.exports = {
     incidenceFindError,
     alarmFindError,
     rangoError,
+    emptyFieldError,
 }

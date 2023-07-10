@@ -10,7 +10,7 @@ export const useMapStore = () => {
          // STATE //
         baseMaps: computed(() => store.state.map.baseMaps),
 
-        selectedBaseMap: computed(() => store.state.map.selectedBaseMap),
+        selectedBaseMap: computed(() => store.state.map.selectedID_BaseMap),
 
         baseMapsConnections: computed(() => store.state.map.baseMapsConnections),
 
@@ -35,6 +35,8 @@ export const useMapStore = () => {
 
         getBbox: computed<number[]>(()=> store.getters['map/getBbox']),
 
+        getTypeIncidence: computed<{ [key: string]: { name_es: string, name_en: string} }>(() => store.getters['map/getTypeIncidence']),
+
         // ACTIONS //
         registrosCalidadAire:() => store.dispatch('map/registrosCalidadAire'),
 
@@ -51,20 +53,23 @@ export const useMapStore = () => {
         nuevaIncidencia: (token: string, nombre: string, tipo: string, coordenadas: string, imagen: File, descripcion: string, bbox: number[]) => 
         store.dispatch('map/nuevaIncidencia', {token, nombre, tipo, coordenadas, imagen, descripcion, bbox }),
 
+        nuevaIncidenciaAdmin: (token: string, nombre_es: string, nombre_en: string, tipo: string, coordenadas: string, imagen: File, descripcion_es: string, descripcion_en: string, bbox: number[]) => 
+        store.dispatch('map/nuevaIncidenciaAdmin', {token, nombre_es, nombre_en, tipo, coordenadas, imagen, descripcion_es, descripcion_en, bbox }),
+
         nuevaAlarma: (token: string, nombre: string, rango: number, coordenadas: string, bbox: number[]) => 
         store.dispatch('map/nuevaAlarma', {token, nombre, rango, coordenadas, bbox}),
 
-        updateIncidencia: (token: string, id: string, nombre: string, tipo: string, coordenadas: string, imagen: File | undefined, descripcion: string, validada: boolean, bbox: number[]) => 
-        store.dispatch('map/updateIncidencia', {token, id, nombre, tipo, coordenadas, imagen, descripcion, validada, bbox }),
+        updateIncidencia: (token: string, id: string, nombre_es: string, nombre_en: string, tipo: string, coordenadas: string, imagen: File | undefined, descripcion_es: string, descripcion_en: string, validada: boolean, bbox: number[]) => 
+        store.dispatch('map/updateIncidencia', {token, id, nombre_es, nombre_en, tipo, coordenadas, imagen, descripcion_es, descripcion_en, validada, bbox }),
 
         resetAlarma: (token: string, id: string) => store.dispatch('map/resetAlarma', {token, id}),
 
         deleteIncidencia: (token: string, id: string, validada: boolean, nombre: string) => store.dispatch('map/deleteIncidencia', { token, id, validada, nombre}),
 
-        deleteAlarma: (token: string, id: string) => store.dispatch('map/deleteAlarma', { token, id}),
+        deleteAlarma: (token: string, id: string) => store.dispatch('map/deleteAlarma', { token, id }),
 
         //  MUTATIONS //
-        setBaseMap: (map: { id: number, name: string }) => store.commit('map/setBaseMap', map),
+        setBaseMap: (map: { id: number, name_es: string, name_en: string }) => store.commit('map/setBaseMap', map),
 
         resetLayersControl: () => store.commit('map/resetLayersControl'),
 

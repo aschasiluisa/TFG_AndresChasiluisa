@@ -4,7 +4,17 @@ Schema = mongoose.Schema
 const registrosIncidenciasSchema = new Schema({
     Nombre: {
 		type: String,
-		required: true, 
+		required: false, 
+		max: 100
+	},
+    Nombre_es: {
+		type: String,
+		required: false, 
+		max: 100
+	},
+    Nombre_en: {
+		type: String,
+		required: false, 
 		max: 100
 	},
     Imagen: {
@@ -20,17 +30,27 @@ const registrosIncidenciasSchema = new Schema({
         type: String,
         required: true,
         enum: [
-            'Accidente de Trafico', 
-            'Derrumbe',
-            'Incendio',
-            'Inundación',
-            'Calima',
-            'Erupción',
-            'Escape de gases',
-            'Otro',
+            'ACC', 
+            'DER',
+            'INC',
+            'INU',
+            'CAL',
+            'ERU',
+            'ESC',
+            'OTR',
          ]
     },
     Descripcion: {
+		type: String,
+		required: false, 
+		max: 1000
+	},
+    Descripcion_es: {
+		type: String,
+		required: false, 
+		max: 1000
+	},
+    Descripcion_en: {
 		type: String,
 		required: false, 
 		max: 1000

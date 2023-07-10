@@ -26,6 +26,10 @@ const getters: GetterTree<MapState, StateInterface> = {
 
     getBbox(state){
         return state.bbox;
+    },
+
+    getTypeIncidence(state){
+        return state.typeIncidence;
     }
 }
 

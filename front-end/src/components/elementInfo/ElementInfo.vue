@@ -7,7 +7,7 @@
     </h6>
     <p>
         <strong> {{ $t('ElementInfo.fecha') }}: </strong>
-        {{ getRegistroInfo.Fecha.slice(0, -7) }}
+        {{ getRegistroInfo.Fecha }}
     </p>
     <p>
         <strong> {{ $t('ElementInfo.temperatura') }}: </strong>
@@ -38,7 +38,14 @@
   <div v-if="getElementInfoID == 2 && getRegistroInfo" class="containerIncidenciasInfo">
     <div>
         <p>
-            <strong> {{ getRegistroInfo.Nombre }} </strong>
+            <strong> 
+                <div v-if="getIdioma === Idiomas.ES">
+                    {{ Nombre_es }}
+                </div>
+                <div v-else-if="getIdioma === Idiomas.EN">
+                    {{ Nombre_en }}
+                </div>
+             </strong>
         </p>
         <p>
             <strong> {{ $t('ElementInfo.fecha') }}: </strong>
@@ -46,7 +53,12 @@
         </p>
         <p>
             <strong> {{ $t('ElementInfo.tipo') }}: </strong>
-            {{ getRegistroInfo.Tipo }}
+            <span v-if="getIdioma === Idiomas.ES">
+                {{ getTypeIncidence[getRegistroInfo.Tipo].name_es }}
+            </span>
+            <span v-else-if="getIdioma === Idiomas.EN">
+                {{ getTypeIncidence[getRegistroInfo.Tipo].name_en }}
+            </span>
         </p>
     </div>
 
@@ -54,12 +66,17 @@
         <img :src="`data:${getRegistroInfo.Imagen.contentType};base64,${Buffer.from(getRegistroInfo.Imagen.data.data).toString('base64')}`" alt="Imagen" class="img-fluid d-block aumentarImagen" />
     </div>
 
-    <p v-if="getRegistroInfo.Descripcion">
+    <p v-if="Descripcion_es && Descripcion_en">
         <strong> {{ $t('ElementInfo.descripcion') }}: </strong><br>
-        {{ getRegistroInfo.Descripcion }}
+        <span v-if="getIdioma === Idiomas.ES">
+            {{ Descripcion_es }}
+        </span>
+        <span v-else-if="getIdioma === Idiomas.EN">
+            {{ Descripcion_en }}
+        </span>
     </p>
 
-    <button v-if="getRole == 1" id="editRegistro" class="btn btn-success"> {{ $t('ElementInfo.modIncidencia') }} </button>
+    <button v-if="getAdmin" id="editRegistro" class="btn btn-success"> {{ $t('ElementInfo.modIncidencia') }} </button>
 
   </div>
 

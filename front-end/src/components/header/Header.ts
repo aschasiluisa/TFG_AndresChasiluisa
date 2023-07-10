@@ -12,7 +12,7 @@ export default defineComponent ({
         const { 
             userAuthenticated,
             getUserToken,
-            getRole,
+            getSuper,
             logout
         } = useAuthStore();
 
@@ -23,8 +23,6 @@ export default defineComponent ({
 
         const route = useRoute();
         const idiomaSelector = ref(false);
-
-        const noSuperAdmin = computed(()=>(getRole.value !== 5 )? true : false);
 
         const noIsCurrentRoute = (path: string) => {
             return route.path != path;
@@ -40,7 +38,7 @@ export default defineComponent ({
 
         return{
             userAuthenticated,
-            noSuperAdmin,
+            getSuper,
             idiomaSelector,
             noIsCurrentRoute,
             

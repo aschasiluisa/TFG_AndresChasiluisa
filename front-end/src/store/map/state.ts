@@ -2,11 +2,12 @@ import L from 'leaflet';
 import { responseRegistrosControl, responseRegistrosIncidenciasControl, responseRegistrosAlarmasControl} from '@/api/mapAPI'
 
 export interface MapState {
-    baseMaps: { id: number, name: string }[];
-    selectedBaseMap: { id: number, name: string};
+    baseMaps: { id: number, name_es: string, name_en: string }[];
+    selectedID_BaseMap: { id: number, name_es: string, name_en: string };
     baseMapsConnections: { [key: number]: L.TileLayer };
-    layers:{id: number, name: string }[];
+    layers:{id: number, name_es: string, name_en: string }[];
     layersControl:{ [key: number]: boolean };
+    typeIncidence: { [key: string]: { name_es: string, name_en: string}};
     registrosCalidadAire?: any;
     registrosIncidencias?: any;
     registrosAlarmas?: any;
@@ -20,13 +21,13 @@ export interface MapState {
 function state(): MapState {
     return {
         baseMaps:[
-            { id: 1, name: 'OpenStreetMap', },
-            { id: 2, name: 'OpenTopoMap', },
-            { id: 3, name: 'Mapa oscuro', },
-            { id: 4, name: 'Ortofoto',}
+            { id: 1, name_es: 'OpenStreetMap', name_en: 'OpenStreetMap'},
+            { id: 2, name_es: 'OpenTopoMap', name_en: 'OpenTopoMap'},
+            { id: 3, name_es: 'Mapa oscuro', name_en: 'Dark Map'},
+            { id: 4, name_es: 'Ortofoto', name_en: 'Orthophoto'}
         ],
 
-        selectedBaseMap: { id: 1, name: 'OpenStreetMap' },
+        selectedID_BaseMap: { id: 1, name_es: 'OpenStreetMap', name_en: 'OpenStreetMap' },
 
         baseMapsConnections: {
             1 : L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -46,15 +47,26 @@ function state(): MapState {
         },
         
         layers: [
-            { id: 1, name: 'Resultados de estaciones medidoras de calidad del aire' },
-            { id: 2, name: 'Insidencias registradas' },
-            { id: 3, name: 'Alarmas registradas' },
+            { id: 1, name_es: 'Resultados de estaciones medidoras de calidad del aire', name_en: 'Results of air quality measuring stations' },
+            { id: 2, name_es: 'Insidencias registradas', name_en: 'Logged Incidences' },
+            { id: 3, name_es: 'Alarmas registradas', name_en: 'Logged alarms' },
         ],
 
         layersControl:{
             1 : false,
             2 : false,
             3 : false,
+        },
+
+        typeIncidence:{
+            'ACC': { name_es: 'Accidente de Trafico', name_en: 'Traffic Accident'},
+            'DER': { name_es: 'Derrumbe', name_en: 'Landslide'},
+            'INC': { name_es: 'Incendio', name_en: 'Fire'},
+            'INU': { name_es: 'Inundación', name_en: 'Flood'},
+            'CAL': { name_es: 'Calima', name_en: 'Calima'},
+            'ERU': { name_es: 'Erupción', name_en: 'Rash'},
+            'ESC': { name_es: 'Escape de gases', name_en: 'Gas exhaust'},
+            'OTR': { name_es: 'Otro', name_en: 'Other'},
         },
 
         elementInfoIDlayer: undefined,

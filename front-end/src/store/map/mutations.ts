@@ -4,7 +4,7 @@ import { MapState } from './state'
 const mutations: MutationTree<MapState> = {
 
     setBaseMap(state, map) {
-        state.selectedBaseMap = map;
+        state.selectedID_BaseMap = map;
     },
 
     setMapResponse(state, mapResponse){
@@ -29,7 +29,7 @@ const mutations: MutationTree<MapState> = {
         state.elementInfoIDlayer = undefined;
         state.registrosIncidencias = undefined;
         state.registrosAlarmas = undefined;
-        state.selectedBaseMap= { id: 1, name: 'OpenStreetMap' };     
+        state.selectedID_BaseMap= { id: 1, name_es: 'OpenStreetMap', name_en: 'OpenStreetMap' };     
     },
 
     resetElementInfoID(state){

@@ -12,6 +12,8 @@ import SuperAdminControl from '../views/superAdminControl.vue'
 import { useAuthStore } from "@/composables/useAuthStore";
 import { useMapStore } from "@/composables/useMapStore";
 
+import { roles } from '@/api/authenticationAPI'
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/visorLaPalma',
@@ -52,7 +54,7 @@ const routes: Array<RouteRecordRaw> = [
     meta:{
       title: 'TFG | Profile',
       requiresAuth: true,
-      authRol: [0,1]
+      authRol: [roles.user, roles.admin]
     }
   },
   {
@@ -62,7 +64,7 @@ const routes: Array<RouteRecordRaw> = [
     meta:{
       title: 'TFG | Editar incidencia',
       requiresAuth: true,
-      authRol: [1]
+      authRol: [roles.admin]
     }
   },
   {
@@ -72,7 +74,7 @@ const routes: Array<RouteRecordRaw> = [
     meta:{
       title: 'TFG | Crear incidencia',
       requiresAuth: true,
-      authRol: [0,1]
+      authRol: [roles.user,roles.admin]
     }
   },
   {
@@ -82,7 +84,7 @@ const routes: Array<RouteRecordRaw> = [
     meta:{
       title: 'TFG | Crear alarma',
       requiresAuth: true,
-      authRol: [0,1]
+      authRol: [roles.user,roles.admin]
     }
   },
   {
@@ -92,7 +94,7 @@ const routes: Array<RouteRecordRaw> = [
     meta:{
       title: 'TFG | Super admin control',
       requiresAuth: true,
-      authRol: [5]
+      authRol: [roles.user]
     }
   }
 ]

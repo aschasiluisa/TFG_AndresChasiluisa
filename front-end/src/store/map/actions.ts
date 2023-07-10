@@ -158,7 +158,80 @@ const actions: ActionTree<MapState, StateInterface> = {
         }
     },
 
-    async updateIncidencia({commit}, {token, id, nombre, tipo, coordenadas, imagen, descripcion, validada, bbox}){
+    async nuevaIncidenciaAdmin({commit}, { token, nombre_es, nombre_en, tipo, coordenadas, imagen, descripcion_es, descripcion_en, bbox } ){
+
+        commit("setSendingData");
+
+        let responseControl: responseRegistrosIncidenciasControl | undefined = undefined;
+        let latitud: number = 0;
+        let longitud: number = 0;
+        const coorVal = /^\d+(\.\d+)?,-?\d+(\.\d+)?$/;
+        const formData = new FormData();
+
+        if(!nombre_es || !nombre_en || !tipo || !coordenadas || !(descripcion_es && descripcion_en) ){
+            responseControl = responseRegistrosIncidenciasControl.emptyFieldError;
+        } 
+
+        if(imagen) {
+            const allowedTypes=["image/jpg","image/jpeg","image/png","image/gif"];
+            if(!allowedTypes.includes(imagen.type))  responseControl = responseRegistrosIncidenciasControl.imageFormatError
+        }
+
+        if(coorVal.test(coordenadas)){
+            const coorSeparadas = coordenadas.split(",");
+            latitud  = parseFloat(coorSeparadas[0].trim())
+            longitud = parseFloat(coorSeparadas[1].trim())
+
+            if( bbox[0] > latitud || latitud > bbox[2] || bbox[1] > longitud || longitud > bbox[3]){
+
+                responseControl = responseRegistrosIncidenciasControl.coorBboxError;
+            }
+            
+        } else {
+            responseControl = responseRegistrosIncidenciasControl.coorFormatError;
+        }
+
+        if(!responseControl){
+            try{
+
+                formData.append('nombre_es', nombre_es)
+                formData.append('nombre_en', nombre_en)
+                formData.append('tipo', tipo)
+                formData.append('latitud', String(latitud))
+                formData.append('longitud', String(longitud))
+                if(imagen) formData.append('imagen', imagen);
+                if(descripcion_es) {
+                    formData.append('descripcion_es', descripcion_es);
+                    formData.append('descripcion_en', descripcion_en);
+                } 
+
+                const responseNuevaIncidencia = await mapAPI.post('/registrosIncidencias', formData, {headers: {token, 'Content-Type': 'multipart/form-data'}});
+
+                if(responseNuevaIncidencia.data && responseNuevaIncidencia.data.result){
+                    responseControl = responseRegistrosIncidenciasControl.ok;
+                } else {
+                    responseControl = responseRegistrosIncidenciasControl.serverError;
+
+                    if(responseNuevaIncidencia.data && responseNuevaIncidencia.data.msg === responseRegistrosIncidenciasControl.coorBboxError){
+                        responseControl = responseRegistrosIncidenciasControl.coorBboxError;
+                    }
+                    
+                    if(responseNuevaIncidencia.data && responseNuevaIncidencia.data.msg === responseRegistrosIncidenciasControl.imageFormatError){
+                        responseControl = responseRegistrosIncidenciasControl.imageFormatError;
+                    }
+                }
+
+                commit("setMapResponse", responseControl);
+
+            } catch {
+                commit("setMapResponse", responseRegistrosIncidenciasControl.serverError);
+            }
+        } else {
+            commit("setMapResponse", responseControl);
+        }
+    },
+
+    async updateIncidencia({commit}, {token, id, nombre_es, nombre_en, tipo, coordenadas, imagen, descripcion_es, descripcion_en, validada, bbox}){
         commit("setSendingData");
 
         let responseControl: responseRegistrosIncidenciasControl | undefined = undefined;
@@ -187,14 +260,18 @@ const actions: ActionTree<MapState, StateInterface> = {
 
         if(!responseControl){
             try{
-                formData.append('id', id)
-                formData.append('nombre', nombre)
-                formData.append('tipo', tipo)
-                formData.append('latitud', String(latitud))
-                formData.append('validada', String(validada))
-                formData.append('longitud', String(longitud))
+                formData.append('id', id);
+                formData.append('nombre_es', nombre_es);
+                formData.append('nombre_en', nombre_en);
+                formData.append('tipo', tipo);
+                formData.append('latitud', String(latitud));
+                formData.append('validada', String(validada));
+                formData.append('longitud', String(longitud));
                 if(imagen) formData.append('imagen', imagen);
-                if(descripcion)formData.append('descripcion', descripcion)
+                if(descripcion_es){
+                    formData.append('descripcion_es', descripcion_es);
+                    formData.append('descripcion_en', descripcion_en);
+                }
 
                 const responseUpdateIncidencia = await mapAPI.put('/registrosIncidencias', formData, {headers: {token, 'Content-Type': 'multipart/form-data'}});
 

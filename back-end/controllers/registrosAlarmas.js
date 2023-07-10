@@ -69,7 +69,7 @@ const postRegistro = async (req, res) => {
                             { Validada: true },
                             { Usuario: req.body.usuario }
                         ]
-                    }).select('Nombre Tipo Descripcion Latitud Longitud');
+                    }).select('Nombre_es Nombre_en Tipo Descripcion_es Descripcion_en Latitud Longitud');
     
                 } catch {
                     res.status(200).json(jsonError.serverError)
@@ -86,9 +86,11 @@ const postRegistro = async (req, res) => {
                     const distancia = calcularDistancia(puntoAlarma.latitud, puntoAlarma.longitud, incidencia.Latitud, incidencia.Longitud);
                     if (distancia < req.body.rango) {
                         incidenciasCercanas.push({
-                          nombre: incidencia.Nombre,
+                          nombre_es: incidencia.Nombre_es,
+                          nombre_en: incidencia.Nombre_en,
                           tipo: incidencia.Tipo,
-                          descripcion: incidencia.Descripcion,
+                          descripcion_es: incidencia.Descripcion_es,
+                          descripcion_en: incidencia.Descripcion_en,
                           distancia: parseInt(distancia)
                         });
                     }
