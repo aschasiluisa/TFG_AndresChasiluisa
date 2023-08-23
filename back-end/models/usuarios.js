@@ -5,6 +5,7 @@ const UsuariosSchema = new Schema({
 	Nombre: {
 		type: String,
 		required: true, 
+        index: true,
 		max: 100
 	},
     Apellido: {
