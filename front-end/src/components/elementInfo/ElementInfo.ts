@@ -7,9 +7,19 @@ import { Idiomas } from  "../../i18n/index"
 import { Buffer } from 'buffer';
 import router from '@/router';
 
+import GasesMedicion from '@/components/gasesMedicion/GasesMedicion.vue'
+
 export default defineComponent({
     name: 'ElementInfo',
+
+    components:{
+        GasesMedicion,
+    },
+
     setup() {
+
+        const RegistrosCalidadAire_count = ref(0);
+
         const Nombre_es = ref();
         const Nombre_en = ref();
         const Descripcion_es = ref();
@@ -51,8 +61,9 @@ export default defineComponent({
         }
 
         onMounted(() => {
-
+    
             watch(getRegistroInfo, () => {
+
                 if(getRegistroInfo.value.Validada){
                     Nombre_es.value = getRegistroInfo.value.Nombre_es;
                     Nombre_en.value = getRegistroInfo.value.Nombre_en;
@@ -80,6 +91,8 @@ export default defineComponent({
         })
         
         return {
+            RegistrosCalidadAire_count,
+
             Nombre_es,
             Nombre_en,
             Descripcion_es,

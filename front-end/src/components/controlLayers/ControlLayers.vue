@@ -30,7 +30,7 @@
 
     <div v-if="showMapOptions">
       <div v-for="map in baseMaps" :key="map.id" @click="selectBaseMap(map)">
-        <tr v-if="selectedBaseMap.id != map.id" class="desplegable">
+        <tr v-if="selectedBaseMap.id != map.id" class="desplegable" style="cursor: pointer;">
           <div v-if="getIdioma === Idiomas.ES">
             {{ map.name_es }}
           </div>
@@ -158,7 +158,6 @@
   border-right: 10px solid $light-color;
  
   background-color: white;
-  cursor: pointer;
 
   align-self: center;
   justify-content: center;
