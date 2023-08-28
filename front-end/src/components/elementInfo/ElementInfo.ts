@@ -9,6 +9,8 @@ import router from '@/router';
 
 import GasesMedicion from '@/components/gasesMedicion/GasesMedicion.vue'
 
+import axios from "axios"
+
 export default defineComponent({
     name: 'ElementInfo',
 
@@ -36,6 +38,7 @@ export default defineComponent({
           } = useMapStore();
 
         const {
+            userAuthenticated,
             getUserToken,
             getAdmin,
         } = useAuthStore();
@@ -91,6 +94,8 @@ export default defineComponent({
         })
         
         return {
+            userAuthenticated,
+
             RegistrosCalidadAire_count,
 
             Nombre_es,
@@ -107,6 +112,40 @@ export default defineComponent({
 
             getIdioma,
             Idiomas,
+
+            historialRegistroCalidadAire: async () => {
+
+                let nombreArchivo: string;
+
+                if(getIdioma.value == Idiomas.ES){
+                    nombreArchivo = 'hitorialRegistros_'+getRegistroInfo.value.Nombre+'.csv';
+                } else if (getIdioma.value == Idiomas.EN){
+                    nombreArchivo = 'logHistory_'+getRegistroInfo.value.Nombre+'.csv';
+                }
+
+                axios({
+                    url: process.env.VUE_APP_SERVIDOR_URL+`/historialRegistrosCalidadAire/${getRegistroInfo.value._id}`,
+                    method: 'GET',
+                    responseType: 'blob',
+                    headers: {
+                        token: getUserToken.value,
+                        idioma: getIdioma.value
+                    }
+                  })
+                  .then(response => {
+                    const url = URL.createObjectURL(response.data); // Crea un objeto URL para el blob
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = nombreArchivo;
+                    link.click();
+                
+                    // Libera el recurso URL.createObjectURL
+                    URL.revokeObjectURL(url);
+                  })
+                  .catch(error => {
+                    console.error('Error al descargar el archivo:', error);
+                  });
+            },
 
             deleteAlarma : async (id: string) =>  {
                 await deleteAlarma(getUserToken.value, id);

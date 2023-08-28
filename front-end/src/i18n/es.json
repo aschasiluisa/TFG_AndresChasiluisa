@@ -166,6 +166,21 @@
     "borrAlarma": "Borrar Alarma"
   },
 
+  "GasesMedicion": {
+    "CO_1": "Buena",
+    "CO_2": "Razonablemente buena",
+    "CO_3": "Regular",
+    "CO_4": "Desfavorable",
+    "CO_5": "Muy Desfavorable",
+
+    "gases_1": "Muy buena",
+    "gases_2": "Buena",
+    "gases_3": "Regular",
+    "gases_4": "Desfavorable",
+    "gases_5": "Muy Desfavorable",
+    "gases_6": "Alarmante"
+  },
+
   "Footer": "Trabajo Final de Grado, Andrés Chasiluisa",
 
   "Error404": "PAGINA NO DISPONIBLE"

@@ -2,9 +2,12 @@
 
 <template>
   <div v-if="getElementInfoID == 1 && getRegistroInfo" class="containerCalidadAireInfo">
+
     <h6 style="margin-bottom: 15px;">
         {{ $t('ElementInfo.estacion') }} {{ getRegistroInfo.Nombre }}
     </h6>
+
+    <button v-show="userAuthenticated" type="button" class="historial-download" @click="historialRegistroCalidadAire"></button>
 
     <table class="tablaCalidadAireInfo">
         <tr>
@@ -24,7 +27,7 @@
             <th colspan="4"> Registros en μg/m³ </th>
         </tr>
         <tr>
-            <td v-if="getRegistroInfo.CO != 0 && getRegistroInfo.CO != 1" 
+            <td id="RegistroCO" v-if="getRegistroInfo.CO != 0 && getRegistroInfo.CO != 1" 
                 :class = "{ 
                                 'CO _1' : getRegistroInfo.CO < 500, 
                                 'CO _2' : getRegistroInfo.CO >= 500 && getRegistroInfo.CO < 1000,
@@ -36,10 +39,10 @@
                 CO 
                 <button class="gasesMedicion" onmouseover=""> 
                     ? 
-                    <GasesMedicion class="medicion CO" :info="'CO'" />
+                    <GasesMedicion class="medicion" :info="'CO'" id="GasCO"/>
                 </button> 
             </td>
-            <td v-if="getRegistroInfo.NO2 != 0 && getRegistroInfo.NO2 != 1"
+            <td id="RegistroNO2" v-if="getRegistroInfo.NO2 != 0 && getRegistroInfo.NO2 != 1"
                 :class = "{
                                 'gases _1' : getRegistroInfo.NO2 < 40, 
                                 'gases _2' : getRegistroInfo.NO2 >= 40 && getRegistroInfo.NO2 < 90,
@@ -52,10 +55,10 @@
                 NO2 
                 <button class="gasesMedicion">
                     ?
-                    <GasesMedicion class="medicion NO2" :info="'NO2'" />
+                    <GasesMedicion class="medicion" :info="'NO2'" />
                 </button>
             </td>
-            <td v-if="getRegistroInfo.O3 != 0 && getRegistroInfo.O3 != 1"
+            <td id="RegistroO3" v-if="getRegistroInfo.O3 != 0 && getRegistroInfo.O3 != 1"
                 :class = "{
                                 'gases _1' : getRegistroInfo.O3 < 50, 
                                 'gases _2' : getRegistroInfo.O3 >= 50 && getRegistroInfo.O3 < 100,
@@ -68,23 +71,23 @@
                 O3 
                 <button class="gasesMedicion">
                     ? 
-                    <GasesMedicion class="medicion O3" :info="'O3'" />
+                    <GasesMedicion class="medicion" :info="'O3'" />
                 </button> 
             </td>
-            <td v-if="getRegistroInfo.SO2 != 0 && getRegistroInfo.SO2 != 1"
+            <td id="RegistroSO2" v-if="getRegistroInfo.SO2 != 0 && getRegistroInfo.SO2 != 1"
                 :class = "{
-                                'gases _1' : getRegistroInfo.SO2 < 40, 
-                                'gases _2' : getRegistroInfo.SO2 >= 40 && getRegistroInfo.SO2 < 90,
-                                'gases _3' : getRegistroInfo.SO2 >= 90 && getRegistroInfo.SO2 < 120,
-                                'gases _4' : getRegistroInfo.SO2 >= 120 && getRegistroInfo.SO2 < 230,
-                                'gases _5' : getRegistroInfo.SO2 >= 230 && getRegistroInfo.SO2 < 340,
-                                'gases _6' : getRegistroInfo.SO2 >= 340
+                                'gases _1' : getRegistroInfo.SO2 < 100, 
+                                'gases _2' : getRegistroInfo.SO2 >= 100 && getRegistroInfo.SO2 < 200,
+                                'gases _3' : getRegistroInfo.SO2 >= 200 && getRegistroInfo.SO2 < 350,
+                                'gases _4' : getRegistroInfo.SO2 >= 350 && getRegistroInfo.SO2 < 500,
+                                'gases _5' : getRegistroInfo.SO2 >= 500 && getRegistroInfo.SO2 < 750,
+                                'gases _6' : getRegistroInfo.SO2 >= 750
                             }"
             > 
                 SO2 
                 <button class="gasesMedicion">
                     ?
-                    <GasesMedicion class="medicion SO2" :info="'SO2'" />
+                    <GasesMedicion class="medicion" :info="'SO2'" />
                 </button> 
             </td>
         </tr>
@@ -181,6 +184,22 @@
         }
     }
 
+    .historial-download{
+        position: absolute;
+        top: 10px;
+        right: 5px;
+        width: 8px;
+        height: 8px;
+        padding: 15px;
+        background: url(../../../public/imagenes/cloud-download.png);
+        background-position: center;
+        background-size: contain;
+        background-color: white;
+        z-index: 1000;
+        cursor: pointer;
+        border: none;
+    }
+
     .tablaCalidadAireInfo{
         width: 100%;
         margin-bottom: 20px;
@@ -240,7 +259,8 @@
         }
     }
 
-    .gasesMedicion{
+    .gasesMedicion {
+        position: relative;
         background-color: transparent;
         width: 18px;
         height: 18px;
@@ -262,35 +282,13 @@
         }
     }
 
-
     .medicion{
         position: absolute;
         display: none;
         z-index: 1004;
         background-color: $light-color;
         border-radius: 20px;
-        padding: 15px;
-
-        &.CO{
-            top: 27%;
-            left: 5%;   
-        }
-
-        &.NO2{
-            top: 22%;
-            left: 25%;
-        }
-
-        &.O3{
-            top: 22%;
-            left: 41%;
-        }
-
-        &.SO2{
-            top: 22%;
-            left: 57%;
-        }
-        
+        padding: 15px;        
     }
 
     .containerIncidenciasInfo{

@@ -43,8 +43,9 @@ const getRegistro = async (req,res) => {
 
 const getHistorialRegistro = async (req,res) => {
     const id = req.params.id;
+    const idioma = req.get('idioma');
 
-    if(id){
+    if(id && idioma){
         try{
             const estacionNombre = await registrosCalidaAire.findById(id).select('Nombre')
 
@@ -52,22 +53,39 @@ const getHistorialRegistro = async (req,res) => {
                 const archivo = await historialRegistrosCalidaAire.find({ Nombre : estacionNombre.Nombre}).select('Fecha Temperatura Humedad CO NO2 O3 SO2')
 
                 if(archivo){
-                    const nombreArchivo = 'hitorialRegistros_'+estacionNombre.Nombre+'.csv';
+                    const  nombreArchivo = "hitorialRegistros_logHistory";
+                    let csvWriter;
+
+                    if (idioma === 'es'){
+                        // Crear el archivo CSV
+                        csvWriter = createCsvWriter({
+                            path: nombreArchivo,
+                            header: [
+                                { id: 'Fecha', title: 'Fecha' },
+                                { id: 'Temperatura', title: 'Temperatura' },
+                                { id: 'Humedad', title: 'Humedad' },
+                                { id: 'CO', title: 'CO' },
+                                { id: 'NO2', title: 'NO2' },
+                                { id: 'O3', title: 'O3' },
+                                { id: 'SO2', title: 'SO2' },
+                            ],
+                        });
+
+                    } else {
+                        csvWriter = createCsvWriter({
+                            path: nombreArchivo,
+                            header: [
+                                { id: 'Fecha', title: 'Date' },
+                                { id: 'Temperatura', title: 'Temperature' },
+                                { id: 'Humedad', title: 'Humedity' },
+                                { id: 'CO', title: 'CO' },
+                                { id: 'NO2', title: 'NO2' },
+                                { id: 'O3', title: 'O3' },
+                                { id: 'SO2', title: 'SO2' },
+                            ],
+                        });
+                    }
     
-                    // Crear el archivo CSV
-                    const csvWriter = createCsvWriter({
-                        path: nombreArchivo,
-                        header: [
-                            { id: 'Fecha', title: 'Fecha' },
-                            { id: 'Temperatura', title: 'Temperatura' },
-                            { id: 'Humedad', title: 'Humedad' },
-                            { id: 'CO', title: 'CO' },
-                            { id: 'NO2', title: 'NO2' },
-                            { id: 'O3', title: 'O3' },
-                            { id: 'SO2', title: 'SO2' },
-                        ],
-                    });
-        
                     // Escribir los datos en el archivo CSV
                     csvWriter.writeRecords(archivo)
                     .then(() => {

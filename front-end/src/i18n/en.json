@@ -166,6 +166,21 @@
     "borrAlarma": "Delete Alarm"
   },
 
+  "GasesMedicion": {
+    "CO_1": "Good",
+    "CO_2": "Reasonably good",
+    "CO_3": "Regular",
+    "CO_4": "Unfavorable",
+    "CO_5": "Very unfavorable",
+
+    "gases_1": "Very good",
+    "gases_2": "Good",
+    "gases_3": "Regular",
+    "gases_4": "Unfavorable",
+    "gases_5": "Very unfavorable",
+    "gases_6": "Alarmingly"
+  },
+
   "Footer": "Final Degree Project, Andrés Chasiluisa",
 
   "Error404": "PAGE NOT AVAILABLE"
