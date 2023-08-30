@@ -1,6 +1,7 @@
 {
   "Header": {
     "titulo": "VISOR LA PALMA",
+    "contacto": "Contacto",
     "visorLaPalma": "Visor la Palma",
     "login": "Acceso",
     "signup": "Registro",
@@ -179,6 +180,31 @@
     "gases_4": "Desfavorable",
     "gases_5": "Muy Desfavorable",
     "gases_6": "Alarmante"
+  },
+
+  "Contacto": {
+    "titulo": "Contacto",
+    "nombre": "Nombre",
+    "apellido": "Apellido",
+    "mail": "Mail",
+    "asunto": "Asunto",
+    "mensaje": "Mensaje",
+    "enviar": "Enviar",
+
+    "asuntos": {
+      "ayuda": "Peticion de ayudas",
+      "fallo": "Fallo en la aplicación",
+      "funcionalidad": "Añadir funcionalidad",
+      "colaboracion": "Colaboración",
+      "otro": "Otro"
+    },
+
+    "error": {
+      "error": "ERROR",
+      "emptyField": "Campos vacios",
+      "emailFormat": "Formato de email incorrecto",
+      "server": "Server error"
+    }
   },
 
   "Footer": "Trabajo Final de Grado, Andrés Chasiluisa",

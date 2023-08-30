@@ -34,6 +34,13 @@ export enum responseSuperAdminControlControl {
     ok = "Ok response"
 }
 
+export enum responseContactoControl {
+    serverError = "Server Error",
+    emptyFieldError = "Mandatory Field empty",
+    emailFormatError = "Wrong user email format",
+    ok = "Ok response"
+}
+
 export enum roles {
     user = 0,
     admin = 1,

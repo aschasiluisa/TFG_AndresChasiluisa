@@ -8,6 +8,7 @@ import CrearIncidencia from '../views/crearIncidencia.vue'
 import CrearAlarma from '../views/crearAlarma.vue'
 import EditarIncidencia from '../views/editarIncidencia.vue'
 import SuperAdminControl from '../views/superAdminControl.vue'
+import Contacto from '../views/contacto.vue'
 
 import { useAuthStore } from "@/composables/useAuthStore";
 import { useMapStore } from "@/composables/useMapStore";
@@ -95,6 +96,14 @@ const routes: Array<RouteRecordRaw> = [
       title: 'TFG | Super admin control',
       requiresAuth: true,
       authRol: [roles.user]
+    }
+  }, 
+  {
+    path:'/visorLaPalma/contacto',
+    component: Contacto,
+    name: 'Contacto',
+    meta:{
+      title: 'TFG | Contacto',
     }
   }
 ]

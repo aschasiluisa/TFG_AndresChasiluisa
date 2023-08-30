@@ -2,7 +2,7 @@ import { ActionTree } from 'vuex'
 import { AuthenticationState } from './state'
 import { StateInterface } from '../index'
 
-import { authenticationAPI, responseLoginControl, responseSignupControl, responseLogOutControl, responseProfileControl, responseSuperAdminControlControl } from '@/api/authenticationAPI'
+import { authenticationAPI, responseLoginControl, responseSignupControl, responseLogOutControl, responseProfileControl, responseSuperAdminControlControl, responseContactoControl } from '@/api/authenticationAPI'
 
 const emailVal = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -265,6 +265,44 @@ const actions: ActionTree<AuthenticationState, StateInterface> = {
             commit("setAuthResponse", responseControl);
         } catch {
             commit("setAuthResponse", responseSuperAdminControlControl.serverError);
+        }
+    },
+
+    async postContacto({commit}, {nombre, apellido, mail, asunto, mensaje}){
+        commit("setAuthenticating");
+
+        let responseControl: responseContactoControl | undefined = undefined;
+
+        if(!nombre || !apellido || !asunto ||  !mensaje || !mail){
+            responseControl = responseContactoControl.emptyFieldError;
+        } else {
+            const emailValidation = emailVal.test(mail);
+
+            if(!emailValidation) {
+
+                responseControl = responseContactoControl.emailFormatError;
+
+            }
+        }
+
+        if(!responseControl){
+            try{
+
+                const responseContacto = await authenticationAPI.post('/contacto', { nombre, apellido, mail, asunto, mensaje});
+
+                if(responseContacto.data && responseContacto.data.result){
+                    responseControl = responseContactoControl.ok;
+                } else {
+                    responseControl = responseContactoControl.serverError;
+                }
+
+                commit("setAuthResponse", responseControl);
+
+            } catch {
+                commit("setAuthResponse", responseContactoControl.serverError);
+            }
+        } else {
+            commit("setAuthResponse", responseControl);
         }
     },
 }

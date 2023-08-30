@@ -53,6 +53,8 @@ export const useAuthStore = () => {
 
         deleteUser: (token: string, usuarioCliente: string) => store.dispatch('auth/deleteUser',{token, usuarioCliente}),
 
+        postContacto: (nombre: string, apellido: string, mail: string, asunto: string, mensaje: string) => store.dispatch('auth/postContacto', { nombre, apellido, mail, asunto, mensaje}),
+
         // MUTATIONS //
         clearAuthResponse: () => store.commit('auth/clearAuthResponse'),
 

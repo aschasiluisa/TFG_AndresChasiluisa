@@ -1,6 +1,7 @@
 {
   "Header": {
     "titulo": "LA PALMA VIEWER",
+    "contacto": "Contacto",
     "visorLaPalma": "La Palma Viewer",
     "login": "Login",
     "signup": "Sign Up",
@@ -179,6 +180,31 @@
     "gases_4": "Unfavorable",
     "gases_5": "Very unfavorable",
     "gases_6": "Alarmingly"
+  },
+
+  "Contacto": {
+    "titulo": "Contact",
+    "nombre": "Name",
+    "apellido": "Last Name",
+    "mail": "Email",
+    "asunto": "Subject",
+    "mensaje": "Message",
+    "enviar": "Send",
+
+    "asuntos": {
+      "ayuda": "Help request",
+      "fallo": "application failure",
+      "funcionalidad": "add functionality",
+      "colaboracion": "collaboration",
+      "otro": "Other"
+    },
+
+    "error": {
+      "error": "ERROR",
+      "emptyField": "Empty fields",
+      "emailFormat": "Wrong email format",
+      "server": "Server error"
+    }
   },
 
   "Footer": "Final Degree Project, Andrés Chasiluisa",

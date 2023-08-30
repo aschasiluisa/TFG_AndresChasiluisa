@@ -146,9 +146,27 @@ const incidenciaRechazada = async (id, nombre) => {
     }
 }
 
+const contactoConfirmacion = async (mail, nombre, apellido) =>  {
+    sendMail(mail, "Mensaje de contacto recibido", 
+                `<p>`+
+                    "Hola "+nombre+" "+apellido+","+`<br> <br>`+
+                    "su mensaje de coontacto ha sido recibido."+`<br> <br>`+
+                        "gracias por su colaboración. Un saludo,"+`<br> <br>`+
+                        `<strong>`+"TFG | La Palma"+`</strong>`+
+                `</p>`+`<br> <hr> <br>`+
+                `<p>`+
+                    "Hello "+nombre+" "+apellido+","+`<br> <br>`+
+                    "your contact message was received."+`<br> <br>`+
+                        "Thank you for your cooperation. All the best,"+`<br> <br>`+
+                        `<strong>`+"TFG | La Palma"+`</strong>`+
+                `</p>`
+            )
+}
+
 module.exports = {
     alarmaActivada_v1,
     alarmaActivada_v2,
     incidenciaValidada,
-    incidenciaRechazada
+    incidenciaRechazada,
+    contactoConfirmacion
 }

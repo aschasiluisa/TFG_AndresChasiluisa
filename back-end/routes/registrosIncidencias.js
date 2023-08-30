@@ -1,5 +1,5 @@
 const express = require('express')
-const  registrosIncidenciasRouter = express.Router()
+const registrosIncidenciasRouter = express.Router()
 const tokenVerification = require('../middlewares/auth')
 
 //llamada al controlador
