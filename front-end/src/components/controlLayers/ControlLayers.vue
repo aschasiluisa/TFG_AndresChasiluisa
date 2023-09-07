@@ -10,6 +10,77 @@
     </thead>
 
     <tr class="titulosTabla">
+      {{ $t('ControlLayers.registros') }}
+    </tr>
+
+    <div v-for="layer in layers" :key="layer.id">
+
+      <tr v-if="(layer.id != 3 || userAuthenticated) && layer.id < 4" class="inputLayerMap">
+
+        <div class="styled-input-single">
+          <input type="checkbox" :id="layer.name_es"  v-model="layersControl[layer.id]" />
+          <label :for="layer.name_es">
+            <div v-if="getIdioma === Idiomas.ES">
+              {{ layer.name_es }} 
+            </div>
+            <div v-else-if="getIdioma === Idiomas.EN">
+              {{ layer.name_en }}
+            </div>
+          </label>
+        </div>
+        <div v-show="(getElementInfoID == layer.id || getLast_registroInfoIDlayer == layer.id)">
+          <div v-if="layerID == layer.id" class="dropup">
+            <button class="btn dropdown-toggle" style="color: rgb(0, 138, 184);" @click="resetLayerID" ></button>
+          </div>
+          <button v-else class="btn dropdown-toggle" style="color: rgb(0, 138, 184);" @click="layerInfo(layer.id)" ></button>
+        </div>
+
+        <button v-if="layer.id == 2 && userAuthenticated" class="btn btn-default" id="goButton1" @click="goCrearIncidencias">+</button>
+        <button v-if="layer.id == 3 && userAuthenticated" class="btn btn-default" id="goButton1" @click="goCrearAlarmas">+</button>
+
+      </tr>
+
+      <tr  v-if="layerID == layer.id && layer.id < 4" class="desplegable">
+          <ElementInfo/>
+      </tr>
+
+    </div>
+
+    <tr class="titulosTabla">
+      {{ $t('ControlLayers.capas') }}
+    </tr>
+    
+    <div v-for="layer in layers" :key="layer.id">
+
+      <tr v-if=" layer.id > 3" class="inputLayerMap">
+
+        <div class="styled-input-single">
+          <input type="checkbox" :id="layer.name_es"  v-model="layersControl[layer.id]" />
+          <label :for="layer.name_es">
+            <div v-if="getIdioma === Idiomas.ES">
+              {{ layer.name_es }} 
+            </div>
+            <div v-else-if="getIdioma === Idiomas.EN">
+              {{ layer.name_en }}
+            </div>
+          </label>
+        </div>
+
+        <div>
+          <div v-if="layerID == layer.id" class="dropup">
+            <button class="btn dropdown-toggle" style="color: rgb(0, 138, 184);" @click="resetLayerID" ></button>
+          </div>
+          <button v-else class="btn dropdown-toggle" style="color: rgb(0, 138, 184);" @click="layerInfo(layer.id)" ></button>
+        </div>
+      </tr>
+
+      <tr  v-if="layerID == layer.id && layer.id > 3" class="desplegable">
+          <ElementInfo/>
+      </tr>
+
+    </div>
+
+    <tr class="titulosTabla">
       {{ $t('ControlLayers.mapaBase') }}
     </tr>
 
@@ -39,43 +110,6 @@
           </div>
         </tr>
       </div>
-    </div>
-
-    <tr class="titulosTabla">
-      {{ $t('ControlLayers.capas') }}
-    </tr>
-    
-    <div v-for="layer in layers" :key="layer.id">
-
-      <tr v-if="layer.id != 3 || userAuthenticated" class="inputLayerMap">
-
-        <div class="styled-input-single">
-          <input type="checkbox" :id="layer.name_es"  v-model="layersControl[layer.id]" />
-          <label :for="layer.name_es">
-            <div v-if="getIdioma === Idiomas.ES">
-              {{ layer.name_es }}
-            </div>
-            <div v-else-if="getIdioma === Idiomas.EN">
-              {{ layer.name_en }}
-            </div>
-          </label>
-        </div>
-        <div v-show="getElementInfoID == layer.id">
-          <div v-if="layerID == layer.id" class="dropup">
-            <button class="btn dropdown-toggle" style="color: rgb(0, 138, 184);" @click="resetLayerID" ></button>
-          </div>
-          <button v-else class="btn dropdown-toggle" style="color: rgb(0, 138, 184);" @click="layerInfo(layer.id)" ></button>
-        </div>
-
-        <button v-if="layer.id == 2 && userAuthenticated" class="btn btn-default" id="goButton1" @click="goCrearIncidencias">+</button>
-        <button v-if="layer.id == 3 && userAuthenticated" class="btn btn-default" id="goButton1" @click="goCrearAlarmas">+</button>
-
-      </tr>
-
-      <tr  v-if="layerID == layer.id " class="desplegable">
-          <ElementInfo/>
-      </tr>
-
     </div>
 
     <tr class="titulosTabla">

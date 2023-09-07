@@ -147,8 +147,9 @@
 
   "ControlLayers": {
     "titulo": "CONTROL DE CAPAS",
-    "mapaBase": "Mapa Base",
-    "capas": "Capas"
+    "registros": "Registros",
+    "capas": "Capas",
+    "mapaBase": "Mapa Base"
   },
 
   "ElementInfo": {

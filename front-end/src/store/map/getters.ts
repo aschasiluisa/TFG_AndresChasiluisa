@@ -24,6 +24,10 @@ const getters: GetterTree<MapState, StateInterface> = {
         return state.elementInfoIDlayer ? state.elementInfoIDlayer : false ;
     },
 
+    getLast_registroInfoIDlayer(state){
+        return state.last_registroInfoIDlayer;
+    },
+
     getBbox(state){
         return state.bbox;
     },

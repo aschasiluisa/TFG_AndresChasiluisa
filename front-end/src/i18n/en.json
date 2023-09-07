@@ -147,8 +147,9 @@
 
   "ControlLayers": {
     "titulo": "LAYERS CONTROL",
-    "mapaBase": "Base Map",
-    "capas": "Layers"
+    "registros": "Records",
+    "capas": "Layers",
+    "mapaBase": "Base Map"
   },
 
   "ElementInfo": {

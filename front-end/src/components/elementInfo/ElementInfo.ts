@@ -32,6 +32,10 @@ export default defineComponent({
             getElementInfoID,
             getTypeIncidence,
             layersControl,
+            sublayers_4,
+            sublayersControl_4,
+            sublayers_5,
+            sublayersControl_5,
             deleteAlarma,
             resetAlarma,
             resetregistrosAlarmas,
@@ -112,6 +116,12 @@ export default defineComponent({
 
             getIdioma,
             Idiomas,
+
+            sublayers_4,
+            sublayersControl_4,
+
+            sublayers_5,
+            sublayersControl_5,
 
             historialRegistroCalidadAire: async () => {
 

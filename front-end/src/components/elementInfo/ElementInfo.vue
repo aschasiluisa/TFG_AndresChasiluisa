@@ -163,7 +163,7 @@
 
   <div v-if="getElementInfoID == 3 && getRegistroInfo" class="containerAlarmasInfo">
 
-    <p class="">
+    <p>
         <strong> {{ $t('ElementInfo.nombre') }}: </strong>
         {{ getRegistroInfo.Nombre }}
     </p>
@@ -179,6 +179,35 @@
     <input v-if="!getRegistroInfo.Activada" class="btn btn-danger" type="button" value="Borrar Alarma" style="margin-bottom: 15px; width: 45%; justify-self: center;" @click="deleteAlarma(getRegistroInfo._id)">
 
   </div>
+
+  <div v-if="getElementInfoID == 4" class="containerAlarmasInfo">
+    <div v-for="sublayer in sublayers_4" :key="sublayer.id">
+        <input type="checkbox" :id="sublayer.name_es"  v-model="sublayersControl_4[sublayer.id]" />
+        <label :for="sublayer.name_es">
+        <div v-if="getIdioma === Idiomas.ES">
+            {{ sublayer.name_es }} 
+        </div>
+        <div v-else-if="getIdioma === Idiomas.EN">
+            {{ sublayer.name_en }}
+        </div>
+        </label>
+    </div>
+  </div>
+
+  <div v-if="getElementInfoID == 5" class="containerAlarmasInfo">
+    <div v-for="sublayer in sublayers_5" :key="sublayer.id">
+        <input type="checkbox" :id="sublayer.name_es"  v-model="sublayersControl_5[sublayer.id]" />
+        <label :for="sublayer.name_es">
+        <div v-if="getIdioma === Idiomas.ES">
+            {{ sublayer.name_es }} 
+        </div>
+        <div v-else-if="getIdioma === Idiomas.EN">
+            {{ sublayer.name_en }}
+        </div>
+        </label>
+    </div>
+  </div>
+
 </template>
 
 <style lang="scss" scoped>

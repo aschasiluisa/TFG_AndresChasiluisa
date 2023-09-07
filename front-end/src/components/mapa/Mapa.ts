@@ -16,16 +16,59 @@ export default defineComponent({
         const RegistrosCalidadAire = L.layerGroup();
         const RegistrosIncidencias = L.layerGroup();
         const RegistrosAlarmas = L.layerGroup();
+
+        const CapaCarreteras = L.tileLayer.wms('http://localhost:8082/geoserver/CAPAStfg/wms', {
+            layers: 'CAPAStfg:tfg-lapalma_carreteras',
+            format: 'image/png',
+            minZoom:11,
+            zIndex:3,
+            transparent: true,
+        })
+
+        const CapaEdificios = L.tileLayer.wms('http://localhost:8082/geoserver/CAPAStfg/wms', {
+            layers: 'CAPAStfg:tfg-lapalma_edificaciones',
+            format: 'image/png',
+            minZoom:12,
+            zIndex:2,
+            transparent: true,
+        })
+
+        const CapaParcelas = L.tileLayer.wms('http://localhost:8082/geoserver/CAPAStfg/wms', {
+            layers: 'CAPAStfg:tfg-lapalma_parcelas',
+            format: 'image/png',
+            minZoom:14,
+            zIndex:1,
+            transparent: true,
+        })
+
+        const CapaColaVolcanica = L.tileLayer.wms('http://localhost:8082/geoserver/CAPAStfg/wms', {
+            layers: 'CAPAStfg:tfg-lapalma_perimetro_cola',
+            format: 'image/png',
+            minZoom:11,
+            zIndex:4,
+            transparent: true,
+        })
+
+        const CapaBocaVolcanica = L.tileLayer.wms('http://localhost:8082/geoserver/CAPAStfg/wms', {
+            layers: 'CAPAStfg:tfg-lapalma_boca_volcan',
+            format: 'image/png',
+            zIndex:5,
+            transparent: true,
+        })
+
         const home = ref(false);
 
         const { 
             selectedBaseMap,
             baseMapsConnections,
             layersControl,
+            sublayersControl_4,
+            sublayersControl_5,
             getRegistrosCalidadAire,
             getRegistrosIncidencias,
             getRegistrosAlarmas,
             getElementInfoID,
+            getLast_registroInfoIDlayer,
             getBbox,
             registrosCalidadAire,
             registroCalidadAireInfo,
@@ -34,6 +77,12 @@ export default defineComponent({
             registrosAlarmas,
             registroAlarmaInfo,
             resetElementInfoID,
+            resetLast_registroInfoIDlayer,
+            setElementoInfoID,
+            setSublayersControl_4,
+            resetSublayersControl_4,
+            setSublayersControl_5,
+            resetSublayersControl_5,
         } = useMapStore();
 
         const {
@@ -173,6 +222,9 @@ export default defineComponent({
             currentBaseMap.value = selectedBaseMap.value.id;
         })
 
+        let no_activada_4 = true;
+        let no_activada_5 = true;
+
         watch(layersControl.value, async () => {
             if (layersControl.value[1]){
                 
@@ -199,9 +251,8 @@ export default defineComponent({
                 RegistrosCalidadAire.addTo(mapa);
             } else {
                 mapa.removeLayer(RegistrosCalidadAire);
-                if(getElementInfoID.value == 1){
-                    resetElementInfoID();
-                }
+                if(getLast_registroInfoIDlayer.value == 1) resetLast_registroInfoIDlayer();
+                if(getElementInfoID.value == 1)resetElementInfoID();
             }
 
             if (layersControl.value[2]){
@@ -234,9 +285,8 @@ export default defineComponent({
                 RegistrosIncidencias.addTo(mapa);
             } else {
                 mapa.removeLayer(RegistrosIncidencias);
-                if(getElementInfoID.value == 2){
-                    resetElementInfoID();
-                }
+                if(getLast_registroInfoIDlayer.value == 2) resetLast_registroInfoIDlayer();
+                if(getElementInfoID.value == 2)resetElementInfoID();
             }
 
             if (layersControl.value[3]){
@@ -273,9 +323,59 @@ export default defineComponent({
                 RegistrosAlarmas.addTo(mapa);
             } else {
                 mapa.removeLayer(RegistrosAlarmas);
-                if(getElementInfoID.value == 3){
+                if(getLast_registroInfoIDlayer.value == 3) resetLast_registroInfoIDlayer();
+                if(getElementInfoID.value == 3)resetElementInfoID();
+            }
+
+            if (layersControl.value[4]){
+                if(no_activada_4){
+                    setSublayersControl_4();
+                    setElementoInfoID(4);
+                }
+                no_activada_4 = false;
+            } else {
+                resetSublayersControl_4();
+                if(getElementInfoID.value == 4 && !no_activada_4){
                     resetElementInfoID();
                 }
+                no_activada_4 = true;
+            }
+
+            if (layersControl.value[5]){
+                if(no_activada_5){
+                    setSublayersControl_5()
+                    setElementoInfoID(5);
+                }
+                no_activada_5 = false;
+            } else {
+                resetSublayersControl_5();
+                if(getElementInfoID.value == 5 && !no_activada_5){
+                    resetElementInfoID();
+                }
+                no_activada_5 = true;
+            }
+        })
+
+        watch(sublayersControl_4.value, () => {
+            if(layersControl.value[4]){
+                sublayersControl_4.value[1]? CapaCarreteras.addTo(mapa) : mapa.removeLayer(CapaCarreteras);
+                sublayersControl_4.value[2]? CapaEdificios.addTo(mapa) : mapa.removeLayer(CapaEdificios);
+                sublayersControl_4.value[3]? CapaParcelas.addTo(mapa) : mapa.removeLayer(CapaParcelas);
+            } else {
+                mapa.removeLayer(CapaCarreteras);
+                mapa.removeLayer(CapaEdificios);
+                mapa.removeLayer(CapaParcelas);
+            }
+        })
+
+        watch(sublayersControl_5.value, () => {
+            if(layersControl.value[5]){
+                sublayersControl_5.value[1]?  CapaBocaVolcanica.addTo(mapa) : mapa.removeLayer(CapaBocaVolcanica);
+                sublayersControl_5.value[2]? CapaColaVolcanica.addTo(mapa) : mapa.removeLayer(CapaColaVolcanica);
+                //sublayersControl_5.value[3]?  : ;
+            } else {
+                mapa.removeLayer(CapaBocaVolcanica);
+                mapa.removeLayer(CapaColaVolcanica);
             }
         })
 

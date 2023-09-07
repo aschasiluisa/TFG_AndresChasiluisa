@@ -24,16 +24,41 @@ const mutations: MutationTree<MapState> = {
         state.registrosAlarmas = registrosAlarmas;
     },
 
+    setElementoInfoID(state, id){
+        state.elementInfoIDlayer = id;
+    },
+
     resetLayersControl(state){
         for (var key in state.layersControl) state.layersControl[key] = false;
         state.elementInfoIDlayer = undefined;
+        state.last_registroInfoIDlayer = undefined;
         state.registrosIncidencias = undefined;
         state.registrosAlarmas = undefined;
         state.selectedID_BaseMap= { id: 1, name_es: 'OpenStreetMap', name_en: 'OpenStreetMap' };     
     },
 
+    setSublayersControl_4(state){
+        for (var key in state.sublayersControl_4) state.sublayersControl_4[key] = true;
+    },
+
+    resetSublayersControl_4(state){
+        for (var key in state.sublayersControl_4) state.sublayersControl_4[key] = false;
+    },
+
+    setSublayersControl_5(state){
+        for (var key in state.sublayersControl_5) state.sublayersControl_5[key] = true;
+    },
+
+    resetSublayersControl_5(state){
+        for (var key in state.sublayersControl_5) state.sublayersControl_5[key] = false;
+    },
+
     resetElementInfoID(state){
         state.elementInfoIDlayer = undefined;
+    },
+
+    resetLast_registroInfoIDlayer(state){
+        state.last_registroInfoIDlayer = undefined;
     },
 
     setSendingData(state){
@@ -43,6 +68,7 @@ const mutations: MutationTree<MapState> = {
 
     setRegistroInfo(state, registroInfo,){
         state.registroInfo = registroInfo.data;
+        state.last_registroInfoIDlayer = registroInfo.id;
         state.elementInfoIDlayer = registroInfo.id;
     },
 

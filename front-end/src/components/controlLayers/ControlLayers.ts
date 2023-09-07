@@ -24,8 +24,11 @@ export default defineComponent({
           layers,
           layersControl,
           getElementInfoID,
+          getLast_registroInfoIDlayer,
           setBaseMap,
           resetLayersControl,
+          setElementoInfoID,
+          resetElementInfoID,
         } = useMapStore();
 
         const {
@@ -40,18 +43,19 @@ export default defineComponent({
 
         watch(getElementInfoID,() => {
           layerID.value = getElementInfoID.value;
+          showMapOptions.value = getElementInfoID.value? false : showMapOptions.value;
         })
     
         return {
           showMapOptions,
           selectedBaseMap,
 
-          baseMaps,
           layers,
+          baseMaps,
           layersControl,
 
           getElementInfoID,
-
+          getLast_registroInfoIDlayer,
           layerID,
 
           userAuthenticated,
@@ -62,6 +66,7 @@ export default defineComponent({
           // Método para mostrar u ocultar las opciones de mapas
           toggleMapOptions: () => {
             showMapOptions.value = !showMapOptions.value;
+            if(showMapOptions.value) resetElementInfoID();
           },
 
           selectBaseMap: ( map: { id: number, name_es: string, name_en: string } ) => {
@@ -70,11 +75,14 @@ export default defineComponent({
           },
 
           layerInfo: ( id:number ) => {
+            setElementoInfoID(id);
+            if(showMapOptions.value) showMapOptions.value = false;
             layerID.value = id;
           },
 
           resetLayerID: () => {
             layerID.value = undefined;
+            resetElementInfoID()
           },
 
           goCrearIncidencias: () => {
