@@ -2,6 +2,7 @@ import { defineComponent, ref,  watch, onMounted } from "vue";
 import { useMapStore } from "@/composables/useMapStore";
 import { useAuthStore } from "@/composables/useAuthStore";
 import { useI18nStore } from "@/composables/useI18nStore";
+import { periodos } from '@/api/mapAPI';
 
 import { Idiomas } from  "../../i18n/index"
 import { Buffer } from 'buffer';
@@ -36,9 +37,11 @@ export default defineComponent({
             sublayersControl_4,
             sublayers_5,
             sublayersControl_5,
+            periodo,
             deleteAlarma,
             resetAlarma,
             resetregistrosAlarmas,
+            setPeriodo,
           } = useMapStore();
 
         const {
@@ -49,7 +52,9 @@ export default defineComponent({
 
         const {
             getIdioma,
-          } = useI18nStore();
+        } = useI18nStore();
+
+        const periodo_ = ref(periodo.value);
 
         if(getRegistroInfo.value.Validada){
             Nombre_es.value = getRegistroInfo.value.Nombre_es;
@@ -88,6 +93,14 @@ export default defineComponent({
                 }
             })
 
+            watch(periodo_, () => {
+                setPeriodo(periodo_.value);
+            })
+
+            watch(layersControl.value, () => {
+                if(layersControl.value[5]) periodo_.value = periodo.value;
+            })
+
             if(getAdmin.value && getElementInfoID.value == 2){
                 const editRegistroButton = document.getElementById('editRegistro');
 
@@ -122,6 +135,10 @@ export default defineComponent({
 
             sublayers_5,
             sublayersControl_5,
+
+            periodo,
+            periodo_,
+            periodos,
 
             historialRegistroCalidadAire: async () => {
 

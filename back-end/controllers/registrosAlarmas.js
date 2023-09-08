@@ -53,7 +53,7 @@ const postRegistro = async (req, res) => {
         let Incidencias;
 
         if( 99 < req.body.rango || 3001 > req.body.rango) {
-            if( bbox[0] < req.body.latitud || req.body.latitud < bbox[2] || bbox[1] < req.body.longitud || req.body.longitud < bbox[3]){
+            if( bbox[0] < req.body.latitud && req.body.latitud < bbox[2] && bbox[1] < req.body.longitud && req.body.longitud < bbox[3]){
 
                 let nuevaAlarma = new registrosAlarmas({
                     Nombre : req.body.nombre,

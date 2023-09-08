@@ -1,5 +1,6 @@
 import { MutationTree } from "vuex"
 import { MapState } from './state'
+import { periodos } from "@/api/mapAPI";
 
 const mutations: MutationTree<MapState> = {
 
@@ -24,8 +25,16 @@ const mutations: MutationTree<MapState> = {
         state.registrosAlarmas = registrosAlarmas;
     },
 
+    setRegistrosTerremotos(state, registrosTerremotos){
+        state.registrosTerremotos = registrosTerremotos;
+    },
+    
     setElementoInfoID(state, id){
         state.elementInfoIDlayer = id;
+    },
+
+    setPeriodo(state, periodoNuevo){
+        state.periodo = periodoNuevo;
     },
 
     resetLayersControl(state){
@@ -34,6 +43,7 @@ const mutations: MutationTree<MapState> = {
         state.last_registroInfoIDlayer = undefined;
         state.registrosIncidencias = undefined;
         state.registrosAlarmas = undefined;
+        state.registrosTerremotos = undefined;
         state.selectedID_BaseMap= { id: 1, name_es: 'OpenStreetMap', name_en: 'OpenStreetMap' };     
     },
 

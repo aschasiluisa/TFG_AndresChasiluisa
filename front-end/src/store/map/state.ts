@@ -1,5 +1,5 @@
 import L from 'leaflet';
-import { responseRegistrosControl, responseRegistrosIncidenciasControl, responseRegistrosAlarmasControl} from '@/api/mapAPI'
+import { responseRegistrosControl, responseRegistrosIncidenciasControl, responseRegistrosAlarmasControl, periodos} from '@/api/mapAPI'
 
 export interface MapState {
     baseMaps: { id: number, name_es: string, name_en: string }[];
@@ -15,6 +15,8 @@ export interface MapState {
     registrosCalidadAire?: any;
     registrosIncidencias?: any;
     registrosAlarmas?: any;
+    registrosTerremotos?: any;
+    periodo: periodos;
     registroInfo?: any;
     mapResponse: responseRegistrosControl | responseRegistrosIncidenciasControl | responseRegistrosAlarmasControl | undefined;
     elementInfoIDlayer: number | undefined;
@@ -112,6 +114,8 @@ function state(): MapState {
         registrosCalidadAire: undefined,
         registrosIncidencias: undefined,
         registrosAlarmas: undefined,
+        registrosTerremotos: undefined,
+        periodo: periodos._3,
         registroInfo: undefined,
         mapResponse: undefined,
         bbox: [28.384151, -18.102722, 28.926439, -17.620697],

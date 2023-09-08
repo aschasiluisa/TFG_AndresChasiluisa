@@ -165,7 +165,13 @@
     "nombre": "Name",
     "rango": "Range",
     "resAlarma": "Reset Alarm",
-    "borrAlarma": "Delete Alarm"
+    "borrAlarma": "Delete Alarm",
+
+    "periodos": {
+      "_3": "since 3 days ago",
+      "_15": "since 15 days ago",
+      "_90": "since 90 days ago"
+    }
   },
 
   "GasesMedicion": {

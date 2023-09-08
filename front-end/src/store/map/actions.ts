@@ -47,7 +47,7 @@ const actions: ActionTree<MapState, StateInterface> = {
         }
     },
 
-    async registrosIncidencias({commit}, { token }){
+    async registrosIncidencias({commit}, {token}){
 
         try {
             let responseControl: responseRegistrosControl | undefined = undefined;
@@ -56,6 +56,26 @@ const actions: ActionTree<MapState, StateInterface> = {
 
             if(responseRegistrosIncidencias.data && responseRegistrosIncidencias.data.result){
                 commit("setRegistrosIncidencias",responseRegistrosIncidencias.data.data)
+                responseControl = responseRegistrosControl.ok;
+            } else {
+                responseControl = responseRegistrosControl.serverError
+            }
+
+            commit("setMapResponse", responseControl);
+        }
+        catch {
+            commit("setMapResponse", responseRegistrosControl.serverError);
+        }
+    },
+
+    async registrosTerremotos({commit}, {periodo}) {
+        try {
+            let responseControl: responseRegistrosControl | undefined = undefined;
+
+            const responseRegistrosTerremotos = await mapAPI.get('/registrosTerremotos', {headers: {periodo}});
+            
+            if(responseRegistrosTerremotos.data && responseRegistrosTerremotos.data.result){
+                commit("setRegistrosTerremotos",responseRegistrosTerremotos.data.data)
                 responseControl = responseRegistrosControl.ok;
             } else {
                 responseControl = responseRegistrosControl.serverError

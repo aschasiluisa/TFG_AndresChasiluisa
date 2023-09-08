@@ -198,13 +198,18 @@
     <div v-for="sublayer in sublayers_5" :key="sublayer.id">
         <input type="checkbox" :id="sublayer.name_es"  v-model="sublayersControl_5[sublayer.id]" />
         <label :for="sublayer.name_es">
-        <div v-if="getIdioma === Idiomas.ES">
-            {{ sublayer.name_es }} 
-        </div>
-        <div v-else-if="getIdioma === Idiomas.EN">
-            {{ sublayer.name_en }}
-        </div>
+            <div v-if="getIdioma === Idiomas.ES">
+                {{ sublayer.name_es }} 
+            </div>
+            <div v-else-if="getIdioma === Idiomas.EN">
+                {{ sublayer.name_en }}
+            </div>
         </label>
+        <select v-if="sublayer.id == 3" id="periodo" v-model="periodo_">
+            <option :value="periodos._3">{{ $t('ElementInfo.periodos._3') }}</option>
+            <option :value="periodos._15">{{ $t('ElementInfo.periodos._15') }}</option>
+            <option :value="periodos._90">{{ $t('ElementInfo.periodos._90') }}</option>
+        </select>
     </div>
   </div>
 

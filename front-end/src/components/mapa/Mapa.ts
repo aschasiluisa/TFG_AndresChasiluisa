@@ -7,6 +7,7 @@ import L from 'leaflet';
 
 import 'leaflet-control-geocoder/dist/Control.Geocoder.css';
 import {Geocoder, geocoders} from 'leaflet-control-geocoder';
+import { periodos } from "@/api/mapAPI";
 
 
 export default defineComponent({
@@ -16,6 +17,7 @@ export default defineComponent({
         const RegistrosCalidadAire = L.layerGroup();
         const RegistrosIncidencias = L.layerGroup();
         const RegistrosAlarmas = L.layerGroup();
+        const RegistrosTerremotos = L.layerGroup();
 
         const CapaCarreteras = L.tileLayer.wms('http://localhost:8082/geoserver/CAPAStfg/wms', {
             layers: 'CAPAStfg:tfg-lapalma_carreteras',
@@ -52,8 +54,8 @@ export default defineComponent({
         const CapaBocaVolcanica = L.tileLayer.wms('http://localhost:8082/geoserver/CAPAStfg/wms', {
             layers: 'CAPAStfg:tfg-lapalma_boca_volcan',
             format: 'image/png',
-            zIndex:5,
             transparent: true,
+            pane:'popupPane',
         })
 
         const home = ref(false);
@@ -64,9 +66,11 @@ export default defineComponent({
             layersControl,
             sublayersControl_4,
             sublayersControl_5,
+            periodo,
             getRegistrosCalidadAire,
             getRegistrosIncidencias,
             getRegistrosAlarmas,
+            getRegistrosTerremotos,
             getElementInfoID,
             getLast_registroInfoIDlayer,
             getBbox,
@@ -76,9 +80,11 @@ export default defineComponent({
             registroIncidenciaInfo,
             registrosAlarmas,
             registroAlarmaInfo,
+            registrosTerremotos,
             resetElementInfoID,
             resetLast_registroInfoIDlayer,
             setElementoInfoID,
+            setPeriodo,
             setSublayersControl_4,
             resetSublayersControl_4,
             setSublayersControl_5,
@@ -224,6 +230,7 @@ export default defineComponent({
 
         let no_activada_4 = true;
         let no_activada_5 = true;
+        let lastPeriodo = "";
 
         watch(layersControl.value, async () => {
             if (layersControl.value[1]){
@@ -246,8 +253,6 @@ export default defineComponent({
                     }
                 }
 
-
-                
                 RegistrosCalidadAire.addTo(mapa);
             } else {
                 mapa.removeLayer(RegistrosCalidadAire);
@@ -368,14 +373,47 @@ export default defineComponent({
             }
         })
 
-        watch(sublayersControl_5.value, () => {
+        watch([sublayersControl_5.value, periodo] , async () => {
+            
+            let nuevoPeriodo = false;
+
             if(layersControl.value[5]){
                 sublayersControl_5.value[1]?  CapaBocaVolcanica.addTo(mapa) : mapa.removeLayer(CapaBocaVolcanica);
                 sublayersControl_5.value[2]? CapaColaVolcanica.addTo(mapa) : mapa.removeLayer(CapaColaVolcanica);
-                //sublayersControl_5.value[3]?  : ;
+
+                if(sublayersControl_5.value[3]){
+                    if(!getRegistrosTerremotos.value || lastPeriodo != periodo.value){
+                        
+                        await registrosTerremotos(periodo.value);
+                        lastPeriodo = periodo.value;
+                        nuevoPeriodo = true;
+                    } 
+
+                    if(RegistrosTerremotos.getLayers().length == 0 || nuevoPeriodo ){
+                        RegistrosTerremotos.clearLayers()
+                        for (let i = 0; i < getRegistrosTerremotos.value.length; i++){
+
+                           L.circleMarker([getRegistrosTerremotos.value[i].lat, getRegistrosTerremotos.value[i].lon], {
+                                color: '#8c009c',
+                                fillColor: '#e600ff',
+                                weight: 1,
+                                fillOpacity: 1,
+                                radius: 3,
+                            }).addTo(RegistrosTerremotos);
+                        }
+                    }
+
+                    RegistrosTerremotos.addTo(mapa);
+                    
+                } else {
+                    mapa.removeLayer(RegistrosTerremotos);
+                }
+
             } else {
                 mapa.removeLayer(CapaBocaVolcanica);
                 mapa.removeLayer(CapaColaVolcanica);
+                mapa.removeLayer(RegistrosTerremotos);
+                setPeriodo(periodos._3)
             }
         })
 
@@ -385,6 +423,8 @@ export default defineComponent({
                 home.value = false;
             }
         })
+
+        mapa.getPane('markerPane')!.style.zIndex= '501';
 
        })
 

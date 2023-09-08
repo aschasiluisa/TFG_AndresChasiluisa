@@ -16,6 +16,10 @@ const getters: GetterTree<MapState, StateInterface> = {
         return state.registrosAlarmas ? state.registrosAlarmas : false ;
     },
 
+    getRegistrosTerremotos(state){
+        return state.registrosTerremotos ? state.registrosTerremotos : false ;
+    },
+
     getRegistroInfo(state){
         return state.registroInfo ? state.registroInfo : false ;
     },

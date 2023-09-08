@@ -1,6 +1,7 @@
 import { computed } from 'vue'
 import { useStore } from 'vuex'
 import store, { StateInterface } from '@/store'
+import { periodos } from '@/api/mapAPI'
 
 export const useMapStore = () => {
 
@@ -26,6 +27,8 @@ export const useMapStore = () => {
 
         sublayersControl_5: computed(() => store.state.map.sublayersControl_5),
 
+        periodo: computed(() => store.state.map.periodo),
+
         mapResponse: computed(() => store.state.map.mapResponse),
 
         sendingData: computed(() => store.state.map.sendingData),
@@ -36,6 +39,8 @@ export const useMapStore = () => {
         getRegistrosIncidencias: computed<any>(() => store.getters['map/getRegistrosIncidencias']),
 
         getRegistrosAlarmas: computed<any>(() => store.getters['map/getRegistrosAlarmas']),
+
+        getRegistrosTerremotos: computed<any>(() => store.getters['map/getRegistrosTerremotos']),
 
         getElementInfoID: computed<any>(() => store.getters['map/getElementInfoID']),
 
@@ -53,6 +58,8 @@ export const useMapStore = () => {
         registrosIncidencias: (token: string) => store.dispatch('map/registrosIncidencias', {token}),
 
         registrosAlarmas: (token: string) => store.dispatch('map/registrosAlarmas', {token}),
+
+        registrosTerremotos: (periodo: periodos) => store.dispatch('map/registrosTerremotos', {periodo}),
 
         registroCalidadAireInfo:(id: string) => store.dispatch('map/registroCalidadAireInfo', {id}),
 
@@ -92,6 +99,8 @@ export const useMapStore = () => {
         resetSublayersControl_5: () => store.commit('map/resetSublayersControl_5'),
 
         resetElementInfoID: () => store.commit('map/resetElementInfoID'),
+
+        setPeriodo: (periodoNuevo: periodos) => store.commit('map/setPeriodo', periodoNuevo),
 
         resetLast_registroInfoIDlayer: () => store.commit('map/resetLast_registroInfoIDlayer'),
 

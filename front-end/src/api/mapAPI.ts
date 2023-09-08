@@ -25,6 +25,12 @@ export enum responseRegistrosAlarmasControl{
     ok = "Ok response"
 }
 
+export enum periodos{
+    _3 = "dias3",
+    _15 = "dias15",
+    _90 = "dias90"
+}
+
 export const mapAPI = axios.create({
     baseURL: process.env.VUE_APP_SERVIDOR_URL,
 })

@@ -174,7 +174,7 @@ const getRegistro = async (req,res) => {
 
 const postRegistro = async (req, res) => {
     try {
-        if( bbox[0] < req.body.latitud || req.body.latitud < bbox[2] || bbox[1] < req.body.longitud || req.body.longitud < bbox[3]){
+        if( bbox[0] < req.body.latitud && req.body.latitud < bbox[2] && bbox[1] < req.body.longitud && req.body.longitud < bbox[3]){
 
             let nuevaIncidencia = new registrosIncidencias({
                 Fecha : moment().format('DD/MM/YYYY HH:mm'),
@@ -275,7 +275,7 @@ const updateRegistro = async (req, res) => {
     if(req.body.rol === 1){
         try {
             if( req.body.nombre_es && req.body.nombre_en && (req.body.descripcion_es && req.body.descripcion_en) || (!req.body.descripcion_es && !req.body.descripcion_en)){
-                if( bbox[0] < req.body.latitud || req.body.latitud < bbox[2] || bbox[1] < req.body.longitud || req.body.longitud < bbox[3]){
+                if( bbox[0] < req.body.latitud && req.body.latitud < bbox[2] && bbox[1] < req.body.longitud && req.body.longitud < bbox[3]){
                     if(req.files){
                         if(allowedTypes.includes(req.files.imagen.mimetype)){
     
