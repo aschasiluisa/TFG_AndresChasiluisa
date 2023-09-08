@@ -28,6 +28,10 @@ export default defineComponent ({
             return route.path != path;
         }
 
+        const IsHomeRoute = () => {
+            return route.path =='/visorLaPalma';
+        }
+
         watch(idiomaSelector,() => {
             if(idiomaSelector.value){
                 setIdioma(Idiomas.EN);
@@ -40,7 +44,9 @@ export default defineComponent ({
             userAuthenticated,
             getSuper,
             idiomaSelector,
+            
             noIsCurrentRoute,
+            IsHomeRoute,
             
             getIdioma,
             Idiomas,

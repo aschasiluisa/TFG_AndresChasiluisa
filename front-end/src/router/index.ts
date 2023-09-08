@@ -95,7 +95,7 @@ const routes: Array<RouteRecordRaw> = [
     meta:{
       title: 'TFG | Super admin control',
       requiresAuth: true,
-      authRol: [roles.user]
+      authRol: [roles.super]
     }
   }, 
   {
