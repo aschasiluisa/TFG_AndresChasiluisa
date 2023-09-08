@@ -17,6 +17,7 @@ export interface MapState {
     registrosAlarmas?: any;
     registrosTerremotos?: any;
     periodo: periodos;
+    mapaCalor_activada: boolean;
     registroInfo?: any;
     mapResponse: responseRegistrosControl | responseRegistrosIncidenciasControl | responseRegistrosAlarmasControl | undefined;
     elementInfoIDlayer: number | undefined;
@@ -116,6 +117,7 @@ function state(): MapState {
         registrosAlarmas: undefined,
         registrosTerremotos: undefined,
         periodo: periodos._3,
+        mapaCalor_activada: false,
         registroInfo: undefined,
         mapResponse: undefined,
         bbox: [28.384151, -18.102722, 28.926439, -17.620697],

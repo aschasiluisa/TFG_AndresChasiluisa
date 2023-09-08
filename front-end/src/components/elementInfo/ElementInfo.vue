@@ -210,6 +210,10 @@
             <option :value="periodos._15">{{ $t('ElementInfo.periodos._15') }}</option>
             <option :value="periodos._90">{{ $t('ElementInfo.periodos._90') }}</option>
         </select>
+        <button v-if="sublayer.id == 3" :style="{ background: mapaCalor_activada? 'linear-gradient(to right, red, yellow)' : 'linear-gradient(to right, blue, purple)', color: mapaCalor_activada ? 'black' : 'white' }" 
+        @click="changeMapaCalor_activada">
+            {{ $t('ElementInfo.mapaCalor') }}
+        </button>
     </div>
   </div>
 

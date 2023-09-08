@@ -21,8 +21,6 @@ export default defineComponent({
 
     setup() {
 
-        const RegistrosCalidadAire_count = ref(0);
-
         const Nombre_es = ref();
         const Nombre_en = ref();
         const Descripcion_es = ref();
@@ -38,10 +36,12 @@ export default defineComponent({
             sublayers_5,
             sublayersControl_5,
             periodo,
+            mapaCalor_activada,
             deleteAlarma,
             resetAlarma,
             resetregistrosAlarmas,
             setPeriodo,
+            changeMapaCalor_activada,
           } = useMapStore();
 
         const {
@@ -113,8 +113,6 @@ export default defineComponent({
         return {
             userAuthenticated,
 
-            RegistrosCalidadAire_count,
-
             Nombre_es,
             Nombre_en,
             Descripcion_es,
@@ -139,6 +137,8 @@ export default defineComponent({
             periodo,
             periodo_,
             periodos,
+
+            mapaCalor_activada,
 
             historialRegistroCalidadAire: async () => {
 
@@ -185,6 +185,8 @@ export default defineComponent({
                 resetregistrosAlarmas();
                 layersControl.value[3] = true;
             },
+
+            changeMapaCalor_activada,
 
         }
     },

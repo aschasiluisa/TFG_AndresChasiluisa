@@ -4,6 +4,7 @@ import { useMapStore } from "@/composables/useMapStore";
 import { useAuthStore } from "@/composables/useAuthStore";
 
 import L from 'leaflet';
+import 'leaflet.heat';
 
 import 'leaflet-control-geocoder/dist/Control.Geocoder.css';
 import {Geocoder, geocoders} from 'leaflet-control-geocoder';
@@ -67,6 +68,7 @@ export default defineComponent({
             sublayersControl_4,
             sublayersControl_5,
             periodo,
+            mapaCalor_activada,
             getRegistrosCalidadAire,
             getRegistrosIncidencias,
             getRegistrosAlarmas,
@@ -83,6 +85,7 @@ export default defineComponent({
             registrosTerremotos,
             resetElementInfoID,
             resetLast_registroInfoIDlayer,
+            resetMapaCalor_fueActivada,
             setElementoInfoID,
             setPeriodo,
             setSublayersControl_4,
@@ -231,6 +234,7 @@ export default defineComponent({
         let no_activada_4 = true;
         let no_activada_5 = true;
         let lastPeriodo = "";
+        let mapaCalor_fueActivada = false;
 
         watch(layersControl.value, async () => {
             if (layersControl.value[1]){
@@ -334,6 +338,7 @@ export default defineComponent({
 
             if (layersControl.value[4]){
                 if(no_activada_4){
+                    resetSublayersControl_4();
                     setSublayersControl_4();
                     setElementoInfoID(4);
                 }
@@ -348,6 +353,7 @@ export default defineComponent({
 
             if (layersControl.value[5]){
                 if(no_activada_5){
+                    resetSublayersControl_5();
                     setSublayersControl_5()
                     setElementoInfoID(5);
                 }
@@ -373,7 +379,7 @@ export default defineComponent({
             }
         })
 
-        watch([sublayersControl_5.value, periodo] , async () => {
+        watch([sublayersControl_5.value, periodo, mapaCalor_activada] , async () => {
             
             let nuevoPeriodo = false;
 
@@ -389,20 +395,29 @@ export default defineComponent({
                         nuevoPeriodo = true;
                     } 
 
+                    nuevoPeriodo = (mapaCalor_activada.value != mapaCalor_fueActivada)? true : nuevoPeriodo;
+                    mapaCalor_fueActivada = mapaCalor_activada.value;
+
                     if(RegistrosTerremotos.getLayers().length == 0 || nuevoPeriodo ){
                         RegistrosTerremotos.clearLayers()
+                        let heatData: (L.LatLng | L.HeatLatLngTuple)[] = [];
+                        
                         for (let i = 0; i < getRegistrosTerremotos.value.length; i++){
-
-                           L.circleMarker([getRegistrosTerremotos.value[i].lat, getRegistrosTerremotos.value[i].lon], {
+                            
+                           L.circleMarker([getRegistrosTerremotos.value[i][0], getRegistrosTerremotos.value[i][1]], {
                                 color: '#8c009c',
                                 fillColor: '#e600ff',
                                 weight: 1,
                                 fillOpacity: 1,
                                 radius: 3,
                             }).addTo(RegistrosTerremotos);
-                        }
-                    }
 
+                            if(mapaCalor_activada.value) heatData.push([getRegistrosTerremotos.value[i][0], getRegistrosTerremotos.value[i][1], getRegistrosTerremotos.value[i][2]*10+7]);
+                        }
+
+                        if(mapaCalor_activada.value) L.heatLayer(heatData,{radius:30}).addTo(RegistrosTerremotos); 
+                    }
+                    
                     RegistrosTerremotos.addTo(mapa);
                     
                 } else {
@@ -414,8 +429,9 @@ export default defineComponent({
                 mapa.removeLayer(CapaColaVolcanica);
                 mapa.removeLayer(RegistrosTerremotos);
                 setPeriodo(periodos._3)
+                resetMapaCalor_fueActivada()
             }
-        })
+        })    
 
         watch( home, () =>{
             if (home.value){
@@ -423,8 +439,6 @@ export default defineComponent({
                 home.value = false;
             }
         })
-
-        mapa.getPane('markerPane')!.style.zIndex= '501';
 
        })
 

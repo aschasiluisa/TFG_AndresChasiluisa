@@ -21,7 +21,7 @@ const getData = async (req,res) => {
                 const lon = terremotos.dias3.features[i].geometry.coordinates[0];
 
                 if( bbox[0] < lat && lat < bbox[2] && bbox[1] < lon && lon < bbox[3]){
-                    terremotos_laPalma.push({ lat: lat, lon: lon, mag: parseFloat(terremotos.dias3.features[i].properties.mag)})
+                    terremotos_laPalma.push([ lat, lon, parseFloat(terremotos.dias3.features[i].properties.mag)])
                 }
             }
             res.json({ result: true, data: terremotos_laPalma });
@@ -33,7 +33,7 @@ const getData = async (req,res) => {
                 const lon = terremotos.dias15.features[i].geometry.coordinates[0];
 
                 if( bbox[0] < lat && lat < bbox[2] && bbox[1] < lon && lon < bbox[3]){
-                    terremotos_laPalma.push({ lat: lat, lon: lon, mag: parseFloat(terremotos.dias15.features[i].properties.mag)})
+                    terremotos_laPalma.push([ lat, lon, parseFloat(terremotos.dias15.features[i].properties.mag)])
                 }
             }
             res.json({ result: true, data: terremotos_laPalma });
@@ -45,7 +45,7 @@ const getData = async (req,res) => {
                 const lon = terremotos.dias90.features[i].geometry.coordinates[0];
 
                 if( bbox[0] < lat && lat < bbox[2] && bbox[1] < lon && lon < bbox[3]){
-                    terremotos_laPalma.push({ lat: lat, lon: lon, mag: parseFloat(terremotos.dias90.features[i].properties.mag)})
+                    terremotos_laPalma.push([ lat, lon, parseFloat(terremotos.dias90.features[i].properties.mag)])
                 }
             }
             res.json({ result: true, data: terremotos_laPalma });

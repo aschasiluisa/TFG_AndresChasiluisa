@@ -37,6 +37,14 @@ const mutations: MutationTree<MapState> = {
         state.periodo = periodoNuevo;
     },
 
+    changeMapaCalor_activada(state){
+        state.mapaCalor_activada = !state.mapaCalor_activada;
+    },
+
+    resetMapaCalor_fueActivada(state){
+        state.mapaCalor_activada = false;
+    },
+
     resetLayersControl(state){
         for (var key in state.layersControl) state.layersControl[key] = false;
         state.elementInfoIDlayer = undefined;

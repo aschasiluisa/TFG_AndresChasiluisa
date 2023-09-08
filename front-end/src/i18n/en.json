@@ -171,7 +171,9 @@
       "_3": "since 3 days ago",
       "_15": "since 15 days ago",
       "_90": "since 90 days ago"
-    }
+    },
+
+    "mapaCalor": "Heat map"
   },
 
   "GasesMedicion": {

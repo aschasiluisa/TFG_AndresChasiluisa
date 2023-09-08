@@ -29,6 +29,8 @@ export const useMapStore = () => {
 
         periodo: computed(() => store.state.map.periodo),
 
+        mapaCalor_activada: computed(() => store.state.map.mapaCalor_activada),
+
         mapResponse: computed(() => store.state.map.mapResponse),
 
         sendingData: computed(() => store.state.map.sendingData),
@@ -101,6 +103,10 @@ export const useMapStore = () => {
         resetElementInfoID: () => store.commit('map/resetElementInfoID'),
 
         setPeriodo: (periodoNuevo: periodos) => store.commit('map/setPeriodo', periodoNuevo),
+
+        changeMapaCalor_activada: () => store.commit('map/changeMapaCalor_activada'),
+
+        resetMapaCalor_fueActivada: () => store.commit('map/resetMapaCalor_fueActivada'),
 
         resetLast_registroInfoIDlayer: () => store.commit('map/resetLast_registroInfoIDlayer'),
 
