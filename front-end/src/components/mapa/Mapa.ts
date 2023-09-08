@@ -20,8 +20,8 @@ export default defineComponent({
         const RegistrosAlarmas = L.layerGroup();
         const RegistrosTerremotos = L.layerGroup();
 
-        const CapaCarreteras = L.tileLayer.wms('http://localhost:8082/geoserver/CAPAStfg/wms', {
-            layers: 'CAPAStfg:tfg-lapalma_carreteras',
+        const CapaCarreteras = L.tileLayer.wms('http://localhost:8082/geoserver/TFG-LaPalma/wms', {
+            layers: 'TFG-LaPalma:carreteras',
             format: 'image/png',
             minZoom:11,
             zIndex:3,

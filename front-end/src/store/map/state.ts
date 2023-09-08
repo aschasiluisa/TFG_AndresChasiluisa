@@ -76,7 +76,7 @@ function state(): MapState {
         },
 
         sublayers_4: [
-            { id: 1, name_es: 'Carreteras', name_en: 'Roads' },
+            { id: 1, name_es: 'Carreteras principales', name_en: 'Main roads' },
             { id: 2, name_es: 'Edificios', name_en: 'Buildings' },
             { id: 3, name_es: 'Parcelas', name_en: 'Parcels' },
         ],

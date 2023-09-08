@@ -181,39 +181,45 @@
   </div>
 
   <div v-if="getElementInfoID == 4" class="containerAlarmasInfo">
-    <div v-for="sublayer in sublayers_4" :key="sublayer.id">
-        <input type="checkbox" :id="sublayer.name_es"  v-model="sublayersControl_4[sublayer.id]" />
-        <label :for="sublayer.name_es">
-        <div v-if="getIdioma === Idiomas.ES">
-            {{ sublayer.name_es }} 
-        </div>
-        <div v-else-if="getIdioma === Idiomas.EN">
-            {{ sublayer.name_en }}
-        </div>
-        </label>
+    <div v-for="sublayer in sublayers_4" :key="sublayer.id" class="capasInfraestructura">
+        <span class="subcapa">
+            <input type="checkbox" :id="sublayer.name_es"  v-model="sublayersControl_4[sublayer.id]" style="cursor: pointer;"/>
+            <label :for="sublayer.name_es">
+                <div v-if="getIdioma === Idiomas.ES">
+                    {{ sublayer.name_es }} 
+                </div>
+                <div v-else-if="getIdioma === Idiomas.EN">
+                    {{ sublayer.name_en }}
+                </div>
+            </label>
+        </span>
     </div>
   </div>
 
   <div v-if="getElementInfoID == 5" class="containerAlarmasInfo">
-    <div v-for="sublayer in sublayers_5" :key="sublayer.id">
-        <input type="checkbox" :id="sublayer.name_es"  v-model="sublayersControl_5[sublayer.id]" />
-        <label :for="sublayer.name_es">
-            <div v-if="getIdioma === Idiomas.ES">
-                {{ sublayer.name_es }} 
-            </div>
-            <div v-else-if="getIdioma === Idiomas.EN">
-                {{ sublayer.name_en }}
-            </div>
-        </label>
-        <select v-if="sublayer.id == 3" id="periodo" v-model="periodo_">
-            <option :value="periodos._3">{{ $t('ElementInfo.periodos._3') }}</option>
-            <option :value="periodos._15">{{ $t('ElementInfo.periodos._15') }}</option>
-            <option :value="periodos._90">{{ $t('ElementInfo.periodos._90') }}</option>
-        </select>
-        <button v-if="sublayer.id == 3" :style="{ background: mapaCalor_activada? 'linear-gradient(to right, red, yellow)' : 'linear-gradient(to right, blue, purple)', color: mapaCalor_activada ? 'black' : 'white' }" 
-        @click="changeMapaCalor_activada">
-            {{ $t('ElementInfo.mapaCalor') }}
-        </button>
+    <div v-for="sublayer in sublayers_5" :key="sublayer.id" class="capasInfraestructura">
+        <span class="subcapa">
+            <input type="checkbox" :id="sublayer.name_es"  v-model="sublayersControl_5[sublayer.id]" />
+            <label :for="sublayer.name_es">
+                <div v-if="getIdioma === Idiomas.ES">
+                    {{ sublayer.name_es }} 
+                </div>
+                <div v-else-if="getIdioma === Idiomas.EN">
+                    {{ sublayer.name_en }}
+                </div>
+            </label>
+            <span v-if="sublayer.id == 3">
+                <select id="periodo" v-model="periodo_">
+                    <option :value="periodos._3">{{ $t('ElementInfo.periodos._3') }}</option>
+                    <option :value="periodos._15">{{ $t('ElementInfo.periodos._15') }}</option>
+                    <option :value="periodos._90">{{ $t('ElementInfo.periodos._90') }}</option>
+                </select>
+                <button :style="{ background: mapaCalor_activada? 'linear-gradient(to right, red, yellow)' : 'linear-gradient(to right, blue, purple)', color: mapaCalor_activada ? 'black' : 'white' }" 
+                @click="changeMapaCalor_activada">
+                    {{ $t('ElementInfo.mapaCalor') }}
+                </button>
+            </span>
+        </span>
     </div>
   </div>
 
@@ -381,6 +387,35 @@
 
         button{
             margin: 0 10% 5% 10% ;
+        }
+    }
+
+    .capasInfraestructura{
+        display: grid;
+        grid-template-columns: 25% 25% 25% 25%;
+
+    }
+
+    .subcapa{
+        input, label {
+            cursor: pointer;
+        }
+        margin-bottom: 7px;
+
+        select{
+            appearance: none;
+            padding: 2px; 
+            background-color: white; 
+            border: 1px solid #ccc; 
+            border-radius: 5px; 
+            margin-left: 7px;
+        }
+
+        button{
+            border: 1px solid #ccc; 
+            padding: 3px 16px 4px 16px;
+            border-radius: 5px;
+            border: none;
         }
     }
 
