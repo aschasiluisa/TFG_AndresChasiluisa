@@ -16,10 +16,11 @@
 
     <nav>
         <router-link to="/visorLaPalma" class="headerLink" v-show="noIsCurrentRoute(`/visorLaPalma`) && !getSuper"> {{ $t('Header.visorLaPalma') }}</router-link> 
-        <router-link to="/visorLaPalma/contacto" class="headerLink" v-show="noIsCurrentRoute(`/visorLaPalma/contacto`) && !getSuper"> {{ $t('Header.contacto') }}</router-link>
         <router-link to="/visorLaPalma/login" class="headerLink" v-show="!userAuthenticated && noIsCurrentRoute(`/visorLaPalma/login`)"> {{ $t('Header.login') }}</router-link> 
         <router-link to="/visorLaPalma/signup" class="headerLink" v-show="!userAuthenticated && noIsCurrentRoute(`/visorLaPalma/signup`)"> {{ $t('Header.signup') }}</router-link> 
         <router-link to="/visorLaPalma/profile" class="headerLink" v-show="userAuthenticated && noIsCurrentRoute(`/visorLaPalma/profile`) && !getSuper"> {{ $t('Header.profile') }}</router-link>
+        <router-link to="/visorLaPalma/contacto" class="headerLink" v-show="noIsCurrentRoute(`/visorLaPalma/contacto`) && !getSuper"> {{ $t('Header.contacto') }}</router-link>
+        <a href="http://localhost:3000/ayudaUsuariosPDF" v-show="!getSuper" class="headerLink" target="_blank">{{ $t('Header.manualUsuario')}} </a>
         <router-link to="/visorLaPalma/login" @click="logout" class="headerLink" v-show="userAuthenticated">{{ $t('Header.logout') }}</router-link>
     </nav>
   </header>
@@ -167,11 +168,12 @@
   }
 
   .headerLink {
+      white-space: nowrap;
       color: white;
       align-self: center;
       text-decoration: none;
       cursor: pointer;
-      margin-right: 10%;
+      margin-right: 8%;
   }
 
 </style>

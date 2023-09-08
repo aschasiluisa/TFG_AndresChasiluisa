@@ -6,7 +6,8 @@
     "login": "Login",
     "signup": "Sign Up",
     "profile": "Profile",
-    "logout": "Log Out"
+    "logout": "Log Out",
+    "manualUsuario": "User Manual"
   },
 
   "CrearAlarma": {

@@ -122,8 +122,8 @@
 
 .legend-item-CO{
     display: grid;
-    grid-template-columns: 6% 91%;
-    grid-column-gap: 3%;
+    grid-template-columns: 6% 89%;
+    grid-column-gap: 5%;
     white-space: nowrap;
 }
 

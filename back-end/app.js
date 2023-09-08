@@ -18,6 +18,7 @@ const registrosIncidenciasRouter = require('./routes/registrosIncidencias')
 const registrosAlarmasRouter = require('./routes/registrosAlarmas')
 const registrosTerremotosRouter = require('./routes/registrosTerremotos')
 const contactoRouter = require('./routes/contacto')
+const ayudaUsuariosPDFRouter = require('./routes/ayudaUsuariosPDF')
 
 //llamada a la conexión de base de datos Mongo
 const initMongo = require('./config/db');
@@ -49,6 +50,7 @@ app.use(registrosIncidenciasRouter)
 app.use(registrosAlarmasRouter)
 app.use(contactoRouter)
 app.use(registrosTerremotosRouter)
+app.use(ayudaUsuariosPDFRouter)
 
 //se conecta con la base de datos Mongo
 initMongo()

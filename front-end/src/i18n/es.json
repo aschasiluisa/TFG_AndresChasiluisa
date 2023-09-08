@@ -6,7 +6,8 @@
     "login": "Acceso",
     "signup": "Registro",
     "profile": "Perfil",
-    "logout": "Salir"
+    "logout": "Salir",
+    "manualUsuario": "Manual de Uso"
   },
 
   "CrearAlarma": {
