@@ -217,6 +217,28 @@
     }
   },
 
+  "MapaLeyenda": {
+    "titulo": "LEYENDA",
+    "busqueda": "Busqueda",
+    "registrosTitulo": "Registros",
+    "registros": {
+      "calidadAire": "Calidad del aire",
+      "incindeciasVer": "Incidencias usuario",
+      "incidencias": "Incidencias",
+      "alarmas": "Alarmas",
+      "alarmasAct": "Alarmas activadas"
+    },
+    "capasTitulo": "Capas",
+    "capas": {
+      "carreteras": "Carreteras principales",
+      "edificios": "Edificios",
+      "parcelas": "Parcelas",
+      "bocasVolcanicas": "Bocas eruptivas",
+      "coladasVolcanicas": "Coladas volcanicas",
+      "terremotos": "Terremotos"
+    }
+  },
+
   "Footer": "Trabajo Final de Grado, Andrés Chasiluisa",
 
   "Error404": "PAGINA NO DISPONIBLE"

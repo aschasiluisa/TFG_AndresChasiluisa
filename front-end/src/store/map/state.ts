@@ -46,25 +46,25 @@ function state(): MapState {
             2 : L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
                 maxZoom: 18,
                 zIndex:0,
-                attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'}),
+                attribution: '<a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'}),
             
             3 : L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png', {
                 maxZoom: 18,
                 zIndex:0,
-                attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'}),
+                attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy'}),
             
             4 : L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
                 maxZoom: 18,
                 zIndex:0,
-                attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'})
+                attribution: 'Tiles &copy; Esri &mdash; Source: Esri, USDA, USGS, IGN'})
         },
 
         layers: [
-            { id: 1, name_es: 'Resultados de estaciones medidoras de calidad del aire', name_en: 'Results of air quality measuring stations' },
-            { id: 2, name_es: 'Insidencias registradas', name_en: 'Logged Incidences' },
-            { id: 3, name_es: 'Alarmas registradas', name_en: 'Logged alarms' },
-            { id: 4, name_es: 'Capas de infraestructura', name_en:'Infrastructure layers'},
-            { id: 5, name_es: 'Capas relativas a la actividad volcanica', name_en:'Layers related to volcanic activity'},
+            { id: 1, name_es: 'Calidad del aire', name_en: 'Air quality' },
+            { id: 2, name_es: 'Incidencias', name_en: 'Incidences' },
+            { id: 3, name_es: 'Alarmas', name_en: 'Alarms' },
+            { id: 4, name_es: 'Infraestructura', name_en:'Infrastructure'},
+            { id: 5, name_es: 'Actividad volcanica', name_en:'Volcanic activity'},
         ],
 
         layersControl:{
@@ -88,8 +88,8 @@ function state(): MapState {
         },     
 
         sublayers_5:[
-            { id: 1, name_es: 'Bocas volcanicas', name_en: 'Volcanic mouths' },
-            { id: 2, name_es: 'Colas volcanicas', name_en: 'Volcanic tails' },
+            { id: 1, name_es: 'Bocas eruptivas', name_en: 'Eruptive mouths' },
+            { id: 2, name_es: 'Coladas volcanicas', name_en: 'Volcanic flows' },
             { id: 3, name_es: 'Terremotos', name_en: 'Earthquakes' },
         ],
 

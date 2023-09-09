@@ -27,7 +27,7 @@ export default defineComponent({
             zIndex:3,
             transparent: true,
         })
-        //http://localhost:8082/geoserver/CAPAStfg/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=200&HEIGHT=200&LAYER=tfg-lapalma_edificaciones
+
         const CapaEdificios = L.tileLayer.wms('http://localhost:8082/geoserver/CAPAStfg/wms', {
             layers: 'CAPAStfg:tfg-lapalma_edificaciones',
             format: 'image/png',
@@ -60,6 +60,7 @@ export default defineComponent({
         })
 
         const home = ref(false);
+        const leyenda = ref (false);
 
         const { 
             selectedBaseMap,
@@ -96,6 +97,7 @@ export default defineComponent({
 
         const {
             getUserToken,
+            userAuthenticated,
         } = useAuthStore();
 
         const limites = L.latLngBounds(
@@ -440,10 +442,23 @@ export default defineComponent({
             }
         })
 
+        const contenedor = document.getElementById('Mapa');
+        const ultimoBoton = contenedor!.lastElementChild;
+
+        ultimoBoton!.addEventListener('click', function() {
+            leyenda.value = false;
+        });
+
+
        })
 
        return {
+         leyenda,
+
+         userAuthenticated,
+
          home : () => home.value = true,
+         changeLeyenda: () =>  leyenda.value = !leyenda.value,
        }
     }
 })

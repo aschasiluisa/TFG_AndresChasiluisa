@@ -217,6 +217,28 @@
     }
   },
 
+  "MapaLeyenda": {
+    "titulo": "LEGEND",
+    "busqueda": "Search",
+    "registrosTitulo": "Records",
+    "registros": {
+      "calidadAire": "Air quality",
+      "incindeciasVer": "User incidences",
+      "incidencias": "Incidences",
+      "alarmas": "Alarms",
+      "alarmasAct": "Active alarms"
+    },
+    "capasTitulo": "Layers",
+    "capas": {
+      "carreteras": "Main Roads",
+      "edificios": "Buildings",
+      "parcelas": "Parcels",
+      "bocasVolcanicas": "Eruptive mouths",
+      "coladasVolcanicas": "Volcanics flows",
+      "terremotos": "Earthquakes"
+    }
+  },
+
   "Footer": "Final Degree Project, Andrés Chasiluisa",
 
   "Error404": "PAGE NOT AVAILABLE"
