@@ -24,7 +24,7 @@
 
     <table class="tablaElementoInfo">
         <tr>
-            <th colspan="4"> Registros en μg/m³ </th>
+            <th colspan="4"> {{ $t('ElementInfo.medicionesTitulo') }} </th>
         </tr>
         <tr>
             <td id="RegistroCO" v-if="getRegistroInfo.CO != 0 && getRegistroInfo.CO != 1" 

@@ -53,7 +53,7 @@ const getHistorialRegistro = async (req,res) => {
                 const archivo = await historialRegistrosCalidaAire.find({ Nombre : estacionNombre.Nombre}).select('Fecha Temperatura Humedad CO NO2 O3 SO2')
 
                 if(archivo){
-                    const  nombreArchivo = "hitorialRegistros_logHistory";
+                    const  nombreArchivo = "assets/hitorialRegistros_logHistory";
                     let csvWriter;
 
                     if (idioma === 'es'){
