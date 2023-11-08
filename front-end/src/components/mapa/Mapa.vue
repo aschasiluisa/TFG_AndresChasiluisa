@@ -99,18 +99,18 @@
           </tr>
           <tr>
             <td>
-              <img src="http://localhost:8082/geoserver/CAPAStfg/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=tfg-lapalma_boca_volcan">
-            </td>
-            <td>
-              &emsp; {{$t('MapaLeyenda.capas.bocasVolcanicas')}}
-            </td>
-          </tr>
-          <tr>
-            <td>
               <img src="http://localhost:8082/geoserver/CAPAStfg/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=tfg-lapalma_perimetro_cola">
             </td>
             <td>
               &emsp; {{$t('MapaLeyenda.capas.coladasVolcanicas')}}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <img src="http://localhost:8082/geoserver/CAPAStfg/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=tfg-lapalma_boca_volcan">
+            </td>
+            <td>
+              &emsp; {{$t('MapaLeyenda.capas.bocasVolcanicas')}}
             </td>
           </tr>
           <tr>
@@ -125,9 +125,7 @@
       </div>
 
     </div>
-
   </div>
-
 </template>
 
 <style lang="scss" scoped>

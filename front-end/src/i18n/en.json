@@ -158,6 +158,7 @@
     "fecha": "Date",
     "temperatura": "Temperature",
     "humedad": "Humidity",
+    "medicionesTitulo": "Measurements in μg/m³",
 
     "tipo": "Type",
     "descripcion": "Description",

@@ -123,12 +123,12 @@ const actions: ActionTree<MapState, StateInterface> = {
             responseControl = responseRegistrosIncidenciasControl.emptyFieldError;
         } 
 
-        if(imagen) {
+        if(!responseControl && imagen) {
             const allowedTypes=["image/jpg","image/jpeg","image/png","image/gif"];
             if(!allowedTypes.includes(imagen.type))  responseControl = responseRegistrosIncidenciasControl.imageFormatError
         }
 
-        if(coorVal.test(coordenadas)){
+        if(!responseControl && coorVal.test(coordenadas)){
             const coorSeparadas = coordenadas.split(",");
             latitud  = parseFloat(coorSeparadas[0].trim())
             longitud = parseFloat(coorSeparadas[1].trim())
@@ -138,7 +138,7 @@ const actions: ActionTree<MapState, StateInterface> = {
                 responseControl = responseRegistrosIncidenciasControl.coorBboxError;
             }
             
-        } else {
+        } else if(!responseControl){
             responseControl = responseRegistrosIncidenciasControl.coorFormatError;
         }
 
@@ -188,16 +188,16 @@ const actions: ActionTree<MapState, StateInterface> = {
         const coorVal = /^\d+(\.\d+)?,-?\d+(\.\d+)?$/;
         const formData = new FormData();
 
-        if(!nombre_es || !nombre_en || !tipo || !coordenadas || !(descripcion_es && descripcion_en) ){
+        if(!nombre_es || !nombre_en || !tipo || !coordenadas || !descripcion_es || !descripcion_en){
             responseControl = responseRegistrosIncidenciasControl.emptyFieldError;
         } 
 
-        if(imagen) {
+        if(!responseControl && imagen) {
             const allowedTypes=["image/jpg","image/jpeg","image/png","image/gif"];
             if(!allowedTypes.includes(imagen.type))  responseControl = responseRegistrosIncidenciasControl.imageFormatError
         }
 
-        if(coorVal.test(coordenadas)){
+        if(!responseControl && coorVal.test(coordenadas)){
             const coorSeparadas = coordenadas.split(",");
             latitud  = parseFloat(coorSeparadas[0].trim())
             longitud = parseFloat(coorSeparadas[1].trim())
@@ -207,7 +207,7 @@ const actions: ActionTree<MapState, StateInterface> = {
                 responseControl = responseRegistrosIncidenciasControl.coorBboxError;
             }
             
-        } else {
+        } else if(!responseControl) {
             responseControl = responseRegistrosIncidenciasControl.coorFormatError;
         }
 
@@ -395,11 +395,11 @@ const actions: ActionTree<MapState, StateInterface> = {
             responseControl = responseRegistrosAlarmasControl.emptyFieldError;
         } 
 
-        if( 99 > rango || 3001 < rango) {
+        if(!responseControl && (99 > rango || 3001 < rango)) {
             responseControl = responseRegistrosAlarmasControl.rangoError;
         }
 
-        if(coorVal.test(coordenadas)){
+        if(!responseControl && coorVal.test(coordenadas)){
             const coorSeparadas = coordenadas.split(",");
             latitud  = parseFloat(coorSeparadas[0].trim())
             longitud = parseFloat(coorSeparadas[1].trim())
@@ -409,7 +409,7 @@ const actions: ActionTree<MapState, StateInterface> = {
                 responseControl = responseRegistrosAlarmasControl.coorBboxError;
             }
             
-        } else {
+        } else if(!responseControl){
             responseControl = responseRegistrosAlarmasControl.coorFormatError;
         }
 

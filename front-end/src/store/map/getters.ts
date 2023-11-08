@@ -38,7 +38,11 @@ const getters: GetterTree<MapState, StateInterface> = {
 
     getTypeIncidence(state){
         return state.typeIncidence;
-    }
+    },
+
+    getCentrarCoor(state){
+        return state.centrarCoor;
+    },
 }
 
 export default getters

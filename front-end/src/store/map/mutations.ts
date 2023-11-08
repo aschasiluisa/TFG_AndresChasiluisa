@@ -1,6 +1,5 @@
 import { MutationTree } from "vuex"
 import { MapState } from './state'
-import { periodos } from "@/api/mapAPI";
 
 const mutations: MutationTree<MapState> = {
 
@@ -84,7 +83,7 @@ const mutations: MutationTree<MapState> = {
         state.mapResponse = undefined;
     },
 
-    setRegistroInfo(state, registroInfo,){
+    setRegistroInfo(state, registroInfo){
         state.registroInfo = registroInfo.data;
         state.last_registroInfoIDlayer = registroInfo.id;
         state.elementInfoIDlayer = registroInfo.id;
@@ -99,6 +98,14 @@ const mutations: MutationTree<MapState> = {
         state.registrosAlarmas = undefined;
         state.registroInfo = undefined;
         state.elementInfoIDlayer = undefined;
+    },
+
+    setMapaCoor(state, coordenadas){
+        state.mapaCoor = coordenadas;
+    },
+
+    setCentrarCoor(state, centrarCoor){
+        state.centrarCoor = centrarCoor;
     }
 }
 

@@ -158,6 +158,7 @@
     "fecha": "Fecha",
     "temperatura": "Temperatura",
     "humedad": "Humedad",
+    "medicionesTitulo": "Mediciones en μg/m³",
 
     "tipo": "Tipo",
     "descripcion": "Descripción",

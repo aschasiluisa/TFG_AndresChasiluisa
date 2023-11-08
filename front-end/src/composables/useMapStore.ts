@@ -31,6 +31,8 @@ export const useMapStore = () => {
 
         mapaCalor_activada: computed(() => store.state.map.mapaCalor_activada),
 
+        mapaCoor:computed(() => store.state.map.mapaCoor),
+
         mapResponse: computed(() => store.state.map.mapResponse),
 
         sendingData: computed(() => store.state.map.sendingData),
@@ -53,6 +55,8 @@ export const useMapStore = () => {
         getBbox: computed<number[]>(()=> store.getters['map/getBbox']),
 
         getTypeIncidence: computed<{ [key: string]: { name_es: string, name_en: string} }>(() => store.getters['map/getTypeIncidence']),
+
+        getCentrarCoor: computed<string>(() => store.getters['map/getCentrarCoor']),
 
         // ACTIONS //
         registrosCalidadAire:() => store.dispatch('map/registrosCalidadAire'),
@@ -115,6 +119,10 @@ export const useMapStore = () => {
         resetregistrosAlarmas: () => store.commit('map/resetregistrosAlarmas'),
 
         setElementoInfoID: (id: number | undefined) => store.commit('map/setElementoInfoID', id),
+
+        setMapaCoor: (coordenadas: string | undefined) => store.commit('map/setMapaCoor', coordenadas),
+
+        setCentrarCoor: (centrarCoor: string | undefined) => store.commit('map/setCentrarCoor', centrarCoor)
 
     }
 }
