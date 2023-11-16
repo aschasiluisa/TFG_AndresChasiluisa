@@ -38,6 +38,8 @@ const registrosIncidenciasSchema = new Schema({
             'ERU',
             'ESC',
             'OTR',
+            'OBR',
+            'OLA'
          ]
     },
     Descripcion: {
@@ -65,7 +67,6 @@ const registrosIncidenciasSchema = new Schema({
 	},
     Usuario: {
         type: String,
-        required: true,
         index: true,
         max: 100
     },
@@ -77,6 +78,18 @@ const registrosIncidenciasSchema = new Schema({
         type: Boolean,
         required: true,
         default: false,
+    },
+    Origen: {
+        type: String,
+        required: true,
+        enum: [
+            'DGT', 
+            'APP',
+        ],
+    },
+    Code:{
+        type: Number, 
+        index: true,
     }
 }, {collection: "registros_incidencias"})
 

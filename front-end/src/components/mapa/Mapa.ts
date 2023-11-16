@@ -97,6 +97,7 @@ export default defineComponent({
 
         const {
             getUserToken,
+            getAdmin,
             userAuthenticated,
         } = useAuthStore();
 
@@ -136,6 +137,15 @@ export default defineComponent({
         
         const localizacionIncidencias = new L.Icon({
             iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-grey.png',
+            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41]
+        });
+
+        const localizacionIncidenciasDGT = new L.Icon({
+            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-violet.png',
             shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
             iconSize: [25, 41],
             iconAnchor: [12, 41],
@@ -278,7 +288,11 @@ export default defineComponent({
                         if(getRegistrosIncidencias.value[i].Validada){
                             marker =L.marker([getRegistrosIncidencias.value[i].Latitud,getRegistrosIncidencias.value[i].Longitud], {icon: localizacionIncidenciasVal}).addTo(RegistrosIncidencias);
                         } else {
-                            marker =L.marker([getRegistrosIncidencias.value[i].Latitud,getRegistrosIncidencias.value[i].Longitud], {icon: localizacionIncidencias}).addTo(RegistrosIncidencias);
+                            if(getRegistrosIncidencias.value[i].Origen && ( getRegistrosIncidencias.value[i].Origen == "DGT")){
+                                marker =L.marker([getRegistrosIncidencias.value[i].Latitud,getRegistrosIncidencias.value[i].Longitud], {icon: localizacionIncidenciasDGT}).addTo(RegistrosIncidencias);
+                            } else {
+                                marker =L.marker([getRegistrosIncidencias.value[i].Latitud,getRegistrosIncidencias.value[i].Longitud], {icon: localizacionIncidencias}).addTo(RegistrosIncidencias);
+                            }
                         }
 
                         marker.on('click', async function() {
@@ -456,6 +470,7 @@ export default defineComponent({
          leyenda,
 
          userAuthenticated,
+         getAdmin,
 
          home : () => home.value = true,
          changeLeyenda: () =>  leyenda.value = !leyenda.value,

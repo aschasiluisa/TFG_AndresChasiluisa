@@ -36,6 +36,14 @@
               &emsp; {{$t('MapaLeyenda.registros.calidadAire')}}
             </td>
           </tr>
+          <tr>
+            <td>
+              <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-black.png" style="height: 25px">
+            </td>
+            <td>
+              &emsp; {{$t('MapaLeyenda.registros.incidencias')}}
+            </td>
+          </tr>
           <tr v-show="userAuthenticated">
             <td>
               <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-grey.png" style="height: 25px">
@@ -44,12 +52,12 @@
               &emsp; {{$t('MapaLeyenda.registros.incindeciasVer')}}
             </td>
           </tr>
-          <tr>
+          <tr v-show="userAuthenticated && getAdmin">
             <td>
-              <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-black.png" style="height: 25px">
+              <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-violet.png" style="height: 25px">
             </td>
             <td>
-              &emsp; {{$t('MapaLeyenda.registros.incidencias')}}
+              &emsp; {{$t('MapaLeyenda.registros.incidenciaDGT')}}
             </td>
           </tr>
           <tr  v-show="userAuthenticated">

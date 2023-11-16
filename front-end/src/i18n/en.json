@@ -225,6 +225,7 @@
     "registros": {
       "calidadAire": "Air quality",
       "incindeciasVer": "User incidences",
+      "incidenciaDGT": "DGT incidences",
       "incidencias": "Incidences",
       "alarmas": "Alarms",
       "alarmasAct": "Active alarms"

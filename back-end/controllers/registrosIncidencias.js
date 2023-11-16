@@ -34,7 +34,7 @@ const getData = async (req,res) => {
         
         if(req.body.rol == 1){
             try{
-                registros = await registrosIncidencias.find().select('_id Latitud Longitud Validada');
+                registros = await registrosIncidencias.find().select('_id Latitud Longitud Validada Origen');
 
             } catch {
                 res.status(200).json(jsonError.serverError)
@@ -182,6 +182,7 @@ const postRegistro = async (req, res) => {
                 Latitud : req.body.latitud,
                 Longitud : req.body.longitud,
                 Usuario : req.body.usuario,
+                Origen : 'APP',
             })
             
             if(req.files){
@@ -340,6 +341,7 @@ const updateRegistro = async (req, res) => {
                                 Longitud : req.body.longitud,
                                 Administrador : req.body.usuario,
                                 Validada : true,
+                                Origen : 'APP',
                             }, { new: true })
     
                             .then (incidencia =>{
@@ -411,6 +413,7 @@ const updateRegistro = async (req, res) => {
                             Longitud : req.body.longitud,
                             Administrador : req.body.usuario,
                             Validada : true,
+                            Origen : 'APP',
                         }, { new: true })
     
                         .then (incidencia =>{

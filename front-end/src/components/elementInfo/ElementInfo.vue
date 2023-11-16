@@ -113,10 +113,8 @@
                     {{ Nombre_en }}
                 </strong>
             </td>
-            <td rowspan="3">
-                <div class="image-container">
-                    <img :src="`data:${getRegistroInfo.Imagen.contentType};base64,${Buffer.from(getRegistroInfo.Imagen.data.data).toString('base64')}`" alt="Imagen" class="img-fluid d-block aumentarImagen" />
-                </div>
+            <td rowspan="3" class="image-container">
+                <img :src="`data:${getRegistroInfo.Imagen.contentType};base64,${Buffer.from(getRegistroInfo.Imagen.data.data).toString('base64')}`" alt="Imagen" class="img-fluid d-block aumentarImagen" />
             </td>
         </tr>
         <tr>
@@ -145,8 +143,8 @@
                 {{ $t('ElementInfo.descripcion') }}
             </th>
         </tr>
-        <tr v-if="Descripcion_es && Descripcion_en">
-            <td colspan="3">
+        <tr v-if="Descripcion_es && Descripcion_en" >
+            <td colspan="3" style="white-space: normal; text-align: left; ">
                 <span v-if="getIdioma === Idiomas.ES">
                     {{ Descripcion_es }}
                 </span>
@@ -214,7 +212,7 @@
                     <option :value="periodos._15">{{ $t('ElementInfo.periodos._15') }}</option>
                     <option :value="periodos._90">{{ $t('ElementInfo.periodos._90') }}</option>
                 </select>
-                <button :style="{ background: mapaCalor_activada? 'linear-gradient(to right, red, yellow)' : 'linear-gradient(to right, blue, purple)', color: mapaCalor_activada ? 'black' : 'white' }" 
+                <button :style="{ background: mapaCalor_activada? 'linear-gradient(to right, blue, purple)' : 'linear-gradient(to right, red, yellow)', color: mapaCalor_activada ? 'white' : 'black' }" 
                 @click="changeMapaCalor_activada">
                     {{ $t('ElementInfo.mapaCalor') }}
                 </button>
@@ -343,13 +341,7 @@
     }
 
     .containerIncidenciasInfo{
-        margin-top: 3%;
-        display: grid;
-        grid-template-columns: 50% 50%;
-
-        p, button {
-            grid-column: 1/3;
-        }
+        margin: 3% 3% 0% 3%;
 
         button {
             margin: 0px 50px 9px 50px;
@@ -357,11 +349,8 @@
     }
 
     .image-container{
-        width: 125px; /* Ancho de la caja en píxeles */
-        height: 125px; /* Alto de la caja en píxeles */
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        width: 155px; /* Ancho de la caja en píxeles */
+        height: 155px; /* Alto de la caja en píxeles */
     }
 
     .aumentarImagen{

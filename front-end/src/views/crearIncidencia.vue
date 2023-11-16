@@ -28,19 +28,19 @@
           <label class="label label-default" for="nombre_es">
             {{ $t('CrearIncidencia.nombre_es') }}*
           </label>
-          <input type="text" id="nombre_es" class="form-control" v-model="nombre_es">
+          <input type="text" id="nombre_es" class="form-control" maxlength="40" v-model="nombre_es">
 
           <label class="label label-default" for="nombre_en">
             {{ $t('CrearIncidencia.nombre_en') }}*
           </label>
-          <input type="text" id="nombre_en" class="form-control" v-model="nombre_en">
+          <input type="text" id="nombre_en" class="form-control" maxlength="40" v-model="nombre_en">
         </div>
 
         <div v-else style=" display: contents;">
           <label class="label label-default" for="nombre">
             {{ $t('CrearIncidencia.nombre') }}*
           </label>
-          <input type="text" id="nombre" class="form-control" v-model="nombre">
+          <input type="text" id="nombre" class="form-control" maxlength="40" v-model="nombre">
         </div>
 
         <label class="label label-default" for="tipo">
@@ -71,19 +71,19 @@
           <label for="descripcion_es" class="form-label">
             {{ $t('CrearIncidencia.descripcion_es') }}*
           </label>
-          <textarea class="form-control" id="descripcion_es" rows="2" maxlength="1000" v-model="descripcion_es"></textarea>
+          <textarea class="form-control" id="descripcion_es" rows="2" maxlength="300" v-model="descripcion_es"></textarea>
 
           <label for="descripcion_en" class="form-label" style="padding-top: 20px;">
             {{ $t('CrearIncidencia.descripcion_en') }}*
           </label>
-          <textarea class="form-control" id="descripcion_en" rows="2" maxlength="1000" v-model="descripcion_en" style="margin-top: 20px;"></textarea>
+          <textarea class="form-control" id="descripcion_en" rows="2" maxlength="300" v-model="descripcion_en" style="margin-top: 20px;"></textarea>
         </div>
 
         <div v-else style=" display: contents;">
           <label for="descripcion" class="form-label">
             {{ $t('CrearIncidencia.descripcion') }}
           </label>
-          <textarea class="form-control" id="descripcion" rows="3" maxlength="1000" v-model="descripcion"></textarea>
+          <textarea class="form-control" id="descripcion" rows="3" maxlength="300" v-model="descripcion"></textarea>
         </div>
 
         <div v-if="getAdmin" style=" display: contents;">

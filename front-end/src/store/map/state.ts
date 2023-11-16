@@ -109,6 +109,8 @@ function state(): MapState {
             'CAL': { name_es: 'Calima', name_en: 'Calima'},
             'ERU': { name_es: 'Erupción', name_en: 'Rash'},
             'ESC': { name_es: 'Escape de gases', name_en: 'Gas exhaust'},
+            'OLA': { name_es: 'Alto oleaje', name_en: 'High swell'},
+            'OBR': { name_es: 'Obras', name_en: 'Works'},
             'OTR': { name_es: 'Otro', name_en: 'Other'},
         },
 
