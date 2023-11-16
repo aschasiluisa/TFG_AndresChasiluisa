@@ -1,4 +1,6 @@
 const usuarios = require('../models/usuarios')
+const registrosAlarmas = require('../models/registrosAlarmas')
+const registrosIncidencias = require('../models/registrosIncidencias')
 const jsonError = require('../config/errors')
 
 const superAdminControl = async (req,res)=>{
@@ -58,15 +60,22 @@ const changeRole = async (req,res)=>{
 
 const deleteUser = async (req,res)=>{
     if(req.body.rol === 5){
-        let delUsuario = await usuarios.findOneAndDelete({ Usuario: req.get('usuarioCliente') })
+        const usuarioCliente = req.get('usuarioCliente');
+        
+        await usuarios.findOneAndDelete({ Usuario: usuarioCliente })
         .catch (error => {
             res.status(200).json(jsonError.userFindError)
         })
-    
+
+        await registrosAlarmas.deleteMany({ Usuario: usuarioCliente });
+
+        await registrosIncidencias.updateMany({ Usuario: usuarioCliente }, { $set: { Usuario: null } });
+
         res.json({
             result: true,
             msg: "delete user successful"
         })
+
     } else {
         return res.status(401).json(jsonError.tokenError)
     }
