@@ -241,6 +241,15 @@
     }
   },
 
+  "MapaRule": {
+    "titulo": "Herramienta de medición",
+    "explicacionHerramienta1": "Dibuje en el mapa el segmento del ",
+    "explicacionHerramienta2": "cual le gustaría conocer su distancia.",
+    "resultadoDistancia1": "La distancia medida es ",
+    "resultadoDistancia2": " metros.",
+    "botonReset": "Reiniciar Medición"
+  },
+
   "Footer": "Trabajo Final de Grado, Andrés Chasiluisa",
 
   "Error404": "PAGINA NO DISPONIBLE"

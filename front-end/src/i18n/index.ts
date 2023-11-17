@@ -1,13 +1,7 @@
 import  {createI18n}  from "vue-i18n"
 
-import { useI18nStore } from "@/composables/useI18nStore";
-
 import es from "./es.json";
 import en from "./en.json"
-
-const {
-    getIdioma,
-} = useI18nStore()
 
 export enum Idiomas {
     ES = 'es',

@@ -20,7 +20,7 @@
         <router-link to="/visorLaPalma/signup" class="headerLink" v-show="!userAuthenticated && noIsCurrentRoute(`/visorLaPalma/signup`)"> {{ $t('Header.signup') }}</router-link> 
         <router-link to="/visorLaPalma/profile" class="headerLink" v-show="userAuthenticated && noIsCurrentRoute(`/visorLaPalma/profile`) && !getSuper"> {{ $t('Header.profile') }}</router-link>
         <router-link to="/visorLaPalma/contacto" class="headerLink" v-show="noIsCurrentRoute(`/visorLaPalma/contacto`) && !getSuper"> {{ $t('Header.contacto') }}</router-link>
-        <a href="http://localhost:3000/ayudaUsuariosPDF" v-show="!getSuper && IsHomeRoute()" class="headerLink" target="_blank">{{ $t('Header.manualUsuario')}} </a>
+        <a href="http://localhost:3000/ayudaUsuariosPDF" v-show="!getSuper && IsHomeRoute()" class="headerLink" target="_blank" style="cursor: help;">{{ $t('Header.manualUsuario')}} </a>
         <router-link to="/visorLaPalma/login" @click="logout" class="headerLink" v-show="userAuthenticated">{{ $t('Header.logout') }}</router-link>
     </nav>
   </header>

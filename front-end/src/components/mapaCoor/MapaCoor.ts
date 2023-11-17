@@ -15,6 +15,12 @@ export default defineComponent({
     name:'MapaCoor',
     setup(){
 
+        const TrazoRule = L.layerGroup();
+        const distancia = ref();
+        const ruler = ref (false);
+        const dibujar = ref(false);
+        const reinicioRule = ref(false);
+
         const { 
             mapaCoor,
             getBbox,
@@ -112,8 +118,7 @@ export default defineComponent({
                 resultMarker.bindPopup(e.geocode.name).openPopup();
             });
 
-            // Agregar un evento de clic al mapa
-            mapa.on('click', function(e) {
+            const fijarCoordenadas = (e: L.LeafletMouseEvent) => {
                 setCentrarCoor(undefined);
                 var latlng = e.latlng; // Obtiene las coordenadas del clic
 
@@ -134,13 +139,21 @@ export default defineComponent({
                 mapa.flyTo(latlng, 16, {
                     duration: 2,
                 });
-            });
+            }
 
-            var boton = document.getElementById('home');
+            // Agregar un evento de clic al mapa
+            mapa.on('click', fijarCoordenadas );
+            dibujar.value = true;
+
+            var botonHome = document.getElementById('home');
 
             // Agrega un manejador de eventos al botón
-            boton!.addEventListener('click', function (e) {
+            botonHome!.addEventListener('click', function (e) {
                 mapa.setView([28.655, -17.865],11)
+                e.stopPropagation(); // Detiene la propagación del evento
+            });
+
+            botonHome!.addEventListener('click', function (e) {
                 e.stopPropagation(); // Detiene la propagación del evento
             });
 
@@ -168,6 +181,77 @@ export default defineComponent({
                     });
                 }
             })
+
+            const contenedor = document.getElementById('Mapa');
+            const ultimoBoton = contenedor!.lastElementChild;
+
+            ultimoBoton!.addEventListener('click', function() {
+                ruler.value = false;
+            });
+
+            watch( ruler, () => {
+                if(ruler.value){
+                    mapa.off('click', fijarCoordenadas);
+                    distancia.value = undefined;
+                    if(TrazoRule.getLayers().length > 0) TrazoRule.clearLayers();
+                    mapa.on('click', dibujarPunto);
+                    dibujar.value = true;
+                    reinicioRule.value = false;
+                } else {
+                    mapa.removeLayer(TrazoRule)
+                    mapa.off('click', dibujarPunto)
+                    dibujar.value=false;
+                    if(!reinicioRule.value) {
+                        mapa.on('click', fijarCoordenadas );   
+                        dibujar.value = true;
+                    }                 
+                }
+            })
+
+            let coorPrimerpunto: L.LatLng;
+            const circleOptions =  { weight: 1, color: '#008ab8' ,radius: 250, fillOpacity: 0.5, fillColor: '#008ab8' };
+
+            const dibujarPunto = (event: L.LeafletMouseEvent) => {
+                const coordenadas = event.latlng;
+            
+                // Si ya hay una capa de dibujo, agrégale un nuevo punto
+                if (TrazoRule.getLayers().length  > 0) {
+                L.circle(coordenadas, circleOptions).addTo(TrazoRule);
+                L.polyline([coorPrimerpunto,coordenadas], { smoothFactor: 0, color: '#3c5570', weight: 2 }).addTo(TrazoRule);
+                distancia.value = Math.round(coorPrimerpunto.distanceTo(coordenadas));
+                mapa.off('click', dibujarPunto); // Detener la escucha de clics
+                dibujar.value = false;
+                } else {
+                // Si no existe la capa de dibujo, crea una nueva polilínea
+                L.circle(coordenadas, circleOptions).addTo(TrazoRule);
+                coorPrimerpunto = coordenadas;
+                TrazoRule.addTo(mapa)
+                }
+            };
+
+            var botonRule = document.getElementById('rule');
+
+            // Agrega un manejador de eventos al botón
+            botonRule!.addEventListener('click', function (e) {
+                e.stopPropagation(); // Detiene la propagación del evento
+            });
+
         })
+
+        return {
+            ruler,
+            distancia,
+            dibujar,
+            changeRuler: () => {
+                ruler.value = !ruler.value;
+            },
+            resetRuler: () => {
+                reinicioRule.value = true;
+                ruler.value = false;
+                setTimeout(() => {
+                    ruler.value = true;
+                }, 0);
+            }
+        }
     }
 })

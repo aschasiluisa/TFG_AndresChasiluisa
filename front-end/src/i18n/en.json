@@ -241,6 +241,15 @@
     }
   },
 
+  "MapaRule": {
+    "titulo": "Measuring tool",
+    "explicacionHerramienta1": "Draw on the map the segment whose",
+    "explicacionHerramienta2": "distance you would like to know.",
+    "resultadoDistancia1": "The measured distance is ",
+    "resultadoDistancia2": " meters.",
+    "botonReset": "Reset Measurement"
+  },
+
   "Footer": "Final Degree Project, Andrés Chasiluisa",
 
   "Error404": "PAGE NOT AVAILABLE"

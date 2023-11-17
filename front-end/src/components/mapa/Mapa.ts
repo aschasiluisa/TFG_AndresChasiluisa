@@ -5,7 +5,6 @@ import { useAuthStore } from "@/composables/useAuthStore";
 
 import L from 'leaflet';
 import 'leaflet.heat';
-
 import 'leaflet-control-geocoder/dist/Control.Geocoder.css';
 import {Geocoder, geocoders} from 'leaflet-control-geocoder';
 import { periodos } from "@/api/mapAPI";
@@ -19,6 +18,8 @@ export default defineComponent({
         const RegistrosIncidencias = L.layerGroup();
         const RegistrosAlarmas = L.layerGroup();
         const RegistrosTerremotos = L.layerGroup();
+        const TrazoRule = L.layerGroup();
+        const distancia = ref();
 
         const CapaCarreteras = L.tileLayer.wms('http://localhost:8082/geoserver/TFG-LaPalma/wms', {
             layers: 'TFG-LaPalma:carreteras',
@@ -61,6 +62,8 @@ export default defineComponent({
 
         const home = ref(false);
         const leyenda = ref (false);
+        const ruler = ref (false);
+        const dibujar = ref(false);
 
         const { 
             selectedBaseMap,
@@ -461,19 +464,82 @@ export default defineComponent({
 
         ultimoBoton!.addEventListener('click', function() {
             leyenda.value = false;
+            ruler.value = false;
         });
 
+        watch( ruler, () => {
+            if(ruler.value){
+                distancia.value = undefined;
+                if(TrazoRule.getLayers().length > 0) TrazoRule.clearLayers();
+                mapa.on('click', dibujarPunto);
+                dibujar.value = true;
+            } else {
+                mapa.removeLayer(TrazoRule)
+                mapa.off('click', dibujarPunto)
+                dibujar.value=false;
+                
+            }
+        })
 
-       })
+        let coorPrimerpunto: L.LatLng;
+        const circleOptions =  { weight: 1, color: '#008ab8' ,radius: 250, fillOpacity: 0.5, fillColor: '#008ab8' };
 
-       return {
-         leyenda,
+        const dibujarPunto = (event: L.LeafletMouseEvent) => {
+            const coordenadas = event.latlng;
+          
+            // Si ya hay una capa de dibujo, agrégale un nuevo punto
+            if (TrazoRule.getLayers().length  > 0) {
+              L.circle(coordenadas, circleOptions).addTo(TrazoRule);
+              L.polyline([coorPrimerpunto,coordenadas], { smoothFactor: 0, color: '#3c5570', weight: 2 }).addTo(TrazoRule);
+              distancia.value = Math.round(coorPrimerpunto.distanceTo(coordenadas));
+              mapa.off('click', dibujarPunto); // Detener la escucha de clics
+              dibujar.value = false;
+            } else {
+              // Si no existe la capa de dibujo, crea una nueva polilínea
+              L.circle(coordenadas, circleOptions).addTo(TrazoRule);
+              coorPrimerpunto = coordenadas;
+              TrazoRule.addTo(mapa)
+            }
+        };
 
-         userAuthenticated,
-         getAdmin,
+        var botonRule = document.getElementById('rule');
+        var botonHome = document.getElementById('home');
 
-         home : () => home.value = true,
-         changeLeyenda: () =>  leyenda.value = !leyenda.value,
-       }
+        // Agrega un manejador de eventos al botón
+        botonRule!.addEventListener('click', function (e) {
+            e.stopPropagation(); // Detiene la propagación del evento
+        });
+
+        botonHome!.addEventListener('click', function (e) {
+            e.stopPropagation(); // Detiene la propagación del evento
+        });
+    })
+
+
+    return {
+        leyenda,
+        userAuthenticated,
+        getAdmin,
+        home,
+        ruler,
+        dibujar,
+        distancia,
+
+        goHome : () => home.value = true,
+        changeLeyenda: () =>  { 
+            leyenda.value = !leyenda.value; 
+            ruler.value = false;
+        },
+        changeRuler: () => {
+            ruler.value = !ruler.value;
+            leyenda.value = false;
+        },
+        resetRuler: () => {
+            ruler.value = false;
+            setTimeout(() => {
+                ruler.value = true;
+            }, 0);
+        }
+    }
     }
 })
