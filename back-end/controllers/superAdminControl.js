@@ -8,18 +8,22 @@ const superAdminControl = async (req,res)=>{
         try{
             await usuarios.findOne({ Usuario: req.get('usuarioCliente')})
             .then(user => {
-                res.json({
-                    result: true,
-                    user:
-                    {
-                        Nombre: user.Nombre,
-                        Apellido: user.Apellido,
-                        Municipio: user.Municipio,
-                        Usuario: user.Usuario,
-                        Mail: user.Mail,
-                        Rol: user.Rol
-                    }
-                })
+                if (user.Rol == 5){
+                    res.status(200).json(jsonError.userFindError)
+                } else {
+                    res.json({
+                        result: true,
+                        user:
+                        {
+                            Nombre: user.Nombre,
+                            Apellido: user.Apellido,
+                            Municipio: user.Municipio,
+                            Usuario: user.Usuario,
+                            Mail: user.Mail,
+                            Rol: user.Rol
+                        }
+                    })
+                }
             })
         } catch (error) {
             res.status(200).json(jsonError.userFindError)
