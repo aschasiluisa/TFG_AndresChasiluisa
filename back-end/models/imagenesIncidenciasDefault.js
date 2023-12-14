@@ -14,6 +14,8 @@ const ImagenesDefaultSchema = new Schema({
             'ERU',
             'ESC',
             'OTR',
+            'OBR',
+            'OLA'
          ]
     },
     Imagen: {

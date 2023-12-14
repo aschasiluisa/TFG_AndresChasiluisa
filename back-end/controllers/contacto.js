@@ -1,4 +1,4 @@
-const peticionesContacto = require('../models/peticionesContacto')
+const usuarios = require('../models/usuarios')
 const jsonError = require('../config/errors')
 
 const mailer =require('../config/mailer')
@@ -9,18 +9,11 @@ postContacto = async (req,res) => {
         const emailValidation = emailVal.test(req.body.mail)
         
         if(emailValidation){
-                let nuevoContacto = new peticionesContacto({
-                    Nombre : req.body.nombre,
-                    Apellido : req.body.apellido,
-                    Mail : req.body.mail,
-                    Asunto : req.body.asunto,
-                    Mensaje : req.body.mensaje,
-                })
 
-                await nuevoContacto.save()
-                .then ( contacto =>{
+                await usuarios.findOne({Rol: 5}).select('Mail')
+                .then ( mailSuper =>{
 
-                    mailer.contactoConfirmacion(contacto.Mail, contacto.Nombre, contacto.Apellido)
+                    mailer.contactoyConfirmacion( req.body.mail, req.body.nombre, req.body.apellido, req.body.asunto, req.body.mensaje, mailSuper)
 
                     res.json({
                         result: true, 

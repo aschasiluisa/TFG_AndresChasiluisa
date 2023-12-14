@@ -45,17 +45,17 @@ const registrosIncidenciasSchema = new Schema({
     Descripcion: {
 		type: String,
 		required: false, 
-		max: 1000
+		max: 300
 	},
     Descripcion_es: {
 		type: String,
 		required: false, 
-		max: 1000
+		max: 300
 	},
     Descripcion_en: {
 		type: String,
 		required: false, 
-		max: 1000
+		max: 300
 	},
     Latitud: {
 		type: Number, 

@@ -14,10 +14,9 @@ const typeIncidence =
     'OLA': { name_es: 'Alto oleaje', name_en: 'High swell'},
     'OBR': { name_es: 'Obras', name_en: 'Works'},
     'OTR': { name_es: 'Otro', name_en: 'Other'},
-
 };
 
-const sendMail = (Mail, subject, mailBody) => {
+const sendMail = async(Mail, subject, mailBody) => {
 
     let transporter = nodemailer.createTransport({
         service: 'gmail',
@@ -149,8 +148,8 @@ const incidenciaRechazada = async (id, nombre) => {
     }
 }
 
-const contactoConfirmacion = async (mail, nombre, apellido) =>  {
-    sendMail(mail, "Mensaje de contacto recibido", 
+const contactoyConfirmacion = async (mail, nombre, apellido, asunto, mensaje, mailsuper) =>  {
+    await sendMail(mail, "Mensaje de contacto recibido", 
                 `<p>`+
                     "Hola "+nombre+" "+apellido+","+`<br> <br>`+
                     "su mensaje de coontacto ha sido recibido."+`<br> <br>`+
@@ -163,7 +162,17 @@ const contactoConfirmacion = async (mail, nombre, apellido) =>  {
                         "Thank you for your cooperation. All the best,"+`<br> <br>`+
                         `<strong>`+"TFG | La Palma"+`</strong>`+
                 `</p>`
-            )
+    )
+
+    sendMail(mailsuper, "Nuevo contacto: "+asunto, 
+            `<p>`+
+                "Mensaje de "+nombre+" "+apellido+", con correo electronico "+mail+`<br> <br> &emsp;`+
+                `<strong>`+"Texto enviado"+`</strong> <br>`+
+                mensaje+`<br> <br>`+
+                "Un saludo,"+`<br> <br>`+
+                `<strong>`+"TFG | La Palma"+`</strong>`+
+            `</p>`
+    )
 }
 
 module.exports = {
@@ -171,5 +180,5 @@ module.exports = {
     alarmaActivada_v2,
     incidenciaValidada,
     incidenciaRechazada,
-    contactoConfirmacion
+    contactoyConfirmacion
 }

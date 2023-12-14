@@ -204,9 +204,9 @@
 
     "asuntos": {
       "ayuda": "Help request",
-      "fallo": "application failure",
-      "funcionalidad": "add functionality",
-      "colaboracion": "collaboration",
+      "fallo": "Application failure",
+      "funcionalidad": "Add functionality",
+      "colaboracion": "Collaboration",
       "otro": "Other"
     },
 

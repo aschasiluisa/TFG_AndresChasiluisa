@@ -12,7 +12,6 @@ const TokensSchema = new Schema({
     Token: {
         type: String,
         required: true,
-
     }
 }, {collection: "tokens"});
 
