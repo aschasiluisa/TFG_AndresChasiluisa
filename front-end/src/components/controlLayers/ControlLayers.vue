@@ -18,7 +18,9 @@
       <tr v-if="(layer.id != 3 || userAuthenticated) && layer.id < 4" class="inputLayerMap">
 
         <div class="styled-input-single">
+
           <input type="checkbox" :id="layer.name_es"  v-model="layersControl[layer.id]" />
+
           <label :for="layer.name_es">
             <div v-if="getIdioma === Idiomas.ES">
               {{ layer.name_es }} 
@@ -27,12 +29,17 @@
               {{ layer.name_en }}
             </div>
           </label>
+
         </div>
+
         <div v-show="(getElementInfoID == layer.id || getLast_registroInfoIDlayer == layer.id)">
+          
           <div v-if="layerID == layer.id" class="dropup">
-            <button class="btn dropdown-toggle" style="color: rgb(0, 138, 184);" @click="resetLayerID" ></button>
+            <button class="btn dropdown-toggle" style="color: rgb(0, 138, 184);" @click="resetLayerID"></button>
           </div>
+
           <button v-else class="btn dropdown-toggle" style="color: rgb(0, 138, 184);" @click="layerInfo(layer.id)" ></button>
+
         </div>
 
         <button v-if="layer.id == 2 && userAuthenticated" class="btn btn-default" id="goButton1" @click="goCrearIncidencias">+</button>

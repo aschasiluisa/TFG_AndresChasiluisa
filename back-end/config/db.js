@@ -1,6 +1,9 @@
-//Importación de librerias
-const mongoose = require('mongoose')
+/////////////////////////////////////////////////////////////////
+//ARCHIVO DE CONFIGURACIÓN DE CONEXIÓN CON LA BASE DE DATOS MONGO
+/////////////////////////////////////////////////////////////////
 
+//Importación de librerías
+const mongoose = require('mongoose')
 
 //Función de conexión a la base de datos Mongo
 const conexion = () => {
@@ -21,7 +24,7 @@ const conexion = () => {
     
 };
 
-//Exportación
+//Exportación de la función
 module.exports = () => {
     conexion()
 }

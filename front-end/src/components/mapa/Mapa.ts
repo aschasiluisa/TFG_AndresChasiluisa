@@ -454,7 +454,7 @@ export default defineComponent({
 
         watch( home, () =>{
             if (home.value){
-                mapa.setView([28.655, -17.865],11)
+                mapa.setView([28.655, -17.865],10.9)
                 home.value = false;
             }
         })

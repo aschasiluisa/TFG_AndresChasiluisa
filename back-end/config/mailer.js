@@ -1,7 +1,15 @@
+///////////////////////////////////////////
+//ARCHIVO DE CONFIGURACIÓN Y ENVÍO DE MAILS
+///////////////////////////////////////////
+
+//Importación de librería
 const nodemailer = require('nodemailer')
+
+//Importación de modelos
 const usuarios = require('../models/usuarios')
 const registrosIncidencias = require('../models/registrosIncidencias')
 
+//Diccionario de código y nombres de tipo de incidencia
 const typeIncidence =
 {
     'ACC': { name_es: 'Accidente de Trafico', name_en: 'Traffic Accident'},
@@ -16,8 +24,10 @@ const typeIncidence =
     'OTR': { name_es: 'Otro', name_en: 'Other'},
 };
 
+//Función de envío de mails
 const sendMail = async(Mail, subject, mailBody) => {
 
+    //Creación de conexión con el servicio de correos
     let transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -25,6 +35,8 @@ const sendMail = async(Mail, subject, mailBody) => {
             pass: process.env.GMAIL_PASSWORD,
         }
     });
+
+    //Opciones de envíos de mails
     var mailOptions = {
         from: 'TFG | La Palma',
         to: Mail,
@@ -32,6 +44,7 @@ const sendMail = async(Mail, subject, mailBody) => {
         html: mailBody
     };
     
+    //Envío de mail diseñado
     transporter.sendMail(mailOptions,(err,res)=>{
         if(err){
             console.log(err);
@@ -42,8 +55,13 @@ const sendMail = async(Mail, subject, mailBody) => {
     });
 }
 
+//Construcción de mensaje de activación para procesos de alarmas
 const alarmaActivada_v1 = async (alarmaActivada, incidenciasCercanas) => {
+
+    //Obtención de datos del usuario receptor del mail
     const usuario = await usuarios.findOne({Usuario: alarmaActivada.usuario}).select('Mail Nombre Apellido');
+
+    //Bloque de construcción del mail
     if (usuario.Mail){
         for (let i = 0; i < incidenciasCercanas.length; i++) {
             sendMail(usuario.Mail, "Alerta!!! incidencdia detectada", 
@@ -70,8 +88,13 @@ const alarmaActivada_v1 = async (alarmaActivada, incidenciasCercanas) => {
     }
 }
 
+//Construcción de mensaje de activación para procesos de incidencias
 const alarmaActivada_v2 = async (alarmaActivada, incidenciaCercana) => {
+
+    //Obtención de datos del usuario receptor del mail
     const usuario = await usuarios.findOne({Usuario: alarmaActivada.usuario}).select('Mail Nombre Apellido');
+
+    //Bloque de construcción del mail
     if (usuario.Mail){
         sendMail(usuario.Mail, "Alerta!!! incidencdia detectada", 
         `<p>`+
@@ -96,10 +119,18 @@ const alarmaActivada_v2 = async (alarmaActivada, incidenciaCercana) => {
     }
 }
 
+//Construcción de mensaje de validación a incidencias
 const incidenciaValidada = async (incidencia) => {
+    
+    //Obtención del nombre del usuario guardado en la incidencia
     const nombreUsuario = await registrosIncidencias.findById(incidencia.id).select('Usuario');
+
     if(nombreUsuario.Usuario){
+        
+        //Obtención de datos del usuario receptor del mail
         const usuario = await usuarios.findOne({Usuario: nombreUsuario.Usuario}).select('Mail Nombre Apellido');
+
+        //Bloque de construcción del mail
         if (usuario.Mail){
             sendMail(usuario.Mail, "Incidencia validada", 
                 `<p>`+
@@ -125,10 +156,18 @@ const incidenciaValidada = async (incidencia) => {
     }
 }
 
+//Construcción de mensaje de rechazo a incidencias
 const incidenciaRechazada = async (id, nombre) => {
+    
+    //Obtención del nombre del usuario guardado en la incidencia
     const nombreUsuario = await registrosIncidencias.findById(id).select('Usuario');
+
     if(nombreUsuario.Usuario){
+
+        //Obtención de datos del usuario receptor del mail
         const usuario = await usuarios.findOne({Usuario: nombreUsuario.Usuario}).select('Mail Nombre Apellido');
+
+        //Bloque de construcción del mail
         if (usuario.Mail){
             sendMail(usuario.Mail, "Propuesta de incidencia rechazada", 
                 `<p>`+
@@ -148,7 +187,10 @@ const incidenciaRechazada = async (id, nombre) => {
     }
 }
 
+//Construcción de mensaje de contacto y mensaje de confirmación para administrador y usuario
 const contactoyConfirmacion = async (mail, nombre, apellido, asunto, mensaje, mailsuper) =>  {
+
+    //Envió de mail de confirmación a usuario
     await sendMail(mail, "Mensaje de contacto recibido", 
                 `<p>`+
                     "Hola "+nombre+" "+apellido+","+`<br> <br>`+
@@ -164,6 +206,7 @@ const contactoyConfirmacion = async (mail, nombre, apellido, asunto, mensaje, ma
                 `</p>`
     )
 
+    //Envió de petición de contacto al superadministrador
     sendMail(mailsuper, "Nuevo contacto: "+asunto, 
             `<p>`+
                 "Mensaje de "+nombre+" "+apellido+", con correo electronico "+mail+`<br> <br> &emsp;`+
@@ -175,6 +218,7 @@ const contactoyConfirmacion = async (mail, nombre, apellido, asunto, mensaje, ma
     )
 }
 
+//Exportación de funciones de envió de mails
 module.exports = {
     alarmaActivada_v1,
     alarmaActivada_v2,

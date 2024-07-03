@@ -83,7 +83,7 @@ export default defineComponent({
                 mapa = L.map("Mapa",{zoomSnap:0.2, maxZoom: 18, minZoom: 10}).setView([localizarIncidencia.lat, localizarIncidencia.lon],16).setMaxBounds(limites);
                 coorMarker= L.marker([localizarIncidencia.lat, localizarIncidencia.lon], {icon: localizacionCoor}).addTo(mapa);
             } else {
-                mapa = L.map("Mapa",{zoomSnap:0.2, maxZoom: 18, minZoom: 10}).setView([28.655, -17.865],11).setMaxBounds(limites);
+                mapa = L.map("Mapa",{zoomSnap:0.1, maxZoom: 18, minZoom: 10}).setView([28.655, -17.865],10.9).setMaxBounds(limites);
             }
 
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -149,7 +149,7 @@ export default defineComponent({
 
             // Agrega un manejador de eventos al botón
             botonHome!.addEventListener('click', function (e) {
-                mapa.setView([28.655, -17.865],11)
+                mapa.setView([28.655, -17.865],10.9)
                 e.stopPropagation(); // Detiene la propagación del evento
             });
 

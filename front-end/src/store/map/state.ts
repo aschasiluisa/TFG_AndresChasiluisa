@@ -66,7 +66,7 @@ function state(): MapState {
             { id: 2, name_es: 'Incidencias', name_en: 'Incidences' },
             { id: 3, name_es: 'Alarmas', name_en: 'Alarms' },
             { id: 4, name_es: 'Infraestructura', name_en:'Infrastructure'},
-            { id: 5, name_es: 'Actividad volcanica', name_en:'Volcanic activity'},
+            { id: 5, name_es: 'Actividad volcánica', name_en:'Volcanic activity'},
         ],
 
         layersControl:{
@@ -91,7 +91,7 @@ function state(): MapState {
 
         sublayers_5:[
             { id: 1, name_es: 'Bocas eruptivas', name_en: 'Eruptive mouths' },
-            { id: 2, name_es: 'Coladas volcanicas', name_en: 'Volcanic flows' },
+            { id: 2, name_es: 'Coladas volcánicas', name_en: 'Volcanic flows' },
             { id: 3, name_es: 'Terremotos', name_en: 'Earthquakes' },
         ],
 

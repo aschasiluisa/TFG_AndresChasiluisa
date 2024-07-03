@@ -98,6 +98,7 @@ const mutations: MutationTree<MapState> = {
         state.registrosAlarmas = undefined;
         state.registroInfo = undefined;
         state.elementInfoIDlayer = undefined;
+        state.last_registroInfoIDlayer= undefined;
     },
 
     setMapaCoor(state, coordenadas){

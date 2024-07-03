@@ -99,7 +99,6 @@ const postRegistro = async (req, res) => {
                 if(incidenciasCercanas.length != 0){
                     mailer.alarmaActivada_v1(req.body,incidenciasCercanas);
                     nuevaAlarma.Activada = true;
-    
                 }
      
                 await nuevaAlarma.save()

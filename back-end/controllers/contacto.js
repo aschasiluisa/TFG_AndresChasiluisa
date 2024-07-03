@@ -1,6 +1,9 @@
+//////////////////////////////////////////////////////////////////////////
+//CONTROLADOR DE PROCESOS PARA EL CONTACTO ENTRE USUARIOS Y ADMINISTRACIÓN
+//////////////////////////////////////////////////////////////////////////
+
 const usuarios = require('../models/usuarios')
 const jsonError = require('../config/errors')
-
 const mailer =require('../config/mailer')
 
 postContacto = async (req,res) => {
